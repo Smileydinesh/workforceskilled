@@ -83,9 +83,9 @@ export default function Navbar() {
             {/* Links */}
               <div className="flex gap-8">
                 {links.map((link, i) => (
-                  <a
+                 <Link
                     key={i}
-                    href={link.href}
+                    to={link.href}
                     className="
                       relative text-white/90 text-sm
                       transition-colors duration-300 ease-out
@@ -100,12 +100,13 @@ export default function Navbar() {
                   >
                     {link.label}
 
-                    {link.label === 'Live Webinars' && (
+                    {link.label === "Live Webinars" && (
                       <span className="ml-2 text-xs bg-red-500 text-white px-2 py-0.5 rounded-full">
                         LIVE
                       </span>
                     )}
-                  </a>
+                  </Link>
+
                 ))}
               </div>
 
@@ -178,11 +179,12 @@ export default function Navbar() {
               </div>
 
               {/* Mobile Links */}
+             {/* Mobile Links */}
               <div className="space-y-1">
                 {links.map((link, index) => (
-                  <a
+                  <Link
                     key={index}
-                    href={link.href}
+                    to={link.href}
                     onClick={() => setOpen(false)}
                     className="block p-3 rounded-xl text-white hover:bg-emerald-700/30"
                   >
@@ -194,9 +196,10 @@ export default function Navbar() {
                         </span>
                       )}
                     </div>
-                  </a>
+                  </Link>
                 ))}
               </div>
+
 
               {/* Mobile Actions */}
               <div className="pt-4 border-t border-emerald-700/30 space-y-3">
