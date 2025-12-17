@@ -73,7 +73,7 @@ export default function HeroSection() {
               className="px-8 py-4 rounded-full bg-[#FACC15]
                          text-black font-semibold shadow-lg"
             >
-              Join for free →
+              Sign Up →
             </motion.button>
 
             <motion.button
