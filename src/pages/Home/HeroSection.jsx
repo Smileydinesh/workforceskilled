@@ -18,7 +18,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-br from-[#0F3D2E]/90 via-[#1E6F5C]/70 to-black/80" />
 
       {/* GLASS BLUR LAYER */}
-      <div className="absolute inset-0 backdrop-blur-[6px]" />
+      <div className="absolute inset-0 backdrop-blur-[2px]" />
 
       {/* BUBBLE EFFECT */}
       <BubbleBackground />
@@ -135,10 +135,10 @@ export default function HeroSection() {
                        bg-[#1E6F5C]/90 text-white flex items-center justify-center"
           >
             <div className="text-center">
-              <p className="text-sm">Online Courses</p>
-              <p className="text-3xl font-extrabold text-[#FACC15]">
-                2,582
-              </p>
+              <p className="text-sm">Live Webinar</p>
+              <h4 className="text-3xl font-extrabold text-[#FACC15]">
+                Join NoW
+              </h4>
             </div>
           </motion.div>
 

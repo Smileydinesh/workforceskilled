@@ -4,6 +4,8 @@ import Navbar from "./components/layout/Navbar";
 import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";
 import Footer from "./components/layout/Footer";
+import About from "./pages/About/About";
+
 
 export default function App() {
   return (
@@ -12,7 +14,10 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+
         <Route path="/contact" element={<Contact />} />
+
       </Routes>
 
       {/* Footer always at bottom */}

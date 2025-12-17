@@ -10,7 +10,7 @@ import {
   FiChevronRight
 } from "react-icons/fi";
 import { MdOutlineLiveTv } from "react-icons/md";
-import logo from "../../assets/images/icons/logo2.png";
+import logo from "../../assets/images/icons/logo3.jpg";
 
 const links = [
   { label: "About", href: "/about" },
@@ -31,34 +31,47 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
 
           {/* Logo + Title */}
-          <Link to="/">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="flex items-center gap-3 cursor-pointer group"
-              >
-                <div className="relative w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl p-1 shadow-2xl shadow-emerald-500/30">
-                  <motion.div
+<Link to="/" className="group flex items-center gap-3">
+  <motion.div
+    whileHover={{ scale: 1.06 }}
+    transition={{ type: "spring", stiffness: 260, damping: 20 }}
+    className="relative"
+  >
+    {/* Glow — BEHIND everything */}
+    <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-yellow-400/40 to-emerald-400/40 blur-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
+    {/* Ring */}
+    <div className="relative z-10 w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-gradient-to-br from-yellow-400 to-emerald-500 p-[1.5px] overflow-hidden">
+      
+      {/* ✅ SHINE EFFECT (YOUR ORIGINAL IDEA — RESTORED) */}
+      <motion.div
                     animate={{ x: [-100, 200] }}
                     transition={{ duration: 3, repeat: Infinity, delay: 1 }}
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
                   />
-                  <div className="relative w-full h-full bg-gradient-to-br from-emerald-600/90 to-emerald-700/90 rounded-xl flex items-center justify-center">
-                    <img src={logo} alt="Logo" className="w-6 h-6 lg:w-7 lg:h-7" />
-                  </div>
-                </div>
 
-                <div>
-                  <h1 className="text-lg lg:text-xl font-bold text-white">
-                    Workforce<span className="text-yellow-400">Skilled</span>
-                  </h1>
-                  <p className="text-xs text-emerald-300/80">
-                    Professional Learning Hub
-                  </p>
-                </div>
-              </motion.div>
-            </Link>
+      {/* Glass */}
+      <div className="relative z-10 w-full h-full rounded-full bg-emerald-950/80 backdrop-blur flex items-center justify-center">
+        <img
+          src={logo}
+          alt="WorkforceSkilled Logo"
+          className="w-7 h-8 lg:w-8 lg:h-8 object-contain"
+        />
+      </div>
+    </div>
+  </motion.div>
+
+  {/* Text */}
+  <div>
+    <h1 className="text-lg lg:text-xl font-bold text-white tracking-tight">
+      Workforce<span className="text-yellow-400">Skilled</span>
+    </h1>
+    <p className="text-xs text-emerald-300/80">
+      Professional Learning Hub
+    </p>
+  </div>
+</Link>
+
 
 
           {/* Desktop Menu */}
