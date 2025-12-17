@@ -150,134 +150,625 @@ export default function About() {
 
 
       {/* ================= ENHANCED WHY CHOOSE US ================= */}
-      <section className="py-28 bg-gradient-to-b from-white to-slate-50">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <span className="inline-flex items-center gap-2 mb-4 px-5 py-2 rounded-full bg-emerald-100 text-emerald-700 text-sm font-semibold">
-              <FiCheckCircle />
-              Why Choose Us
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Powerful Features for <span className="text-emerald-600">Your Success</span>
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-16">
-              Everything you need to achieve and maintain compliance excellence with industry-leading solutions
-            </p>
-          </motion.div>
+{/* ================= WHY CHOOSE US - MODERN DESIGN ================= */}
+{/* ================= WHY CHOOSE US - TECH STYLE ================= */}
+<section className="relative py-32 bg-gray-950 text-white overflow-hidden">
+  {/* Tech grid background */}
+  <div className="absolute inset-0 opacity-10">
+    <div className="absolute inset-0"
+      style={{
+        backgroundImage: `
+          linear-gradient(90deg, #10B981 1px, transparent 1px),
+          linear-gradient(180deg, #10B981 1px, transparent 1px)
+        `,
+        backgroundSize: '60px 60px',
+        backgroundPosition: 'center center'
+      }}
+    />
+    
+    {/* Animated lines */}
+    {[...Array(4)].map((_, i) => (
+      <motion.div
+        key={i}
+        animate={{
+          x: ['100%', '-100%']
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          delay: i * 5,
+          ease: "linear"
+        }}
+        className="absolute top-0 h-px bg-gradient-to-r from-transparent via-emerald-500 to-transparent"
+        style={{ top: `${25 * (i + 1)}%` }}
+      />
+    ))}
+  </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                icon: <FiZap className="text-2xl" />,
-                title: "Fast Implementation",
-                desc: "Get started in days, not months with our streamlined onboarding process",
-                accent: "from-orange-100 to-orange-50",
-                iconColor: "text-orange-600",
-                delay: 0.1
-              },
-              {
-                icon: <MdOutlineSecurity className="text-2xl" />,
-                title: "100% Secure",
-                desc: "Enterprise-grade security with SOC 2 Type II certification",
-                accent: "from-emerald-100 to-emerald-50",
-                iconColor: "text-emerald-600",
-                highlight: true,
-                delay: 0.2
-              },
-              {
-                icon: <FiHeadphones className="text-2xl" />,
-                title: "Expert Support",
-                desc: "24/7 dedicated customer success team with average 2-minute response",
-                accent: "from-pink-100 to-pink-50",
-                iconColor: "text-pink-600",
-                delay: 0.3
-              },
-              {
-                icon: <FiTrendingUp className="text-2xl" />,
-                title: "Proven Results",
-                desc: "98% client success rate with measurable compliance improvements",
-                accent: "from-indigo-100 to-indigo-50",
-                iconColor: "text-indigo-600",
-                delay: 0.4
-              }
-            ].map((feature, idx) => (
-              <EnhancedFeatureCard key={idx} {...feature} />
-            ))}
+  {/* Glowing orbs */}
+  <div className="absolute top-1/4 -left-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl" />
+  <div className="absolute bottom-1/4 -right-20 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl" />
+
+  <div className="relative max-w-7xl mx-auto px-6">
+    {/* Header */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      className="text-center mb-20"
+    >
+      <div className="inline-flex items-center gap-3 mb-8">
+        <div className="w-8 h-px bg-gradient-to-r from-emerald-500 to-teal-500" />
+        <span className="text-emerald-400 font-mono text-sm tracking-widest">
+          // WHY_US
+        </span>
+        <div className="w-8 h-px bg-gradient-to-r from-teal-500 to-emerald-500" />
+      </div>
+
+      <h2 className="text-4xl md:text-6xl font-bold mb-6">
+        <span className="text-gray-300">Engineered for</span>
+        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
+          Peak Performance
+        </span>
+      </h2>
+
+      <p className="text-gray-400 text-lg max-w-2xl mx-auto font-light">
+        Built with cutting-edge technology and proven methodologies to deliver
+        unparalleled results in compliance training.
+      </p>
+    </motion.div>
+
+    {/* Feature Cards - Tech Style */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {[
+        {
+          icon: <FiZap className="text-2xl" />,
+          title: "Blazing Speed",
+          description: "Instant deployment with automated setup",
+          metric: "≤2h setup",
+          gradient: "from-orange-500 to-amber-500",
+          delay: 0.1
+        },
+        {
+          icon: <MdOutlineSecurity className="text-2xl" />,
+          title: "Ironclad Security",
+          description: "Zero-trust architecture with end-to-end encryption",
+          metric: "SOC 2 Certified",
+          gradient: "from-emerald-500 to-teal-500",
+          delay: 0.2,
+          featured: true
+        },
+        {
+          icon: <FiHeadphones className="text-2xl" />,
+          title: "Premium Support",
+          description: "Dedicated experts available round the clock",
+          metric: "24/7/365",
+          gradient: "from-cyan-500 to-blue-500",
+          delay: 0.3
+        },
+        {
+          icon: <FiTrendingUp className="text-2xl" />,
+          title: "Maximum ROI",
+          description: "Proven track record of measurable success",
+          metric: "98% Success",
+          gradient: "from-purple-500 to-pink-500",
+          delay: 0.4
+        }
+      ].map((feature) => (
+        <motion.div
+          key={feature.title}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: feature.delay }}
+          viewport={{ once: true }}
+          whileHover={{ scale: 1.05 }}
+          className="relative group"
+        >
+          {/* Glowing border */}
+          <div className={`absolute -inset-0.5 rounded-xl bg-gradient-to-br ${feature.gradient} opacity-30 blur group-hover:opacity-60 transition-all duration-500`} />
+
+          <div className="relative p-8 rounded-xl bg-gray-900/80 backdrop-blur-sm border border-gray-800 group-hover:border-gray-700 transition-all duration-300">
+            {/* Icon with glow */}
+            <motion.div
+              whileHover={{ 
+                rotate: 360,
+                scale: 1.2
+              }}
+              transition={{ duration: 0.5 }}
+              className={`relative w-14 h-14 mb-6 rounded-lg bg-gradient-to-br ${feature.gradient} flex items-center justify-center shadow-lg`}
+            >
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-br opacity-50 blur" />
+              {feature.icon}
+            </motion.div>
+
+            {/* Content */}
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold text-white">
+                {feature.title}
+              </h3>
+              
+              <p className="text-gray-400 text-sm leading-relaxed">
+                {feature.description}
+              </p>
+
+              {/* Metric */}
+              <div className="pt-4 border-t border-gray-800">
+                <div className="inline-flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full bg-gradient-to-br ${feature.gradient}`} />
+                  <span className="text-sm font-mono text-gray-300">
+                    {feature.metric}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Corner accent */}
+            <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="w-2 h-2 rounded-full bg-gradient-to-br from-emerald-400 to-teal-400 animate-pulse" />
+            </div>
           </div>
-        </div>
-      </section>
+
+          {/* Featured badge */}
+          {feature.featured && (
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+              <div className="px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 text-xs font-bold uppercase tracking-wider shadow-lg border border-emerald-400/30">
+                Recommended
+              </div>
+            </div>
+          )}
+        </motion.div>
+      ))}
+    </div>
+
+    {/* Tech stats */}
+    {/* <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.6, delay: 0.6 }}
+      viewport={{ once: true }}
+      className="mt-20 pt-10 border-t border-gray-800"
+    >
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {[
+          { value: "10K+", label: "Active Users", icon: "👥" },
+          { value: "500+", label: "Companies", icon: "🏢" },
+          { value: "99.9%", label: "Uptime", icon: "⚡" },
+          { value: "<2min", label: "Response Time", icon: "⚡" }
+        ].map((stat, idx) => (
+          <div key={idx} className="text-center p-6 rounded-xl bg-gray-900/50 backdrop-blur-sm border border-gray-800">
+            <div className="text-3xl mb-3">{stat.icon}</div>
+            <div className="text-2xl font-bold text-emerald-400 mb-2">{stat.value}</div>
+            <div className="text-gray-400 text-sm">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </motion.div> */}
+  </div>
+</section>
 
       {/* ================= ENHANCED OUR EXPERTISE ================= */}
-      <section className="py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="inline-flex items-center gap-2 mb-4 px-5 py-2 rounded-full bg-orange-100 text-orange-700 text-sm font-semibold">
-              <FiBriefcase />
-              Our Services
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Our <span className="text-orange-600">Expertise</span>
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Comprehensive compliance solutions across multiple domains with proven track record
-            </p>
-          </motion.div>
+    <section className="relative py-32 bg-gray-950 text-white overflow-hidden">
+  {/* Animated tech background */}
+  <div className="absolute inset-0 opacity-5">
+    {/* Matrix grid */}
+    <div className="absolute inset-0"
+      style={{
+        backgroundImage: `
+          linear-gradient(90deg, #10B981 1px, transparent 1px),
+          linear-gradient(180deg, #10B981 1px, transparent 1px)
+        `,
+        backgroundSize: '50px 50px',
+      }}
+    />
+    
+    {/* Tiny moving balls */}
+    {[...Array(40)].map((_, i) => (
+      <motion.div
+        key={`ball-${i}`}
+        animate={{
+          y: [0, -100, 0],
+          x: [0, Math.random() * 30 - 15, 0],
+          opacity: [0, 1, 0],
+        }}
+        transition={{
+          duration: Math.random() * 10 + 15,
+          repeat: Infinity,
+          delay: Math.random() * 10,
+          ease: "easeInOut"
+        }}
+        className="absolute w-1.5 h-1.5 rounded-full bg-gradient-to-br from-emerald-400 to-cyan-400"
+        style={{
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+        }}
+      />
+    ))}
+    
+    {/* Scanning lines */}
+    {[...Array(3)].map((_, i) => (
+      <motion.div
+        key={`scan-${i}`}
+        animate={{
+          y: ['0%', '100%']
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          delay: i * 4,
+          ease: "linear"
+        }}
+        className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent"
+        style={{ top: `${33 * (i + 1)}%` }}
+      />
+    ))}
+  </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                title: "Workplace Safety",
-                desc: "Comprehensive safety training programs with OSHA compliance",
-                stat: "500+ Programs",
-                icon: <FiShield className="text-2xl" />,
-                bg: "from-cyan-50 to-blue-50",
-                border: "border-cyan-200",
-                delay: 0.1
-              },
-              {
-                title: "Harassment Prevention",
-                desc: "Creating respectful work environments with DEI integration",
-                stat: "100K+ Trained",
-                icon: <MdOutlineGroups className="text-2xl" />,
-                bg: "from-emerald-50 to-teal-50",
-                border: "border-emerald-200",
-                delay: 0.2
-              },
-              {
-                title: "Regulatory Compliance",
-                desc: "Industry-specific compliance solutions for 25+ sectors",
-                stat: "25+ Industries",
-                icon: <FiBookOpen className="text-2xl" />,
-                bg: "from-green-50 to-emerald-50",
-                border: "border-green-200",
-                delay: 0.3
-              },
-              {
-                title: "Risk Management",
-                desc: "Identify and mitigate organizational risks with AI-powered insights",
-                stat: "1000+ Audits",
-                icon: <FiAlertTriangle className="text-2xl" />,
-                bg: "from-orange-50 to-yellow-50",
-                border: "border-orange-200",
-                delay: 0.4
-              }
-            ].map((expertise, idx) => (
-              <EnhancedExpertiseCard key={idx} {...expertise} />
-            ))}
-          </div>
+  {/* Glowing orbs */}
+  <div className="absolute top-1/4 -left-40 w-80 h-80 bg-gradient-to-br from-emerald-500/10 to-teal-500/5 rounded-full blur-3xl" />
+  <div className="absolute bottom-1/4 -right-40 w-80 h-80 bg-gradient-to-br from-cyan-500/10 to-blue-500/5 rounded-full blur-3xl" />
+
+  <div className="relative max-w-7xl mx-auto px-6 z-10">
+    {/* Header with tech styling */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true, margin: "-100px" }}
+      className="text-center mb-20"
+    >
+      {/* Tech indicator */}
+      <motion.div
+        animate={{ 
+          scale: [1, 1.1, 1],
+          opacity: [0.7, 1, 0.7]
+        }}
+        transition={{ 
+          duration: 3, 
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="inline-flex items-center gap-3 mb-8 px-6 py-3 rounded-full border border-emerald-500/30 bg-emerald-500/5 backdrop-blur-sm"
+      >
+        <div className="flex gap-1">
+          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
+          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" style={{ animationDelay: '0.4s' }} />
         </div>
-      </section>
+        <span className="text-emerald-400 font-mono text-sm tracking-[0.2em] uppercase">
+          OUR_SERVICES
+        </span>
+        <div className="flex gap-1">
+          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" style={{ animationDelay: '0.6s' }} />
+          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" style={{ animationDelay: '0.8s' }} />
+          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" style={{ animationDelay: '1s' }} />
+        </div>
+      </motion.div>
+
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="text-5xl md:text-7xl font-bold mb-6 tracking-tight"
+      >
+        <span className="text-gray-300 font-light">Specialized</span>
+        <motion.span
+          animate={{
+            textShadow: [
+              '0 0 20px rgba(249, 115, 22, 0.3)',
+              '0 0 30px rgba(249, 115, 22, 0.5)',
+              '0 0 20px rgba(249, 115, 22, 0.3)'
+            ]
+          }}
+          transition={{ duration: 4, repeat: Infinity }}
+          className="block mt-4 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400"
+        >
+          Our Expertise
+        </motion.span>
+      </motion.h2>
+
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+        className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed font-light"
+      >
+        Advanced compliance solutions powered by AI and machine learning algorithms
+        to ensure maximum security and regulatory adherence.
+      </motion.p>
+    </motion.div>
+
+    {/* Cyber Expertise Cards */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {[
+        {
+          title: "Workplace Safety",
+          desc: "AI-powered safety monitoring with real-time threat detection and OSHA compliance automation",
+          stat: "500+ Programs",
+          icon: <FiShield className="text-2xl" />,
+          gradient: "from-cyan-500 to-blue-500",
+          borderGlow: "group-hover:shadow-[0_0_30px_rgba(6,182,212,0.4)]",
+          delay: 0.1,
+          features: ["AI threat detection", "Real-time alerts", "Automated reporting"]
+        },
+        {
+          title: "Harassment Prevention",
+          desc: "Behavioral analytics and DEI integration for creating secure, respectful work environments",
+          stat: "100K+ Trained",
+          icon: <MdOutlineGroups className="text-2xl" />,
+          gradient: "from-emerald-500 to-teal-500",
+          borderGlow: "group-hover:shadow-[0_0_30px_rgba(16,185,129,0.4)]",
+          delay: 0.2,
+          features: ["Behavioral analytics", "DEI integration", "Anonymous reporting"]
+        },
+        {
+          title: "Regulatory Compliance",
+          desc: "Automated compliance tracking for 25+ industries with real-time regulatory updates",
+          stat: "25+ Industries",
+          icon: <FiBookOpen className="text-2xl" />,
+          gradient: "from-green-500 to-emerald-500",
+          borderGlow: "group-hover:shadow-[0_0_30px_rgba(34,197,94,0.4)]",
+          delay: 0.3,
+          features: ["Auto-tracking", "Real-time updates", "Multi-industry"]
+        },
+        {
+          title: "Risk Management",
+          desc: "Predictive risk analysis with AI-powered insights and automated mitigation protocols",
+          stat: "1000+ Audits",
+          icon: <FiAlertTriangle className="text-2xl" />,
+          gradient: "from-orange-500 to-yellow-500",
+          borderGlow: "group-hover:shadow-[0_0_30px_rgba(249,115,22,0.4)]",
+          delay: 0.4,
+          features: ["Predictive analysis", "AI insights real time", "Auto-mitigation"]
+        }
+      ].map((expertise, idx) => (
+        <motion.div
+          key={idx}
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ 
+            duration: 0.7, 
+            delay: expertise.delay,
+            type: "spring",
+            stiffness: 100
+          }}
+          viewport={{ once: true, margin: "-50px" }}
+          whileHover={{ 
+            y: -12,
+            scale: 1.05,
+            transition: { 
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }
+          }}
+          className="relative group"
+        >
+          {/* Floating tiny balls around card */}
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={`card-ball-${idx}-${i}`}
+              animate={{
+                y: [0, -20, 0],
+                x: [0, 10, 0],
+                opacity: [0.3, 0.8, 0.3],
+              }}
+              transition={{
+                duration: Math.random() * 4 + 6,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+                ease: "easeInOut"
+              }}
+              className={`absolute w-1.5 h-1.5 rounded-full bg-gradient-to-br ${expertise.gradient}`}
+              style={{
+                left: `${Math.random() * 80 + 10}%`,
+                top: `${Math.random() * 80 + 10}%`,
+                zIndex: -1,
+              }}
+            />
+          ))}
+
+          {/* Holographic border glow */}
+          <div className={`absolute -inset-0.5 rounded-xl bg-gradient-to-br ${expertise.gradient} opacity-0 group-hover:opacity-100 blur transition-all duration-500 ${expertise.borderGlow}`} />
+
+          {/* Main card */}
+          <div className="relative p-8 rounded-xl bg-gray-900/70 backdrop-blur-sm border border-gray-800 group-hover:border-emerald-500/30 transition-all duration-300 overflow-hidden">
+            
+            {/* Matrix code effect inside card */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute inset-0"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(90deg, currentColor 1px, transparent 1px),
+                    linear-gradient(180deg, currentColor 1px, transparent 1px)
+                  `,
+                  backgroundSize: '15px 15px',
+                }}
+              />
+            </div>
+
+            {/* Icon with cyber effects */}
+            <div className="relative mb-8">
+              {/* Animated rings */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                className="absolute -inset-3 rounded-full border border-emerald-500/20"
+              />
+              
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                className="absolute -inset-2 rounded-full border border-emerald-500/10"
+              />
+
+              {/* Icon container with spin */}
+              <motion.div
+                whileHover={{ 
+                  rotate: 360,
+                  scale: 1.2,
+                  transition: { 
+                    rotate: { duration: 0.6, ease: "easeInOut" },
+                    scale: { duration: 0.3 }
+                  }
+                }}
+                className={`relative w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${expertise.gradient} flex items-center justify-center shadow-2xl`}
+              >
+                {/* Inner glow */}
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-br opacity-50 blur-sm" />
+                
+                {/* Icon */}
+                <div className="relative z-10">
+                  {expertise.icon}
+                </div>
+
+                {/* Pulsing effect */}
+                <motion.div
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.5, 0.8, 0.5],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute inset-0 rounded-xl border-2 border-white/20"
+                />
+              </motion.div>
+            </div>
+
+            {/* Content */}
+            <div className="relative space-y-4">
+              <h3 className="text-xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-400 group-hover:to-teal-400 transition-all duration-300">
+                {expertise.title}
+              </h3>
+              
+              <p className="text-gray-400 text-sm leading-relaxed min-h-[80px]">
+                {expertise.desc}
+              </p>
+
+              {/* Features chips */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {expertise.features.map((feature, fIdx) => (
+                  <motion.span
+                    key={fIdx}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: expertise.delay + fIdx * 0.1 }}
+                    className="px-3 py-1.5 rounded-full bg-gray-800/50 text-xs text-gray-400 border border-gray-700 group-hover:border-emerald-500/30 transition-colors duration-300"
+                  >
+                    {feature}
+                  </motion.span>
+                ))}
+              </div>
+
+              {/* Stat badge with cyber look */}
+              <div className="pt-4 border-t border-gray-800 group-hover:border-emerald-500/30 transition-colors duration-300">
+                <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-gray-900/80 border border-gray-700">
+                  <div className="flex gap-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" style={{ animationDelay: '0.3s' }} />
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" style={{ animationDelay: '0.6s' }} />
+                  </div>
+                  <span className="text-sm font-mono text-emerald-400 font-bold">
+                    {expertise.stat}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Corner accent */}
+            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="w-2 h-2 rounded-full bg-gradient-to-br from-emerald-400 to-teal-400 animate-pulse" />
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+
+    {/* Cyber stats bar */}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.6 }}
+      viewport={{ once: true }}
+      className="mt-20 pt-10 border-t border-gray-800/50"
+    >
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {[
+          { 
+            value: "500+", 
+            label: "Safety Programs", 
+            icon: "🛡️",
+            gradient: "from-cyan-500 to-blue-500"
+          },
+          { 
+            value: "100K+", 
+            label: "Professionals", 
+            icon: "👥",
+            gradient: "from-emerald-500 to-teal-500"
+          },
+          { 
+            value: "25+", 
+            label: "Industries", 
+            icon: "🏢",
+            gradient: "from-green-500 to-emerald-500"
+          },
+          { 
+            value: "1000+", 
+            label: "Audits", 
+            icon: "📊",
+            gradient: "from-orange-500 to-yellow-500"
+          }
+        ].map((stat, idx) => (
+          <motion.div
+            key={idx}
+            whileHover={{ y: -5 }}
+            className="text-center p-6 rounded-xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 group hover:border-emerald-500/30 transition-all duration-300"
+          >
+            <motion.div
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 3, repeat: Infinity, delay: idx * 0.5 }}
+              className="text-3xl mb-3"
+            >
+              {stat.icon}
+            </motion.div>
+            <div className={`text-3xl font-bold bg-gradient-to-br ${stat.gradient} bg-clip-text text-transparent mb-2`}>
+              {stat.value}
+            </div>
+            <div className="text-gray-400 text-sm">
+              {stat.label}
+            </div>
+            
+            {/* Tiny balls around stats */}
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={`stat-ball-${idx}-${i}`}
+                animate={{
+                  y: [0, -8, 0],
+                  x: [0, 5, 0],
+                }}
+                transition={{
+                  duration: Math.random() * 3 + 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                  ease: "easeInOut"
+                }}
+                className="absolute w-1 h-1 rounded-full bg-emerald-400/50"
+                style={{
+                  left: `${Math.random() * 80 + 10}%`,
+                  top: `${Math.random() * 80 + 10}%`,
+                }}
+              />
+            ))}
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  </div>
+</section>
+
 
       {/* ================= ENHANCED BY THE NUMBERS ================= */}
       <section className="relative py-28 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white overflow-hidden">
