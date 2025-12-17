@@ -130,6 +130,73 @@ export default function Navbar() {
           </button>
 
         </div>
+              {/* Mobile Menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden overflow-hidden bg-gradient-to-b from-emerald-900 to-emerald-950/95 border-t border-emerald-700/30"
+          >
+            <div className="px-4 py-6 space-y-4">
+
+              {/* Mobile Search */}
+              <div className="relative">
+                <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-yellow-300" />
+                <input
+                  type="text"
+                  placeholder="Search webinars"
+                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/10 text-white border border-emerald-700/30"
+                />
+              </div>
+
+              {/* Mobile Links */}
+              <div className="space-y-1">
+                {links.map((link, index) => (
+                  <a
+                    key={index}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="block p-3 rounded-xl text-white hover:bg-emerald-700/30"
+                  >
+                    <div className="flex justify-between items-center">
+                      <span>{link.label}</span>
+                      {link.label === "Live Webinars" && (
+                        <span className="text-xs bg-red-500 text-white px-2 py-0.5 rounded-full">
+                          LIVE
+                        </span>
+                      )}
+                    </div>
+                  </a>
+                ))}
+              </div>
+
+              {/* Mobile Actions */}
+              <div className="pt-4 border-t border-emerald-700/30 space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-white">Cart</span>
+                  <span className="bg-yellow-400 text-xs font-bold px-3 py-1 rounded-full">
+                    {cartCount}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <button className="py-2.5 rounded-xl border border-emerald-700/30 text-white">
+                    Login
+                  </button>
+                  <button className="py-2.5 rounded-xl bg-yellow-400 text-gray-900 font-bold">
+                    Sign Up
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       </div>
     </nav>
   );
