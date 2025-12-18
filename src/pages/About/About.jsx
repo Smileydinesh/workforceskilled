@@ -87,7 +87,7 @@ export default function About() {
       className="inline-flex items-center gap-2 mb-6 px-5 py-2.5 rounded-full bg-emerald-500/10 text-emerald-400 text-sm font-semibold border border-emerald-500/20 backdrop-blur-sm"
     >
       <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-      ✨ About ComplianceTrained
+      ✨ About WorkForceSkilled
     </motion.span>
 
     <motion.h1
@@ -108,7 +108,7 @@ export default function About() {
       transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
       className="mt-6 max-w-3xl mx-auto text-xl text-slate-300 leading-relaxed"
     >
-      We're ComplianceTrained — your trusted partner in navigating the
+      We're WorkForceSkilled — your trusted partner in navigating the
       complex world of regulatory compliance with confidence and clarity.
     </motion.p>
 

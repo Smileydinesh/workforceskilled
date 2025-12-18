@@ -9,7 +9,7 @@ import {
   FiSearch,
   FiChevronRight
 } from "react-icons/fi";
-import { MdOutlineLiveTv } from "react-icons/md";
+// import { MdOutlineLiveTv } from "react-icons/md";
 import logo from "../../assets/images/icons/logo3.jpg";
 
 const links = [
@@ -23,7 +23,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const [cartCount] = useState(2);
-  const [hoveredLink, setHoveredLink] = useState(null);
+  // const [hoveredLink, setHoveredLink] = useState(null);
 
   return (
     <nav className="sticky top-0 z-50 bg-gradient-to-b from-emerald-900/95 via-emerald-900/90 to-emerald-950/95 backdrop-blur-xl border-b border-emerald-700/30">
@@ -136,29 +136,28 @@ export default function Navbar() {
               </div>
 
               {/* Login */}
-              <button className="text-white text-sm px-4 py-2 rounded-xl border border-emerald-700/30">
+              <Link
+                to="/login"
+                className="text-white text-sm px-4 py-2 rounded-xl border border-emerald-700/30 hover:bg-white/10"
+              >
                 Login
-              </button>
+              </Link>
+
 
               {/* ✅ NEW SIGN UP BUTTON (ONLY CHANGE) */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="
-                  relative px-5 py-2.5 rounded-xl text-sm font-semibold
-                  text-yellow-300
-                  border border-yellow-400/60
-                  backdrop-blur-md
-                  bg-white/5
-                  hover:bg-yellow-400/10
-                  hover:text-yellow-200
-                  shadow-[0_0_0_0_rgba(250,204,21,0.4)]
-                  hover:shadow-[0_0_25px_-5px_rgba(250,204,21,0.6)]
-                  transition-all
-                "
-              >
-                Sign Up
-              </motion.button>
+              <Link to="/signup">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="relative px-5 py-2.5 rounded-xl text-sm font-semibold
+                        text-yellow-300 border border-yellow-400/60
+                        backdrop-blur-md bg-white/5 hover:bg-yellow-400/10
+                        hover:text-yellow-200 transition-all"
+                    >
+                      Sign Up
+                    </motion.button>
+                  </Link>
+
 
             </div>
           </div>
@@ -227,9 +226,19 @@ export default function Navbar() {
                   <button className="py-2.5 rounded-xl border border-emerald-700/30 text-white">
                     Login
                   </button>
-                  <button className="py-2.5 rounded-xl bg-yellow-400 text-gray-900 font-bold">
-                    Sign Up
-                  </button>
+                  <Link to="/signup">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="relative px-5 py-2.5 rounded-xl text-sm font-semibold
+                        text-yellow-300 border border-yellow-400/60
+                        backdrop-blur-md bg-white/5 hover:bg-yellow-400/10
+                        hover:text-yellow-200 transition-all"
+                    >
+                      Sign Up
+                    </motion.button>
+                  </Link>
+
                 </div>
               </div>
 

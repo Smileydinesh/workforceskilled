@@ -277,10 +277,10 @@ export default function Footer() {
         {/* Bottom Bar - Copyright Only */}
         <div className="flex flex-col items-center justify-center text-center space-y-3">
           <p className="text-emerald-400/90 text-sm">
-            © {new Date().getFullYear()} ComplianceTrained. All rights reserved.
+            © {new Date().getFullYear()} WorkForceSkilled. All rights reserved.
           </p>
           <p className="text-emerald-500/80 text-xs max-w-md">
-            Empowering businesses through expert compliance training.
+            Empowering businesses through expert WorkForceSkilled.
           </p>
         </div>
 

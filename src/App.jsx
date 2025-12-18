@@ -1,11 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/layout/Navbar";
-import Home from "./pages/Home/Home";
-import Contact from "./pages/Contact/Contact";
 import Footer from "./components/layout/Footer";
-import About from "./pages/About/About";
 
+import Home from "./pages/Home/Home";
+import About from "./pages/About/About";
+import LiveWebinars from "./pages/Webinars/LiveWebinars";
+import Login from "./pages/Auth/Login";
+import Signup from "./pages/Auth/Signup";
+import Contact from "./pages/Contact/Contact";
 
 export default function App() {
   return (
@@ -15,12 +18,22 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/live-webinars" element={<LiveWebinars />} />
+         <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
-        <Route path="/contact" element={<Contact />} />
-
+        {/* TEMP fallback to avoid blank screen */}
+        <Route
+          path="*"
+          element={
+            <div className="min-h-screen flex items-center justify-center text-white bg-slate-950">
+              Page Not Found
+            </div>
+          }
+        />
       </Routes>
 
-      {/* Footer always at bottom */}
       <Footer />
     </Router>
   );
