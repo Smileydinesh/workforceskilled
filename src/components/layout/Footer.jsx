@@ -216,7 +216,7 @@ export default function Footer() {
                 </div>
                 <div className="flex-1">
                   <h4 className="text-white font-semibold mb-2 text-lg">Email Support</h4>
-                  <p className="text-emerald-200 font-medium text-base">support@compliancetrained.com</p>
+                  <p className="text-emerald-200 font-medium text-base">support@workforceskilled.com</p>
                   <p className="text-emerald-400 text-sm mt-2">Fast response within 24 hours</p>
                 </div>
               </div>
