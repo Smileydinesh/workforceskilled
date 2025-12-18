@@ -119,7 +119,7 @@ export default function Login() {
             <div className="p-2 rounded-lg bg-emerald-500/20">
               <FiMonitor className="text-2xl text-emerald-400" />
             </div>
-            <h2 className="text-2xl font-bold text-white">WrokForceSkilled</h2>
+            <h2 className="text-2xl font-bold text-white">WorkForceSkilled</h2>
           </div>
 
           {/* Header */}
