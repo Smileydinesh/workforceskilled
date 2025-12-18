@@ -196,7 +196,7 @@ export default function Login() {
               </Link>
             </p>
             <p className="text-emerald-300/70 text-xs mt-4">
-              © 2025 ComplianceTrained. All rights reserved.
+              © 2025 WorkForceSkilled. All rights reserved.
             </p>
           </div>
         </motion.div>

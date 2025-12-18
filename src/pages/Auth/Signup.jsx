@@ -533,7 +533,7 @@ export default function Signup() {
           <div className="mt-6 pt-5 border-t border-white/10">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-emerald-300/70 text-xs">
-                © 2025 ComplianceTrained. All rights reserved.
+                © 2025 WorkForceSkilled. All rights reserved.
               </p>
               <div className="flex gap-5 mt-3 md:mt-0">
                 <Link to="/terms" className="text-emerald-400 hover:text-emerald-300 hover:underline transition text-xs">
