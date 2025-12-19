@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import BubbleBackground from "../../components/effects/BubbleBackground";
+import { useNavigate } from "react-router-dom";
 
 export default function HeroSection() {
+  const navigate = useNavigate();
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
 
@@ -68,26 +70,36 @@ export default function HeroSection() {
             className="mt-8 flex gap-4"
           >
             <motion.button
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 rounded-full bg-[#FACC15]
-                         text-black font-semibold shadow-lg"
-            >
-              Sign Up →
-            </motion.button>
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => navigate("/signup")}
+                className="px-8 py-4 rounded-full bg-[#FACC15]
+                          text-black font-semibold shadow-lg"
+              >
+                Sign Up →
+              </motion.button>
 
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              className="px-6 py-4 rounded-full border border-white
-                         text-white hover:bg-white hover:text-[#0F3D2E] transition"
-            >
-              Browse Webinars
+                whileHover={{ scale: 1.05 }}
+                onClick={() => navigate("/live-webinars")}
+                className="px-6 py-4 rounded-full border border-white
+                          text-white hover:bg-white hover:text-[#0F3D2E] transition"
+              >
+                Browse Webinars
             </motion.button>
+
           </motion.div>
 
           <p className="mt-4 text-sm text-gray-300">
-            Already joined? <span className="underline cursor-pointer">Log in</span>
-          </p>
+              Already joined?{" "}
+              <span
+                onClick={() => navigate("/login")}
+                className="underline cursor-pointer hover:text-[#FACC15]"
+              >
+                Log in
+              </span>
+            </p>
+
         </motion.div>
 
         {/* RIGHT VISUAL AREA */}
@@ -128,19 +140,22 @@ export default function HeroSection() {
           </motion.div>
 
           {/* STATS BUBBLE */}
-          <motion.div
-            animate={{ y: [0, -15, 0] }}
-            transition={{ repeat: Infinity, duration: 7 }}
-            className="absolute bottom-0 left-32 w-56 h-56 rounded-full
-                       bg-[#1E6F5C]/90 text-white flex items-center justify-center"
-          >
-            <div className="text-center">
-              <p className="text-sm">Live Webinar</p>
-              <h4 className="text-3xl font-extrabold text-[#FACC15]">
-                Join NoW
-              </h4>
-            </div>
-          </motion.div>
+         <motion.div
+  onClick={() => navigate("/live-webinars")}
+  animate={{ y: [0, -15, 0] }}
+  transition={{ repeat: Infinity, duration: 7 }}
+  className="absolute bottom-0 left-32 w-56 h-56 rounded-full
+             bg-[#1E6F5C]/90 text-white flex items-center justify-center
+             cursor-pointer hover:scale-105 transition"
+>
+  <div className="text-center">
+    <p className="text-sm">Live Webinar</p>
+    <h4 className="text-3xl font-extrabold text-[#FACC15]">
+      Join Now
+    </h4>
+  </div>
+</motion.div>
+
 
         </div>
       </div>
