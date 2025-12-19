@@ -9,6 +9,7 @@ import LiveWebinars from "./pages/Webinars/LiveWebinars";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import Contact from "./pages/Contact/Contact";
+import RecordedWebinars from "./pages/Webinars/RecordedWebinars";
 
 export default function App() {
   return (
@@ -19,7 +20,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/live-webinars" element={<LiveWebinars />} />
-         <Route path="/contact" element={<Contact />} />
+        <Route path="/recorded-webinars" element={<RecordedWebinars />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
