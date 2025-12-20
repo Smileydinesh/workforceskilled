@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import SidebarFilter from "../../components/filters/SidebarFilter";
 
@@ -63,10 +63,21 @@ const recordedWebinars = [
 
 /* ---------------- PAGE ---------------- */
 export default function RecordedWebinars() {
+
+  const pageRef = useRef(null);
   const [search, setSearch] = useState("");
   const [selectedMonths, setSelectedMonths] = useState([]);
   const [selectedSpeakers, setSelectedSpeakers] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+
+  useEffect(() => {
+  const el = document.getElementById("page-top");
+  if (el) {
+    el.scrollIntoView({ block: "start" });
+  }
+}, []);
+
+
 
 
   const filtered = recordedWebinars.filter((w) => {
@@ -84,7 +95,13 @@ export default function RecordedWebinars() {
   });
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <div
+  ref={pageRef}
+  className="bg-slate-950 text-white">
+      <div id="page-top"></div>
+
+
+
 
       {/* HEADER */}
       <section className="py-24 text-center bg-gradient-to-br from-slate-900 to-indigo-950">
@@ -98,6 +115,8 @@ export default function RecordedWebinars() {
 
       {/* SEARCH BAR */}
       <section className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur border-b border-slate-800">
+
+
         <div className="max-w-4xl mx-auto px-6 py-6">
           <div className="relative">
             <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -242,6 +261,6 @@ export default function RecordedWebinars() {
 
         </div>
       </section>
-    </main>
+    </div>
   );
 }

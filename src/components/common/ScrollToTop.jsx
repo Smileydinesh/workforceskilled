@@ -5,19 +5,14 @@ export default function ScrollToTop() {
   const { pathname } = useLocation();
 
   useLayoutEffect(() => {
-    // Disable browser scroll restoration
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
+    const scrollElement =
+      document.scrollingElement || document.documentElement;
 
-    // Force reset ALL scroll containers
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    window.scrollTo(0, 0);
+    scrollElement.scrollTop = 0;
 
-    // Extra safety for sticky + animation pages
+    // safety for layout shifts (sticky + motion)
     requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
+      scrollElement.scrollTop = 0;
     });
   }, [pathname]);
 

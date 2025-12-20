@@ -32,3 +32,7 @@ body {
 html {
   scroll-behavior: smooth;
 }
+html, body {
+  height: auto;
+  overflow-x: hidden;
+}
