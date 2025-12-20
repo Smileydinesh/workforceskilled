@@ -327,7 +327,7 @@ export default function RefundCancellationPolicy() {
             </div>
             
             <p className="mt-8 text-center text-sm text-slate-500">
-              Policy last updated: December 20, 2025 • PeopleSkillTraining Inc.
+              Policy last updated: December 20, 2025 • WorkForceSkilled Inc.
             </p>
           </motion.div>
         </main>
@@ -440,7 +440,7 @@ function renderSectionContent(sectionId) {
           </div>
           
           <div className="p-4 rounded-xl bg-blue-50 border border-blue-100">
-            <h4 className="font-semibold text-blue-800 mb-2">Event Cancellation by PeopleSkillTraining</h4>
+            <h4 className="font-semibold text-blue-800 mb-2">Event Cancellation by WorkForceSkilled</h4>
             <p className="text-sm text-slate-700">
               If we cancel or reschedule an event, you'll receive a full refund or credit for a future event. 
               We'll notify you via email and provide options within 3 business days.
@@ -698,7 +698,7 @@ function renderSectionContent(sectionId) {
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
             <h4 className="font-semibold text-slate-800 mb-2">Mailing Address</h4>
             <p className="text-slate-700">
-              PeopleSkillTraining Inc.<br />
+              WorkForceSkilled Inc.<br />
               123 Learning Plaza, Suite 500<br />
               San Francisco, CA 94107<br />
               United States

@@ -1,266 +1,285 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import SidebarFilter from "../../components/filters/SidebarFilter";
-
 import {
   FiSearch,
+  FiChevronDown,
+  FiChevronUp,
   FiClock,
-  FiTag,
-  FiStar,
-  FiPlayCircle,
-  FiTrendingUp,
   FiUser,
-  FiBookOpen,
-  FiGlobe,
-  FiArrowRight,
+  FiGrid,
+  FiList
 } from "react-icons/fi";
 
 /* ---------------- MOCK DATA ---------------- */
 const recordedWebinars = [
   {
-    id: 101,
-    title: "Advanced HR Analytics & Dashboards",
-    category: "HR & Recruitment",
-    level: "Advanced",
-    language: "English",
-    duration: "6h 40m",
-    lessons: 24,
-    access: "Lifetime",
-    price: "₹2,999",
-    originalPrice: "₹4,999",
-    rating: 4.8,
-    bestseller: true,
-    progress: 45,
-    instructor: {
-      name: "Rahul Mehta",
-      role: "People Analytics Lead",
-      avatar: "https://i.pravatar.cc/150?img=12",
-    },
+    id: 1,
+    title: "Introduction to Copilot for Business Professionals",
+    speaker: "Tom Fragale",
+    duration: "60 minutes",
+    month: "October",
+    category: "AI & Productivity",
+    price: "$189.00",
     image: "https://images.unsplash.com/photo-1552664730-d307ca884978",
+    speakerImage: "https://i.pravatar.cc/100?img=32",
   },
   {
-    id: 102,
-    title: "Workplace POSH & Legal Compliance",
-    category: "Compliance & Law",
-    level: "Intermediate",
-    language: "English",
-    duration: "4h 10m",
-    lessons: 18,
-    access: "Lifetime",
-    price: "₹1,999",
-    originalPrice: "₹3,499",
-    rating: 4.6,
-    bestseller: false,
-    progress: null,
-    instructor: {
-      name: "Anita Sharma",
-      role: "HR Director @ Infosys",
-      avatar: "https://i.pravatar.cc/150?img=32",
-    },
+    id: 2,
+    title: "ChatGPT and AI for Project Management",
+    speaker: "Chris DeVany",
+    duration: "60 minutes",
+    month: "October",
+    category: "Project Management",
+    price: "$189.00",
     image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
+    speakerImage: "https://i.pravatar.cc/100?img=12",
   },
 ];
 
 /* ---------------- PAGE ---------------- */
 export default function RecordedWebinars() {
+  const [view, setView] = useState("grid");
 
-  const pageRef = useRef(null);
-  const [search, setSearch] = useState("");
-  const [selectedMonths, setSelectedMonths] = useState([]);
-  const [selectedSpeakers, setSelectedSpeakers] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [openMonth, setOpenMonth] = useState(true);
+  const [openSpeaker, setOpenSpeaker] = useState(true);
+  const [openCategory, setOpenCategory] = useState(true);
 
-  useEffect(() => {
-  const el = document.getElementById("page-top");
-  if (el) {
-    el.scrollIntoView({ block: "start" });
-  }
-}, []);
+  const expandAll = () => {
+    setOpenMonth(true);
+    setOpenSpeaker(true);
+    setOpenCategory(true);
+  };
 
-
-
-
-  const filtered = recordedWebinars.filter((w) => {
-    const matchesSearch = w.title
-      .toLowerCase()
-      .includes(search.toLowerCase());
-    const matchesSpeaker =
-      selectedSpeakers.length === 0 ||
-      selectedSpeakers.includes(w.instructor.name);
-    const matchesCategory =
-      selectedCategories.length === 0 ||
-      selectedCategories.includes(w.category);
-
-    return matchesSearch && matchesSpeaker && matchesCategory;
-  });
+  const collapseAll = () => {
+    setOpenMonth(false);
+    setOpenSpeaker(false);
+    setOpenCategory(false);
+  };
 
   return (
-    <div
-  ref={pageRef}
-  className="bg-slate-950 text-white">
-      <div id="page-top"></div>
-
-
-
+    <div className="min-h-screen bg-emerald-950 text-emerald-50">
 
       {/* HEADER */}
-      <section className="py-24 text-center bg-gradient-to-br from-slate-900 to-indigo-950">
-        <h1 className="text-4xl md:text-6xl font-bold">
-          Recorded <span className="text-indigo-400">Webinars</span>
+      <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-yellow-600 py-14 px-10">
+        <h1 className="text-3xl font-bold text-white flex items-center gap-2">
+          ▶ Recorded Webinars
         </h1>
-        <p className="text-slate-300 mt-4">
-          Learn anytime with lifetime access
-        </p>
-      </section>
+      </div>
 
-      {/* SEARCH BAR */}
-      <section className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur border-b border-slate-800">
+      {/* MAIN */}
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-10">
 
+        {/* FILTER SIDEBAR */}
+        <aside className="bg-emerald-900/60 backdrop-blur border border-emerald-800 rounded-xl p-5 h-fit sticky top-24">
+          <h3 className="font-semibold mb-4 text-yellow-400">Filter</h3>
 
-        <div className="max-w-4xl mx-auto px-6 py-6">
-          <div className="relative">
-            <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search recorded webinars..."
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
+          {/* Search */}
+          <div className="mb-5">
+            <label className="text-sm font-medium">Search</label>
+            <div className="relative mt-2">
+              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-400" />
+              <input
+                placeholder="Search webinars..."
+                className="w-full pl-9 pr-3 py-2 rounded-lg bg-emerald-950 border border-emerald-700 focus:ring-2 focus:ring-yellow-400 text-sm"
+              />
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* CONTENT */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-10">
-
-          {/* SIDEBAR */}
-          <SidebarFilter
-            search={search}
-            setSearch={setSearch}
-            selectedMonths={selectedMonths}
-            setSelectedMonths={setSelectedMonths}
-            selectedSpeakers={selectedSpeakers}
-            setSelectedSpeakers={setSelectedSpeakers}
-            selectedCategories={selectedCategories}
-            setSelectedCategories={setSelectedCategories}
+          <FilterBlock
+            title="Month"
+            open={openMonth}
+            toggle={() => setOpenMonth(!openMonth)}
+            items={["October", "November", "December"]}
           />
 
-          {/* CARDS */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {filtered.map((w) => (
-              <motion.div
-                key={w.id}
-                whileHover={{ y: -8 }}
-                className="rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-lg"
+          <FilterBlock
+            title="Speaker"
+            open={openSpeaker}
+            toggle={() => setOpenSpeaker(!openSpeaker)}
+            items={["Tom Fragale", "Chris DeVany"]}
+          />
+
+          <FilterBlock
+            title="Category"
+            open={openCategory}
+            toggle={() => setOpenCategory(!openCategory)}
+            items={["AI & Productivity", "Project Management"]}
+          />
+
+          <div className="flex justify-between text-sm text-yellow-400 mt-6">
+            <button onClick={expandAll}>Expand All</button>
+            <button onClick={collapseAll}>Collapse All</button>
+          </div>
+        </aside>
+
+        {/* RESULTS */}
+        <section>
+
+          {/* TOP BAR */}
+          <div className="flex items-center justify-between mb-6">
+            <p className="font-semibold">47 recorded webinars</p>
+
+            <div className="flex items-center gap-2 bg-emerald-900 border border-emerald-800 rounded-lg p-1">
+              <button
+                onClick={() => setView("grid")}
+                className={`p-2 rounded ${
+                  view === "grid"
+                    ? "bg-yellow-400 text-emerald-950"
+                    : "text-emerald-300 hover:bg-emerald-800"
+                }`}
               >
-                {/* IMAGE */}
-                <div className="relative h-52">
-                  <img
-                    src={w.image}
-                    alt={w.title}
-                    className="w-full h-full object-cover"
-                  />
-
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition">
-                    <FiPlayCircle size={48} />
-                  </div>
-
-                  {w.bestseller && (
-                    <span className="absolute top-4 left-4 bg-amber-400 text-black text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
-                      <FiTrendingUp /> Bestseller
-                    </span>
-                  )}
-                </div>
-
-                {/* CONTENT */}
-                <div className="p-6 space-y-4">
-
-                  <h3 className="text-lg font-bold">{w.title}</h3>
-
-                  {/* TAGS */}
-                  <div className="flex flex-wrap gap-2 text-xs">
-                    <span className="px-2 py-1 bg-slate-800 rounded">
-                      {w.level}
-                    </span>
-                    <span className="px-2 py-1 bg-slate-800 rounded">
-                      {w.language}
-                    </span>
-                    <span className="px-2 py-1 bg-indigo-500/20 text-indigo-400 rounded">
-                      {w.access}
-                    </span>
-                  </div>
-
-                  {/* META */}
-                  <div className="grid grid-cols-2 gap-3 text-sm text-slate-300">
-                    <div className="flex items-center gap-2">
-                      <FiClock /> {w.duration}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FiBookOpen /> {w.lessons} Lessons
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FiTag /> {w.category}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FiStar className="text-amber-400" /> {w.rating}
-                    </div>
-                  </div>
-
-                  {/* PROGRESS */}
-                  {w.progress !== null && (
-                    <div>
-                      <div className="flex justify-between text-xs mb-1">
-                        <span>Progress</span>
-                        <span>{w.progress}%</span>
-                      </div>
-                      <div className="h-2 bg-slate-800 rounded-full">
-                        <div
-                          style={{ width: `${w.progress}%` }}
-                          className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* INSTRUCTOR + PRICE */}
-                  <div className="flex items-center gap-3 pt-4 border-t border-slate-800">
-                    <img
-                      src={w.instructor.avatar}
-                      className="w-10 h-10 rounded-full"
-                    />
-                    <div className="flex-1">
-                      <p className="font-medium">{w.instructor.name}</p>
-                      <p className="text-xs text-slate-400">
-                        {w.instructor.role}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="line-through text-xs text-slate-400">
-                        {w.originalPrice}
-                      </p>
-                      <p className="font-semibold text-indigo-400">
-                        {w.price}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* CTA */}
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-black font-semibold flex items-center justify-center gap-2"
-                  >
-                    {w.progress ? "Continue Watching" : "Buy & Watch"}
-                    <FiArrowRight />
-                  </motion.button>
-                </div>
-              </motion.div>
-            ))}
+                <FiGrid />
+              </button>
+              <button
+                onClick={() => setView("list")}
+                className={`p-2 rounded ${
+                  view === "list"
+                    ? "bg-yellow-400 text-emerald-950"
+                    : "text-emerald-300 hover:bg-emerald-800"
+                }`}
+              >
+                <FiList />
+              </button>
+            </div>
           </div>
 
+          {/* GRID VIEW */}
+          {view === "grid" && (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {recordedWebinars.map((w) => (
+                <motion.div
+                  key={w.id}
+                  whileHover={{ y: -6 }}
+                  className="bg-emerald-900/60 border border-emerald-800 rounded-2xl overflow-hidden"
+                >
+                  <div className="relative h-48">
+                    <img
+                      src={w.image}
+                      className="w-full h-full object-cover"
+                      alt={w.title}
+                    />
+                    <span className="absolute top-3 right-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
+                      ON-DEMAND
+                    </span>
+                  </div>
+
+                  <div className="p-5 space-y-3">
+                    <h3 className="font-bold text-sm leading-snug">
+                      {w.title}
+                    </h3>
+
+                    <div className="flex items-center gap-2 text-sm">
+                      <img
+                        src={w.speakerImage}
+                        className="w-8 h-8 rounded-full"
+                      />
+                      {w.speaker}
+                    </div>
+
+                    <div className="flex items-center gap-2 text-sm text-emerald-300">
+                      <FiClock /> {w.duration}
+                    </div>
+
+                    <p className="text-green-400 text-sm">Available 24/7</p>
+
+                    <div className="flex items-center justify-between pt-3">
+                      <span className="font-bold text-yellow-400">
+                        {w.price}
+                      </span>
+                      <button className="px-4 py-2 text-sm bg-yellow-400 text-emerald-950 rounded-lg">
+                        Details
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+
+          {/* LIST VIEW */}
+          {view === "list" && (
+            <div className="space-y-6">
+              {recordedWebinars.map((w) => (
+                <motion.div
+                  key={w.id}
+                  whileHover={{ y: -4 }}
+                  className="bg-emerald-900/60 border border-emerald-800 rounded-2xl overflow-hidden flex flex-col md:flex-row"
+                >
+                  <div className="relative md:w-80 h-56 md:h-auto">
+                    <img
+                      src={w.image}
+                      className="w-full h-full object-cover"
+                      alt={w.title}
+                    />
+                    <span className="absolute top-4 left-4 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
+                      ON-DEMAND
+                    </span>
+                  </div>
+
+                  <div className="flex-1 p-6 flex justify-between gap-6">
+                    <div>
+                      <h3 className="text-lg font-bold mb-2">
+                        {w.title}
+                      </h3>
+
+                      <div className="text-sm space-y-2">
+                        <div className="flex items-center gap-2">
+                          <FiUser /> {w.speaker}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <FiClock /> {w.duration}
+                        </div>
+                        <p className="text-green-400">Available 24/7</p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col items-end justify-between">
+                      <img
+                        src={w.speakerImage}
+                        className="w-12 h-12 rounded-full"
+                      />
+                      <div className="text-right">
+                        <p className="text-xl font-bold text-yellow-400">
+                          {w.price}
+                        </p>
+                        <button className="mt-3 px-5 py-2 rounded-lg bg-yellow-400 text-emerald-950 text-sm">
+                          Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- FILTER BLOCK ---------------- */
+function FilterBlock({ title, open, toggle, items }) {
+  return (
+    <div className="mb-4">
+      <button
+        onClick={toggle}
+        className="flex items-center justify-between w-full text-sm font-medium"
+      >
+        {title}
+        {open ? <FiChevronUp /> : <FiChevronDown />}
+      </button>
+
+      {open && (
+        <div className="mt-3 space-y-2 text-sm text-emerald-300">
+          {items.map((item) => (
+            <label key={item} className="flex items-center gap-2">
+              <input type="checkbox" className="accent-yellow-400" />
+              {item}
+            </label>
+          ))}
         </div>
-      </section>
+      )}
     </div>
   );
 }

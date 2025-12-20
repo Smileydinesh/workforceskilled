@@ -1,255 +1,295 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   FiSearch,
-  FiCalendar,
+  FiChevronDown,
+  FiChevronUp,
   FiClock,
   FiUser,
-  FiTag,
-  FiHeart,
-  FiAward,
-  FiPlayCircle,
+  FiCalendar,
+  FiGrid,
+  FiList
 } from "react-icons/fi";
 
 /* ---------------- MOCK DATA ---------------- */
-
 const webinars = [
   {
     id: 1,
-    title: "HR Compliance & Workplace Ethics 2025",
-    description:
-      "Learn modern HR compliance strategies with real-world case studies.",
-    category: "HR & Recruitment",
-    level: "Intermediate",
-    audience: ["HR Managers", "Team Leads"],
-    date: "2025-03-28T18:30:00",
-    duration: "2 Hours",
-    month: "March",
-    price: "₹1,499",
-    originalPrice: "₹2,499",
-    language: "English",
-    timezone: "IST",
-    seatsTotal: 100,
-    seatsLeft: 18,
-    certificate: true,
-    recording: true,
-    agenda: [
-      "Compliance Overview",
-      "Case Studies",
-      "Live Q&A",
-    ],
-    learnings: [
-      "Avoid legal risks",
-      "Build ethical culture",
-      "Compliance automation basics",
-    ],
-    instructor: {
-      name: "Anita Sharma",
-      role: "HR Director @ Infosys",
-      experience: "12+ Years",
-      avatar: "https://i.pravatar.cc/150?img=32",
-    },
-    image:
-      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
+    title:
+      "HR Metrics and Analytics 2026 – Update on Strategic Planning",
+    speaker: "Ronald Adler",
+    duration: "90 minutes",
+    time: "9:00 AM PST | 12:00 PM EST",
+    date: "17 Dec",
+    month: "December",
+    category: "HR & Analytics",
+    price: "$147.00",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978",
+    speakerImage: "https://i.pravatar.cc/100?img=11",
+  },
+  {
+    id: 2,
+    title: "How to Use ChatGPT & Microsoft Copilot for Project Management",
+    speaker: "Tom Fragale",
+    duration: "60 minutes",
+    time: "12:00 PM PST | 3:00 PM EST",
+    date: "17 Dec",
+    month: "December",
+    category: "AI & Productivity",
+    price: "$147.00",
+    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
+    speakerImage: "https://i.pravatar.cc/100?img=32",
   },
 ];
 
-/* ---------------- HELPERS ---------------- */
-
-function getStatus(date) {
-  const now = new Date();
-  const start = new Date(date);
-
-  if (now > start) return "LIVE";
-  if ((start - now) / (1000 * 60 * 60) < 24) return "STARTING SOON";
-  return "UPCOMING";
-}
-
-function getCountdown(date) {
-  const diff = new Date(date) - new Date();
-  if (diff <= 0) return null;
-
-  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const m = Math.floor((diff / (1000 * 60)) % 60);
-
-  return `${d}d ${h}h ${m}m`;
-}
-
-/* ---------------- COMPONENT ---------------- */
-
+/* ---------------- PAGE ---------------- */
 export default function LiveWebinars() {
   const [search, setSearch] = useState("");
+  const [view, setView] = useState("grid");
+
+  const [openMonth, setOpenMonth] = useState(true);
+  const [openSpeaker, setOpenSpeaker] = useState(true);
+  const [openCategory, setOpenCategory] = useState(true);
+
+  const expandAll = () => {
+    setOpenMonth(true);
+    setOpenSpeaker(true);
+    setOpenCategory(true);
+  };
+
+  const collapseAll = () => {
+    setOpenMonth(false);
+    setOpenSpeaker(false);
+    setOpenCategory(false);
+  };
 
   return (
-    <main className="bg-slate-950 text-white min-h-screen">
+    <div className="min-h-screen bg-emerald-950 text-emerald-50">
 
       {/* HEADER */}
-      <section className="py-24 bg-gradient-to-br from-slate-900 to-emerald-950 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">
-          Live <span className="text-emerald-400">Webinars</span>
-        </h1>
-        <p className="text-slate-300 max-w-2xl mx-auto">
-          Learn directly from industry experts in real-time interactive sessions.
-        </p>
-      </section>
+      <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-yellow-600 py-14 px-10">
+        <h1 className="text-3xl font-bold text-white">Live Webinars</h1>
+      </div>
 
-      {/* FILTER BAR */}
-      <section className="sticky top-20 z-30 bg-slate-950/90 backdrop-blur border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="relative max-w-md mx-auto">
-            <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search webinars"
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-900 border border-slate-700"
-            />
+      {/* MAIN */}
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-10">
+
+        {/* FILTER SIDEBAR */}
+        <aside className="bg-emerald-900/60 backdrop-blur border border-emerald-800 rounded-xl p-5 h-fit sticky top-24">
+          <h3 className="font-semibold mb-4 text-yellow-400">Filter</h3>
+
+          {/* Search */}
+          <div className="mb-5">
+            <label className="text-sm font-medium">Search</label>
+            <div className="relative mt-2">
+              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-400" />
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search webinars..."
+                className="w-full pl-9 pr-3 py-2 rounded-lg bg-emerald-950 border border-emerald-700 focus:ring-2 focus:ring-yellow-400 text-sm"
+              />
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* WEBINAR CARDS */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {/* MONTH */}
+          <FilterBlock
+            title="Month"
+            open={openMonth}
+            toggle={() => setOpenMonth(!openMonth)}
+            items={["December", "January", "February"]}
+          />
 
-          {webinars
-            .filter((w) =>
-              w.title.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((w) => {
-              const status = getStatus(w.date);
-              const countdown = getCountdown(w.date);
-              const seatPercent =
-                (w.seatsLeft / w.seatsTotal) * 100;
+          {/* SPEAKER */}
+          <FilterBlock
+            title="Speaker"
+            open={openSpeaker}
+            toggle={() => setOpenSpeaker(!openSpeaker)}
+            items={["Ronald Adler", "Tom Fragale"]}
+          />
 
-              return (
+          {/* CATEGORY */}
+          <FilterBlock
+            title="Category"
+            open={openCategory}
+            toggle={() => setOpenCategory(!openCategory)}
+            items={["HR & Analytics", "AI & Productivity"]}
+          />
+
+          <div className="flex justify-between text-sm text-yellow-400 mt-6">
+            <button onClick={expandAll}>Expand All</button>
+            <button onClick={collapseAll}>Collapse All</button>
+          </div>
+        </aside>
+
+        {/* RESULTS */}
+        <section>
+          {/* Top Bar */}
+          <div className="flex items-center justify-between mb-6">
+            <p className="font-semibold">96 results</p>
+
+            <div className="flex items-center gap-2 bg-emerald-900 border border-emerald-800 rounded-lg p-1">
+              <button
+                onClick={() => setView("grid")}
+                className={`p-2 rounded ${
+                  view === "grid"
+                    ? "bg-yellow-400 text-emerald-950"
+                    : "text-emerald-300 hover:bg-emerald-800"
+                }`}
+              >
+                <FiGrid />
+              </button>
+
+              <button
+                onClick={() => setView("list")}
+                className={`p-2 rounded ${
+                  view === "list"
+                    ? "bg-yellow-400 text-emerald-950"
+                    : "text-emerald-300 hover:bg-emerald-800"
+                }`}
+              >
+                <FiList />
+              </button>
+            </div>
+          </div>
+
+          {/* GRID VIEW */}
+          {view === "grid" && (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {webinars.map((w) => (
                 <motion.div
                   key={w.id}
-                  whileHover={{ y: -8 }}
-                  className="relative rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-lg"
+                  whileHover={{ y: -6 }}
+                  className="bg-emerald-900/60 border border-emerald-800 rounded-2xl overflow-hidden"
                 >
-                  {/* IMAGE */}
                   <div className="relative h-48">
                     <img
                       src={w.image}
                       className="w-full h-full object-cover"
+                      alt={w.title}
                     />
-                    <span className="absolute top-4 left-4 bg-emerald-500 text-black text-xs font-bold px-3 py-1 rounded-full">
-                      {status}
-                    </span>
-                    <button className="absolute top-4 right-4 text-white/80 hover:text-emerald-400">
-                      <FiHeart />
-                    </button>
+                    <div className="absolute top-3 left-3 bg-yellow-400 text-emerald-950 rounded-full px-3 py-1 text-sm font-semibold">
+                      {w.date}
+                    </div>
                   </div>
 
-                  {/* CONTENT */}
-                  <div className="p-6 space-y-4">
-
-                    {/* TITLE */}
-                    <h3 className="text-lg font-bold">
+                  <div className="p-5 space-y-3">
+                    <h3 className="font-bold text-sm leading-snug">
                       {w.title}
                     </h3>
 
-                    {/* TAGS */}
-                    <div className="flex flex-wrap gap-2 text-xs">
-                      <span className="px-2 py-1 bg-slate-800 rounded">
-                        {w.level}
-                      </span>
-                      {w.audience.map((a) => (
-                        <span
-                          key={a}
-                          className="px-2 py-1 bg-slate-800 rounded"
-                        >
-                          {a}
-                        </span>
-                      ))}
-                      {w.certificate && (
-                        <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded flex items-center gap-1">
-                          <FiAward /> Certificate
-                        </span>
-                      )}
-                    </div>
-
-                    {/* META */}
-                    <div className="grid grid-cols-2 gap-3 text-sm text-slate-300">
-                      <div className="flex items-center gap-2">
-                        <FiCalendar />
-                        {new Date(w.date).toLocaleDateString()}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <FiClock />
-                        {w.duration}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <FiTag />
-                        {w.category}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <FiUser />
-                        {w.instructor.name}
-                      </div>
-                    </div>
-
-                    {/* COUNTDOWN */}
-                    {countdown && (
-                      <div className="text-sm text-emerald-400">
-                        Starts in {countdown}
-                      </div>
-                    )}
-
-                    {/* SEATS */}
-                    <div>
-                      <div className="flex justify-between text-xs mb-1">
-                        <span>{w.seatsLeft} seats left</span>
-                        <span>{w.seatsTotal}</span>
-                      </div>
-                      <div className="h-2 bg-slate-800 rounded-full">
-                        <div
-                          style={{ width: `${seatPercent}%` }}
-                          className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full"
-                        />
-                      </div>
-                    </div>
-
-                    {/* INSTRUCTOR */}
-                    <div className="flex items-center gap-3 pt-4 border-t border-slate-800">
+                    <div className="flex items-center gap-2 text-sm">
                       <img
-                        src={w.instructor.avatar}
-                        className="w-10 h-10 rounded-full"
+                        src={w.speakerImage}
+                        className="w-8 h-8 rounded-full"
                       />
-                      <div className="flex-1">
-                        <p className="font-medium">
-                          {w.instructor.name}
-                        </p>
-                        <p className="text-xs text-slate-400">
-                          {w.instructor.role}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="line-through text-xs text-slate-400">
-                          {w.originalPrice}
-                        </p>
-                        <p className="font-semibold text-emerald-400">
-                          {w.price}
-                        </p>
-                      </div>
+                      {w.speaker}
                     </div>
 
-                    {/* CTA */}
-                    <motion.button
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-black font-semibold flex items-center justify-center gap-2"
-                    >
-                      <FiPlayCircle /> Join Now
-                    </motion.button>
+                    <div className="text-sm flex items-center gap-2 text-emerald-300">
+                      <FiClock /> {w.duration}
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4">
+                      <span className="font-bold text-yellow-400">
+                        {w.price}
+                      </span>
+                      <button className="px-4 py-2 text-sm bg-yellow-400 text-emerald-950 rounded-lg">
+                        Details
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
-              );
-            })}
+              ))}
+            </div>
+          )}
+
+          {/* LIST VIEW */}
+          {view === "list" && (
+            <div className="space-y-6">
+              {webinars.map((w) => (
+                <motion.div
+                  key={w.id}
+                  whileHover={{ y: -4 }}
+                  className="bg-emerald-900/60 border border-emerald-800 rounded-2xl overflow-hidden flex flex-col md:flex-row"
+                >
+                  <div className="relative md:w-80 h-56 md:h-auto">
+                    <img
+                      src={w.image}
+                      className="w-full h-full object-cover"
+                      alt={w.title}
+                    />
+                    <div className="absolute top-4 left-4 bg-yellow-400 text-emerald-950 rounded-full px-3 py-2 text-sm font-semibold">
+                      {w.date}
+                    </div>
+                  </div>
+
+                  <div className="flex-1 p-6 flex justify-between gap-6">
+                    <div>
+                      <h3 className="text-lg font-bold mb-2">
+                        {w.title}
+                      </h3>
+
+                      <div className="text-sm space-y-2">
+                        <div className="flex items-center gap-2">
+                          <FiUser /> {w.speaker}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <FiClock /> {w.duration}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <FiCalendar /> {w.time}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col items-end justify-between">
+                      <img
+                        src={w.speakerImage}
+                        className="w-12 h-12 rounded-full"
+                      />
+                      <div className="text-right">
+                        <p className="text-xl font-bold text-yellow-400">
+                          {w.price}
+                        </p>
+                        <button className="mt-3 px-5 py-2 rounded-lg bg-yellow-400 text-emerald-950 text-sm">
+                          Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- FILTER BLOCK ---------------- */
+function FilterBlock({ title, open, toggle, items }) {
+  return (
+    <div className="mb-4">
+      <button
+        onClick={toggle}
+        className="flex items-center justify-between w-full text-sm font-medium"
+      >
+        {title}
+        {open ? <FiChevronUp /> : <FiChevronDown />}
+      </button>
+
+      {open && (
+        <div className="mt-3 space-y-2 text-sm text-emerald-300">
+          {items.map((item) => (
+            <label key={item} className="flex items-center gap-2">
+              <input type="checkbox" className="accent-yellow-400" />
+              {item}
+            </label>
+          ))}
         </div>
-      </section>
-    </main>
+      )}
+    </div>
   );
 }

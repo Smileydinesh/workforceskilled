@@ -93,29 +93,9 @@ export default function PrivacyPolicy() {
             transition={{ delay: 0.2 }}
             className="text-xl text-emerald-200 max-w-3xl mx-auto mb-8 leading-relaxed"
           >
-            At PeopleSkillTraining, we value your privacy and are committed to protecting 
+            At WorkForceSkilled, we value your privacy and are committed to protecting 
             your personal information with enterprise-grade security measures.
           </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-6 mt-10"
-          >
-            <div className="text-center px-4">
-              <div className="text-2xl font-bold text-white mb-1">GDPR</div>
-              <div className="text-sm text-emerald-300">Compliant</div>
-            </div>
-            <div className="text-center px-4">
-              <div className="text-2xl font-bold text-white mb-1">256-bit</div>
-              <div className="text-sm text-emerald-300">Encryption</div>
-            </div>
-            <div className="text-center px-4">
-              <div className="text-2xl font-bold text-white mb-1">ISO 27001</div>
-              <div className="text-sm text-emerald-300">Certified</div>
-            </div>
-          </motion.div>
           
           <motion.p
             initial={{ opacity: 0 }}
@@ -245,7 +225,7 @@ export default function PrivacyPolicy() {
             </div>
             
             <p className="mt-8 text-sm text-slate-500">
-              Policy last updated: December 20, 2025 • PeopleSkillTraining Inc.
+              Policy last updated: December 20, 2025 • WorkForceSkilled Inc.
             </p>
           </motion.div>
         </main>
@@ -561,7 +541,7 @@ function renderSectionContent(sectionId) {
           </div>
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
             <p className="text-sm text-slate-700">
-              <strong>Mailing Address:</strong> PeopleSkillTraining Inc., 123 Tech Park Drive, 
+              <strong>Mailing Address:</strong> WorkForceSkilled Inc., 123 Tech Park Drive, 
               Suite 500, San Francisco, CA 94107
             </p>
           </div>
