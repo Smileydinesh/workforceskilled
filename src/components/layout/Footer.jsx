@@ -4,7 +4,7 @@ import { HiOutlineAcademicCap, HiOutlineDocumentText, HiOutlineShieldCheck, HiOu
 import { MdOutlineLiveTv, MdOutlinePlayCircle, MdBusinessCenter, MdRocketLaunch } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import logo from "../../assets/images/icons/logo2.png";
+import logo from "../../assets/images/icons/logo5.jpeg";
 
 
 export default function Footer() {
