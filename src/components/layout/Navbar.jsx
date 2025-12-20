@@ -89,19 +89,24 @@ export default function Navbar() {
             <div className="flex gap-8">
               {links.map((link, i) => (
                 <NavLink
-                  key={i}
-                  to={link.href}
-                  className={({ isActive }) =>
-                    `relative text-sm font-medium transition-colors duration-300
-                    ${isActive ? "text-yellow-300" : "text-white/90 hover:text-white"}
-                    after:content-[''] after:absolute after:left-1/2 after:-bottom-1
-                    after:h-[2px] after:w-0 after:bg-gradient-to-r
-                    after:from-yellow-300 after:to-emerald-400
-                    after:transition-all after:duration-300
-                    hover:after:w-full hover:after:left-0
-                    ${isActive ? "after:w-full after:left-0" : ""}`
-                  }
-                >
+                    key={i}
+                    to={link.href}
+                    className={({ isActive }) =>
+                      `relative text-sm font-medium transition-colors duration-300
+                      ${isActive ? "text-yellow-300" : "text-white/90 hover:text-white"}
+
+                      after:content-['']
+                      after:absolute after:left-0 after:-bottom-1
+                      after:h-[2px] after:w-full
+                      after:bg-gradient-to-r after:from-yellow-300 after:to-emerald-400
+                      after:scale-x-0 after:origin-center
+                      after:transition-transform after:duration-300
+
+                      hover:after:scale-x-100
+                      ${isActive ? "after:scale-x-100" : ""}`
+                    }
+                  >
+
                   {link.label}
                   {link.label === "Live Webinars" && (
                     <span className="ml-2 text-xs bg-red-500 text-white px-2 py-0.5 rounded-full">
