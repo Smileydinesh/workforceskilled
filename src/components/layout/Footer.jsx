@@ -76,40 +76,66 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3.5">
               {[
-                { text: "Live Webinars", icon: MdOutlineLiveTv, color: "text-red-400" },
-                { text: "On-Demand Courses", icon: MdOutlinePlayCircle, color: "text-blue-400" },
-                { text: "Enterprise Solutions", icon: MdBusinessCenter, color: "text-purple-400" },
-                { text: "Get Started", icon: MdRocketLaunch, color: "text-yellow-400" }
+                {
+                  text: "Live Webinars",
+                  path: "/live-webinars",
+                  icon: MdOutlineLiveTv,
+                  color: "text-red-400"
+                },
+                {
+                  text: "Recorded Webinars",
+                  path: "/recorded-webinars",
+                  icon: MdOutlinePlayCircle,
+                  color: "text-blue-400"
+                },
+                {
+                  text: "Join With Us",
+                  path: "/signup",
+                  icon: MdRocketLaunch,
+                  color: "text-yellow-400"
+                }
               ].map((item, idx) => (
                 <li key={idx}>
-                  <button
+                  <Link
+                    to={item.path}
                     onMouseEnter={() => setHoveredItem(`training-${idx}`)}
                     onMouseLeave={() => setHoveredItem(null)}
                     className="w-full text-left flex items-center gap-3 group relative"
                   >
-                    {/* Animated border effect */}
-                    <div className={`absolute -inset-2 rounded-lg border transition-all duration-300 ${
-                      hoveredItem === `training-${idx}` 
-                        ? 'border-yellow-400/50 bg-yellow-400/5' 
-                        : 'border-transparent'
-                    }`} />
-                    
+                    {/* Animated border */}
+                    <div
+                      className={`absolute -inset-2 rounded-lg border transition-all duration-300 ${
+                        hoveredItem === `training-${idx}`
+                          ? "border-yellow-400/50 bg-yellow-400/5"
+                          : "border-transparent"
+                      }`}
+                    />
+
                     <div className="relative z-10 flex items-center gap-3 w-full">
-                      <div className={`p-2 rounded-lg bg-emerald-900/50 group-hover:bg-emerald-800/70 transition-all duration-300 ${
-                        hoveredItem === `training-${idx}` ? 'scale-110' : ''
-                      }`}>
+                      <div
+                        className={`p-2 rounded-lg bg-emerald-900/50 group-hover:bg-emerald-800/70 transition-all duration-300 ${
+                          hoveredItem === `training-${idx}` ? "scale-110" : ""
+                        }`}
+                      >
                         <item.icon className={`text-lg ${item.color}`} />
                       </div>
+
                       <span className="text-emerald-300/90 group-hover:text-white transition-colors duration-300 font-medium text-sm">
                         {item.text}
                       </span>
-                      <FiChevronRight className={`ml-auto text-emerald-500 transition-all duration-300 ${
-                        hoveredItem === `training-${idx}` ? 'translate-x-1 opacity-100' : 'opacity-0'
-                      }`} />
+
+                      <FiChevronRight
+                        className={`ml-auto text-emerald-500 transition-all duration-300 ${
+                          hoveredItem === `training-${idx}`
+                            ? "translate-x-1 opacity-100"
+                            : "opacity-0"
+                        }`}
+                      />
                     </div>
-                  </button>
+                  </Link>
                 </li>
               ))}
+
             </ul>
           </div>
 
@@ -121,38 +147,60 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3.5">
               {[
-                { text: "About Us", icon: HiOutlineUserGroup, color: "text-emerald-400" },
-                { text: "Contact", icon: FiUser, color: "text-sky-400" }
+                {
+                  text: "About Us",
+                  path: "/about",
+                  icon: HiOutlineUserGroup,
+                  color: "text-emerald-400"
+                },
+                {
+                  text: "Contact",
+                  path: "/contact",
+                  icon: FiUser,
+                  color: "text-sky-400"
+                }
               ].map((item, idx) => (
                 <li key={idx}>
-                  <button
+                  <Link
+                    to={item.path}
                     onMouseEnter={() => setHoveredItem(`company-${idx}`)}
                     onMouseLeave={() => setHoveredItem(null)}
                     className="w-full text-left flex items-center gap-3 group relative"
                   >
-                    {/* Animated border effect */}
-                    <div className={`absolute -inset-2 rounded-lg border transition-all duration-300 ${
-                      hoveredItem === `company-${idx}` 
-                        ? 'border-yellow-400/50 bg-yellow-400/5' 
-                        : 'border-transparent'
-                    }`} />
-                    
+                    {/* Animated border */}
+                    <div
+                      className={`absolute -inset-2 rounded-lg border transition-all duration-300 ${
+                        hoveredItem === `company-${idx}`
+                          ? "border-yellow-400/50 bg-yellow-400/5"
+                          : "border-transparent"
+                      }`}
+                    />
+
                     <div className="relative z-10 flex items-center gap-3 w-full">
-                      <div className={`p-2 rounded-lg bg-emerald-900/50 group-hover:bg-emerald-800/70 transition-all duration-300 ${
-                        hoveredItem === `company-${idx}` ? 'scale-110' : ''
-                      }`}>
+                      <div
+                        className={`p-2 rounded-lg bg-emerald-900/50 group-hover:bg-emerald-800/70 transition-all duration-300 ${
+                          hoveredItem === `company-${idx}` ? "scale-110" : ""
+                        }`}
+                      >
                         <item.icon className={`text-lg ${item.color}`} />
                       </div>
+
                       <span className="text-emerald-300/90 group-hover:text-white transition-colors duration-300 font-medium text-sm">
                         {item.text}
                       </span>
-                      <FiChevronRight className={`ml-auto text-emerald-500 transition-all duration-300 ${
-                        hoveredItem === `company-${idx}` ? 'translate-x-1 opacity-100' : 'opacity-0'
-                      }`} />
+
+                      <FiChevronRight
+                        className={`ml-auto text-emerald-500 transition-all duration-300 ${
+                          hoveredItem === `company-${idx}`
+                            ? "translate-x-1 opacity-100"
+                            : "opacity-0"
+                        }`}
+                      />
                     </div>
-                  </button>
+                  </Link>
                 </li>
               ))}
+
             </ul>
           </div>
 
@@ -164,40 +212,72 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3.5">
               {[
-                { text: "Terms & Conditions", icon: FiFileText, color: "text-orange-400" },
-                { text: "Privacy Policy", icon: FiShield, color: "text-green-400" },
-                { text: "Refund Policy", icon: FiRefreshCw, color: "text-pink-400" },
-                { text: "Shipping Policy", icon: FiPackage, color: "text-indigo-400" }
-              ].map((item, idx) => (
-                <li key={idx}>
-                  <button
-                    onMouseEnter={() => setHoveredItem(`legal-${idx}`)}
-                    onMouseLeave={() => setHoveredItem(null)}
-                    className="w-full text-left flex items-center gap-3 group relative"
-                  >
-                    {/* Animated border effect */}
-                    <div className={`absolute -inset-2 rounded-lg border transition-all duration-300 ${
-                      hoveredItem === `legal-${idx}` 
-                        ? 'border-yellow-400/50 bg-yellow-400/5' 
-                        : 'border-transparent'
-                    }`} />
-                    
-                    <div className="relative z-10 flex items-center gap-3 w-full">
-                      <div className={`p-2 rounded-lg bg-emerald-900/50 group-hover:bg-emerald-800/70 transition-all duration-300 ${
-                        hoveredItem === `legal-${idx}` ? 'scale-110' : ''
-                      }`}>
-                        <item.icon className={`text-lg ${item.color}`} />
+                  {
+                    text: "Terms & Conditions",
+                    path: "/terms-and-conditions",
+                    icon: FiFileText,
+                    color: "text-orange-400"
+                  },
+                  {
+                    text: "Privacy Policy",
+                    path: "/privacy-policy",
+                    icon: FiShield,
+                    color: "text-green-400"
+                  },
+                  {
+                    text: "Refund & Cancellation",
+                    path: "/refund-cancellation-policy",
+                    icon: FiRefreshCw,
+                    color: "text-pink-400"
+                  },
+                  {
+                    text: "Shipping & Return",
+                    path: "/shipping-return-policy",
+                    icon: FiPackage,
+                    color: "text-indigo-400"
+                  }
+                ].map((item, idx) => (
+                  <li key={idx}>
+                    <Link
+                      to={item.path}
+                      onMouseEnter={() => setHoveredItem(`legal-${idx}`)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                      className="w-full text-left flex items-center gap-3 group relative"
+                    >
+                      {/* Animated border */}
+                      <div
+                        className={`absolute -inset-2 rounded-lg border transition-all duration-300 ${
+                          hoveredItem === `legal-${idx}`
+                            ? "border-yellow-400/50 bg-yellow-400/5"
+                            : "border-transparent"
+                        }`}
+                      />
+
+                      <div className="relative z-10 flex items-center gap-3 w-full">
+                        <div
+                          className={`p-2 rounded-lg bg-emerald-900/50 group-hover:bg-emerald-800/70 transition-all duration-300 ${
+                            hoveredItem === `legal-${idx}` ? "scale-110" : ""
+                          }`}
+                        >
+                          <item.icon className={`text-lg ${item.color}`} />
+                        </div>
+
+                        <span className="text-emerald-300/90 group-hover:text-white transition-colors duration-300 font-medium text-sm">
+                          {item.text}
+                        </span>
+
+                        <FiChevronRight
+                          className={`ml-auto text-emerald-500 transition-all duration-300 ${
+                            hoveredItem === `legal-${idx}`
+                              ? "translate-x-1 opacity-100"
+                              : "opacity-0"
+                          }`}
+                        />
                       </div>
-                      <span className="text-emerald-300/90 group-hover:text-white transition-colors duration-300 font-medium text-sm">
-                        {item.text}
-                      </span>
-                      <FiChevronRight className={`ml-auto text-emerald-500 transition-all duration-300 ${
-                        hoveredItem === `legal-${idx}` ? 'translate-x-1 opacity-100' : 'opacity-0'
-                      }`} />
-                    </div>
-                  </button>
-                </li>
-              ))}
+                    </Link>
+                  </li>
+                ))}
+
             </ul>
           </div>
 

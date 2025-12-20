@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import SidebarFilter from "../../components/filters/SidebarFilter";
 
@@ -68,9 +68,6 @@ export default function RecordedWebinars() {
   const [selectedSpeakers, setSelectedSpeakers] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
 
   const filtered = recordedWebinars.filter((w) => {
     const matchesSearch = w.title

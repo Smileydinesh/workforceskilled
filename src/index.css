@@ -29,3 +29,6 @@ body {
   --mouse-x: 0;
   --mouse-y: 0;
 }
+html {
+  scroll-behavior: smooth;
+}
