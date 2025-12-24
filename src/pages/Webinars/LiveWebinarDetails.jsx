@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+
+
 import { useParams, useNavigate } from "react-router-dom";
 import {
   FiCalendar,
@@ -24,13 +26,15 @@ export default function LiveWebinarDetails() {
   const [loading, setLoading] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const API_URL = process.env.REACT_APP_API_URL;
 
   /* ---------- FETCH WEBINAR DETAILS ---------- */
   useEffect(() => {
     // Simulate loading delay for better UX
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/live-webinars/${webinar_id}/`);
+        const response = await fetch(`${API_URL}/api/live-webinars/${webinar_id}/`)
+
         const data = await response.json();
         
         // Add small delay for smooth loading animation
@@ -56,10 +60,10 @@ export default function LiveWebinarDetails() {
   const addToCart = async (redirect = false) => {
     setIsAddingToCart(true);
     try {
-      await fetch("http://localhost:8000/api/cart/", {
+      await fetch(`${API_URL}/api/cart/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
         body: JSON.stringify({
           webinar_id: webinar.webinar_id,
           purchase_type: selectedPlan.type,
