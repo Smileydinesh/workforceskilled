@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   FiSearch,
@@ -10,40 +10,16 @@ import {
   FiGrid,
   FiList
 } from "react-icons/fi";
-
-/* ---------------- MOCK DATA ---------------- */
-const webinars = [
-  {
-    id: 1,
-    title:
-      "HR Metrics and Analytics 2026 – Update on Strategic Planning",
-    speaker: "Ronald Adler",
-    duration: "90 minutes",
-    time: "9:00 AM PST | 12:00 PM EST",
-    date: "17 Dec",
-    month: "December",
-    category: "HR & Analytics",
-    price: "$147.00",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978",
-    speakerImage: "https://i.pravatar.cc/100?img=11",
-  },
-  {
-    id: 2,
-    title: "How to Use ChatGPT & Microsoft Copilot for Project Management",
-    speaker: "Tom Fragale",
-    duration: "60 minutes",
-    time: "12:00 PM PST | 3:00 PM EST",
-    date: "17 Dec",
-    month: "December",
-    category: "AI & Productivity",
-    price: "$147.00",
-    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
-    speakerImage: "https://i.pravatar.cc/100?img=32",
-  },
-];
+import { useNavigate } from "react-router-dom";
 
 /* ---------------- PAGE ---------------- */
 export default function LiveWebinars() {
+
+  const navigate = useNavigate();
+
+  const [webinars, setWebinars] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [search, setSearch] = useState("");
   const [view, setView] = useState("grid");
 
@@ -51,17 +27,27 @@ export default function LiveWebinars() {
   const [openSpeaker, setOpenSpeaker] = useState(true);
   const [openCategory, setOpenCategory] = useState(true);
 
-  const expandAll = () => {
-    setOpenMonth(true);
-    setOpenSpeaker(true);
-    setOpenCategory(true);
-  };
+  /* ---------------- FETCH LIVE WEBINARS ---------------- */
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/live-webinars/")
+      .then((res) => res.json())
+      .then((data) => {
+        setWebinars(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to load webinars", err);
+        setLoading(false);
+      });
+  }, []);
 
-  const collapseAll = () => {
-    setOpenMonth(false);
-    setOpenSpeaker(false);
-    setOpenCategory(false);
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-emerald-950 text-yellow-400">
+        Loading live webinars...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-emerald-950 text-emerald-50">
@@ -92,41 +78,35 @@ export default function LiveWebinars() {
             </div>
           </div>
 
-          {/* MONTH */}
-          <FilterBlock
-            title="Month"
-            open={openMonth}
-            toggle={() => setOpenMonth(!openMonth)}
-            items={["December", "January", "February"]}
-          />
-
-          {/* SPEAKER */}
-          <FilterBlock
-            title="Speaker"
-            open={openSpeaker}
-            toggle={() => setOpenSpeaker(!openSpeaker)}
-            items={["Ronald Adler", "Tom Fragale"]}
-          />
-
-          {/* CATEGORY */}
-          <FilterBlock
-            title="Category"
-            open={openCategory}
-            toggle={() => setOpenCategory(!openCategory)}
-            items={["HR & Analytics", "AI & Productivity"]}
-          />
+          <FilterBlock title="Month" open={openMonth} toggle={() => setOpenMonth(!openMonth)} items={[]} />
+          <FilterBlock title="Speaker" open={openSpeaker} toggle={() => setOpenSpeaker(!openSpeaker)} items={[]} />
+          <FilterBlock title="Category" open={openCategory} toggle={() => setOpenCategory(!openCategory)} items={[]} />
 
           <div className="flex justify-between text-sm text-yellow-400 mt-6">
-            <button onClick={expandAll}>Expand All</button>
-            <button onClick={collapseAll}>Collapse All</button>
+            <button onClick={() => {
+              setOpenMonth(true);
+              setOpenSpeaker(true);
+              setOpenCategory(true);
+            }}>
+              Expand All
+            </button>
+
+            <button onClick={() => {
+              setOpenMonth(false);
+              setOpenSpeaker(false);
+              setOpenCategory(false);
+            }}>
+              Collapse All
+            </button>
           </div>
         </aside>
 
         {/* RESULTS */}
         <section>
+
           {/* Top Bar */}
           <div className="flex items-center justify-between mb-6">
-            <p className="font-semibold">96 results</p>
+            <p className="font-semibold">{webinars.length} results</p>
 
             <div className="flex items-center gap-2 bg-emerald-900 border border-emerald-800 rounded-lg p-1">
               <button
@@ -158,18 +138,18 @@ export default function LiveWebinars() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {webinars.map((w) => (
                 <motion.div
-                  key={w.id}
+                  key={w.webinar_id}
                   whileHover={{ y: -6 }}
                   className="bg-emerald-900/60 border border-emerald-800 rounded-2xl overflow-hidden"
                 >
                   <div className="relative h-48">
                     <img
-                      src={w.image}
+                      src={w.cover_image}
                       className="w-full h-full object-cover"
                       alt={w.title}
                     />
                     <div className="absolute top-3 left-3 bg-yellow-400 text-emerald-950 rounded-full px-3 py-1 text-sm font-semibold">
-                      {w.date}
+                      {w.date_display}
                     </div>
                   </div>
 
@@ -180,21 +160,25 @@ export default function LiveWebinars() {
 
                     <div className="flex items-center gap-2 text-sm">
                       <img
-                        src={w.speakerImage}
+                        src={w.instructor.photo}
                         className="w-8 h-8 rounded-full"
+                        alt={w.instructor.name}
                       />
-                      {w.speaker}
+                      {w.instructor.name}
                     </div>
 
                     <div className="text-sm flex items-center gap-2 text-emerald-300">
-                      <FiClock /> {w.duration}
+                      <FiClock /> {w.duration_minutes} minutes
                     </div>
 
                     <div className="flex items-center justify-between pt-4">
                       <span className="font-bold text-yellow-400">
-                        {w.price}
+                        ${w.display_price}
                       </span>
-                      <button className="px-4 py-2 text-sm bg-yellow-400 text-emerald-950 rounded-lg">
+                      <button
+                        onClick={() => navigate(`/live-webinars/${w.webinar_id}`)}
+                        className="px-4 py-2 text-sm bg-yellow-400 text-emerald-950 rounded-lg"
+                      >
                         Details
                       </button>
                     </div>
@@ -209,18 +193,18 @@ export default function LiveWebinars() {
             <div className="space-y-6">
               {webinars.map((w) => (
                 <motion.div
-                  key={w.id}
+                  key={w.webinar_id}
                   whileHover={{ y: -4 }}
                   className="bg-emerald-900/60 border border-emerald-800 rounded-2xl overflow-hidden flex flex-col md:flex-row"
                 >
                   <div className="relative md:w-80 h-56 md:h-auto">
                     <img
-                      src={w.image}
+                      src={w.cover_image}
                       className="w-full h-full object-cover"
                       alt={w.title}
                     />
                     <div className="absolute top-4 left-4 bg-yellow-400 text-emerald-950 rounded-full px-3 py-2 text-sm font-semibold">
-                      {w.date}
+                      {w.date_display}
                     </div>
                   </div>
 
@@ -232,27 +216,32 @@ export default function LiveWebinars() {
 
                       <div className="text-sm space-y-2">
                         <div className="flex items-center gap-2">
-                          <FiUser /> {w.speaker}
+                          <FiUser /> {w.instructor.name}
                         </div>
                         <div className="flex items-center gap-2">
-                          <FiClock /> {w.duration}
+                          <FiClock /> {w.duration_minutes} minutes
                         </div>
                         <div className="flex items-center gap-2">
-                          <FiCalendar /> {w.time}
+                          <FiCalendar /> {w.time_display}
                         </div>
                       </div>
                     </div>
 
                     <div className="flex flex-col items-end justify-between">
                       <img
-                        src={w.speakerImage}
+                        src={w.instructor.photo}
                         className="w-12 h-12 rounded-full"
+                        alt={w.instructor.name}
                       />
                       <div className="text-right">
                         <p className="text-xl font-bold text-yellow-400">
-                          {w.price}
+                          ${w.display_price}
+
                         </p>
-                        <button className="mt-3 px-5 py-2 rounded-lg bg-yellow-400 text-emerald-950 text-sm">
+                        <button
+                          onClick={() => navigate(`/live-webinars/${w.webinar_id}`)}
+                          className="mt-3 px-5 py-2 rounded-lg bg-yellow-400 text-emerald-950 text-sm"
+                        >
                           Details
                         </button>
                       </div>

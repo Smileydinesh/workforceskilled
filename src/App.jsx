@@ -16,6 +16,9 @@ import PrivacyPolicy from "./pages/Legal/PrivacyPolicy";
 import RefundCancellationPolicy from "./pages/Legal/RefundCancellationPolicy";
 import ShippingReturnPolicy from "./pages/Legal/ShippingReturnPolicy";
 import ScrollToTop from "./components/common/ScrollToTop";
+import Cart from "./pages/Cart/Cart";
+import Checkout from "./pages/Checkout/Checkout";
+
 
 
 
@@ -31,9 +34,17 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/live-webinars" element={<LiveWebinars />} />
-        <Route path="/live-webinars/details" element={<LiveWebinarDetails />} />
+        <Route path="/live-webinars/:webinar_id" element={<LiveWebinarDetails />}/>
+
+        {/* <Route path="/live-webinars/details" element={<LiveWebinarDetails />} /> */}
 
         <Route path="/recorded-webinars" element={<RecordedWebinars />} />
+        <Route path="/cart" element={<Cart />} />
+
+        <Route path="/checkout" element={<Checkout />} />
+
+
+
         <Route path="/terms-and-conditions" element={<TermsConditions />}/>
         <Route path="/privacy-policy" element={<PrivacyPolicy />}/>
         <Route path="/refund-cancellation-policy" element={<RefundCancellationPolicy />}/>
