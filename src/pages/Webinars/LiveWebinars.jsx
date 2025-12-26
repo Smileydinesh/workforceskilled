@@ -34,18 +34,20 @@ export default function LiveWebinars() {
 
   /* ---------------- FETCH LIVE WEBINARS ---------------- */
   useEffect(() => {
-    fetch(`${API_BASE}/api/live-webinars/`)
-
-      .then((res) => res.json())
-      .then((data) => {
-        setWebinars(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to load webinars", err);
-        setLoading(false);
-      });
-  }, []);
+  fetch(`${API_BASE}/api/live-webinars/`)
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to fetch webinars");
+      return res.json();
+    })
+    .then((data) => {
+      setWebinars(data);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.error("Failed to load webinars", err);
+      setLoading(false);
+    });
+}, []);
 
   if (loading) {
     return (
