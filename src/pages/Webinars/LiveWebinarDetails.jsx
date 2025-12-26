@@ -24,13 +24,16 @@ export default function LiveWebinarDetails() {
   const [loading, setLoading] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
   /* ---------- FETCH WEBINAR DETAILS ---------- */
   useEffect(() => {
     // Simulate loading delay for better UX
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/live-webinars/${webinar_id}/`);
+        const response = await fetch(`${API_BASE}/api/live-webinars/${webinar_id}/`);
+
+
         const data = await response.json();
         
         // Add small delay for smooth loading animation
@@ -50,13 +53,13 @@ export default function LiveWebinarDetails() {
     };
 
     fetchData();
-  }, [webinar_id]);
+  }, [webinar_id, API_BASE]);
 
   /* ---------- ADD TO CART ---------- */
   const addToCart = async (redirect = false) => {
     setIsAddingToCart(true);
     try {
-      await fetch("http://localhost:8000/api/cart/", {
+      await fetch(`${API_BASE}/api/cart/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

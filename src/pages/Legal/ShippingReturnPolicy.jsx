@@ -511,7 +511,7 @@ function renderSectionContent(sectionId) {
           
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 mt-4">
             <p className="text-sm text-slate-700">
-              <strong>Note:</strong> For access issues, contact <span className="text-emerald-700 font-medium">support@peopleskilltraining.com</span> 
+              <strong>Note:</strong> For access issues, contact <span className="text-emerald-700 font-medium">support@workforceskilled.com</span> 
               with your order details and we'll resolve it within 24 hours.
             </p>
           </div>
@@ -671,7 +671,7 @@ function renderSectionContent(sectionId) {
           <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-100">
             <p className="text-sm text-emerald-800">
               <strong>Contact:</strong> For technical difficulties accessing purchased content, 
-              email <span className="font-medium">support@peopleskilltraining.com</span> immediately. 
+              email <span className="font-medium">support@workforceskilled.com</span> immediately. 
               Include your order number, device/browser details, and screenshots if possible.
             </p>
           </div>
@@ -707,7 +707,7 @@ function renderSectionContent(sectionId) {
                 </div>
                 <h5 className="font-semibold text-slate-800 mb-2 text-sm">Contact Support</h5>
                 <p className="text-xs text-slate-600">
-                  Email support@peopleskilltraining.com with subject "Refund Request"
+                  Email support@workforceskilled.com with subject "Refund Request"
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white border border-purple-200 text-center">
@@ -848,7 +848,7 @@ function renderSectionContent(sectionId) {
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white border border-emerald-200">
-                <p className="text-sm font-semibold text-emerald-700">support@peopleskilltraining.com</p>
+                <p className="text-sm font-semibold text-emerald-700">support@workforceskilled.com</p>
                 <p className="text-xs text-emerald-600 mt-2">Response within 24 business hours</p>
               </div>
             </div>

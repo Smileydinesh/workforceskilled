@@ -523,19 +523,19 @@ function renderSectionContent(sectionId) {
             <div className="p-5 rounded-xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 text-center">
               <FiMail className="text-emerald-600 text-2xl mx-auto mb-3" />
               <h4 className="font-semibold text-slate-800 mb-2">Primary Contact</h4>
-              <p className="text-sm text-slate-700">privacy@peopleskilltraining.com</p>
+              <p className="text-sm text-slate-700">privacy@workforcedskilled.com</p>
               <p className="text-xs text-slate-500 mt-2">Response within 24 hours</p>
             </div>
             <div className="p-5 rounded-xl bg-gradient-to-br from-amber-50 to-white border border-amber-100 text-center">
               <FiUserCheck className="text-amber-600 text-2xl mx-auto mb-3" />
               <h4 className="font-semibold text-slate-800 mb-2">Data Protection Officer</h4>
-              <p className="text-sm text-slate-700">dpo@peopleskilltraining.com</p>
+              <p className="text-sm text-slate-700">dpo@workforceskilled.com</p>
               <p className="text-xs text-slate-500 mt-2">For formal data requests</p>
             </div>
             <div className="p-5 rounded-xl bg-gradient-to-br from-blue-50 to-white border border-blue-100 text-center">
               <FiShield className="text-blue-600 text-2xl mx-auto mb-3" />
               <h4 className="font-semibold text-slate-800 mb-2">Security Team</h4>
-              <p className="text-sm text-slate-700">security@peopleskilltraining.com</p>
+              <p className="text-sm text-slate-700">security@pworkforceskilled.com</p>
               <p className="text-xs text-slate-500 mt-2">For security incidents</p>
             </div>
           </div>

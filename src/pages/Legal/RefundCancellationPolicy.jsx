@@ -533,7 +533,7 @@ function renderSectionContent(sectionId) {
                 </div>
                 <h5 className="font-semibold text-slate-800 mb-2">Contact Support</h5>
                 <p className="text-xs text-slate-600">
-                  Email support@peopleskilltraining.com with your order details
+                  Email support@workforceskilled.com with your order details
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white border border-blue-200 text-center">
@@ -674,7 +674,7 @@ function renderSectionContent(sectionId) {
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white border border-slate-200">
-                <p className="text-lg font-semibold text-emerald-700">support@peopleskilltraining.com</p>
+                <p className="text-lg font-semibold text-emerald-700">support@workforceskilled.com</p>
                 <p className="text-sm text-slate-600 mt-2">Response within 24 business hours</p>
               </div>
             </div>

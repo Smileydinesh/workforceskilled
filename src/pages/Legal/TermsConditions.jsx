@@ -541,9 +541,9 @@ function renderSectionContent(sectionId, title) {
     "contact": {
       main: "For inquiries regarding these terms, legal notices, or compliance matters:",
       points: [
-        // "Primary legal communications: legal@peopleskilltraining.com",
+        // "Primary legal communications: legal@workforceskilled.com",
         "General support: support@workforceskilled.com",
-        // "Data protection inquiries: dpo@peopleskilltraining.com",
+        // "Data protection inquiries: dpo@workforceskilled.com",
         "Physical correspondence to corporate headquarters"
       ]
     }
@@ -664,7 +664,7 @@ function renderSectionExtras(sectionId) {
             </div>
             {/* <div className="p-4 rounded-lg bg-gradient-to-b from-slate-50 to-white border border-slate-200">
               <h4 className="font-semibold text-slate-800 mb-2 text-sm">Legal Department</h4>
-              <p className="font-medium text-slate-700 text-sm">legal@peopleskilltraining.com</p>
+              <p className="font-medium text-slate-700 text-sm">legal@workforceskilled.com</p>
               <p className="text-xs text-slate-600 mt-1">Formal notices only</p>
             </div> */}
           </div>
