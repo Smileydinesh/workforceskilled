@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   FiSearch,
@@ -9,40 +9,30 @@ import {
   FiGrid,
   FiList
 } from "react-icons/fi";
-
-/* ---------------- MOCK DATA ---------------- */
-const recordedWebinars = [
-  {
-    id: 1,
-    title: "Introduction to Copilot for Business Professionals",
-    speaker: "Tom Fragale",
-    duration: "60 minutes",
-    month: "October",
-    category: "AI & Productivity",
-    price: "$189.00",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978",
-    speakerImage: "https://i.pravatar.cc/100?img=32",
-  },
-  {
-    id: 2,
-    title: "ChatGPT and AI for Project Management",
-    speaker: "Chris DeVany",
-    duration: "60 minutes",
-    month: "October",
-    category: "Project Management",
-    price: "$189.00",
-    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
-    speakerImage: "https://i.pravatar.cc/100?img=12",
-  },
-];
+import { Link } from "react-router-dom";
 
 /* ---------------- PAGE ---------------- */
 export default function RecordedWebinars() {
   const [view, setView] = useState("grid");
+  const [recordedWebinars, setRecordedWebinars] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [openMonth, setOpenMonth] = useState(true);
   const [openSpeaker, setOpenSpeaker] = useState(true);
   const [openCategory, setOpenCategory] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/recorded-webinars/")
+      .then((res) => res.json())
+      .then((data) => {
+        setRecordedWebinars(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to load recorded webinars", err);
+        setLoading(false);
+      });
+  }, []);
 
   const expandAll = () => {
     setOpenMonth(true);
@@ -55,6 +45,14 @@ export default function RecordedWebinars() {
     setOpenSpeaker(false);
     setOpenCategory(false);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-emerald-950 text-yellow-400">
+        Loading recorded webinars...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-emerald-950 text-emerald-50">
@@ -85,26 +83,9 @@ export default function RecordedWebinars() {
             </div>
           </div>
 
-          <FilterBlock
-            title="Month"
-            open={openMonth}
-            toggle={() => setOpenMonth(!openMonth)}
-            items={["October", "November", "December"]}
-          />
-
-          <FilterBlock
-            title="Speaker"
-            open={openSpeaker}
-            toggle={() => setOpenSpeaker(!openSpeaker)}
-            items={["Tom Fragale", "Chris DeVany"]}
-          />
-
-          <FilterBlock
-            title="Category"
-            open={openCategory}
-            toggle={() => setOpenCategory(!openCategory)}
-            items={["AI & Productivity", "Project Management"]}
-          />
+          <FilterBlock title="Month" open={openMonth} toggle={() => setOpenMonth(!openMonth)} items={[]} />
+          <FilterBlock title="Speaker" open={openSpeaker} toggle={() => setOpenSpeaker(!openSpeaker)} items={[]} />
+          <FilterBlock title="Category" open={openCategory} toggle={() => setOpenCategory(!openCategory)} items={[]} />
 
           <div className="flex justify-between text-sm text-yellow-400 mt-6">
             <button onClick={expandAll}>Expand All</button>
@@ -117,7 +98,9 @@ export default function RecordedWebinars() {
 
           {/* TOP BAR */}
           <div className="flex items-center justify-between mb-6">
-            <p className="font-semibold">47 recorded webinars</p>
+            <p className="font-semibold">
+              {recordedWebinars.length} recorded webinars
+            </p>
 
             <div className="flex items-center gap-2 bg-emerald-900 border border-emerald-800 rounded-lg p-1">
               <button
@@ -148,7 +131,7 @@ export default function RecordedWebinars() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {recordedWebinars.map((w) => (
                 <motion.div
-                  key={w.id}
+                  key={w.webinar_id}
                   whileHover={{ y: -6 }}
                   className="bg-emerald-900/60 border border-emerald-800 rounded-2xl overflow-hidden"
                 >
@@ -186,9 +169,12 @@ export default function RecordedWebinars() {
                       <span className="font-bold text-yellow-400">
                         {w.price}
                       </span>
-                      <button className="px-4 py-2 text-sm bg-yellow-400 text-emerald-950 rounded-lg">
+                      <Link
+                        to={`/recorded-webinars/${w.webinar_id}`}
+                        className="px-4 py-2 text-sm bg-yellow-400 text-emerald-950 rounded-lg"
+                      >
                         Details
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </motion.div>
@@ -201,7 +187,7 @@ export default function RecordedWebinars() {
             <div className="space-y-6">
               {recordedWebinars.map((w) => (
                 <motion.div
-                  key={w.id}
+                  key={w.webinar_id}
                   whileHover={{ y: -4 }}
                   className="bg-emerald-900/60 border border-emerald-800 rounded-2xl overflow-hidden flex flex-col md:flex-row"
                 >
@@ -242,9 +228,12 @@ export default function RecordedWebinars() {
                         <p className="text-xl font-bold text-yellow-400">
                           {w.price}
                         </p>
-                        <button className="mt-3 px-5 py-2 rounded-lg bg-yellow-400 text-emerald-950 text-sm">
+                        <Link
+                          to={`/recorded-webinars/${w.webinar_id}`}
+                          className="px-4 py-2 text-sm bg-yellow-400 text-emerald-950 rounded-lg"
+                        >
                           Details
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>

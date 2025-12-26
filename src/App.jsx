@@ -18,7 +18,7 @@ import ShippingReturnPolicy from "./pages/Legal/ShippingReturnPolicy";
 import ScrollToTop from "./components/common/ScrollToTop";
 import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
-
+import RecordedWebinarDetails from "./pages/Webinars/RecordedWebinarDetails";
 
 
 
@@ -39,6 +39,11 @@ export default function App() {
         {/* <Route path="/live-webinars/details" element={<LiveWebinarDetails />} /> */}
 
         <Route path="/recorded-webinars" element={<RecordedWebinars />} />
+       <Route
+  path="/recorded-webinars/:webinar_id"
+  element={<RecordedWebinarDetails />}
+/>
+       
         <Route path="/cart" element={<Cart />} />
 
         <Route path="/checkout" element={<Checkout />} />

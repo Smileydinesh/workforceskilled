@@ -26,12 +26,10 @@ export default function LiveWebinars() {
   const [openMonth, setOpenMonth] = useState(true);
   const [openSpeaker, setOpenSpeaker] = useState(true);
   const [openCategory, setOpenCategory] = useState(true);
-  const API_URL = process.env.REACT_APP_API_URL;
-
 
   /* ---------------- FETCH LIVE WEBINARS ---------------- */
   useEffect(() => {
-    fetch(`${API_URL}/api/live-webinars/`)
+    fetch("http://127.0.0.1:8000/api/live-webinars/")
       .then((res) => res.json())
       .then((data) => {
         setWebinars(data);
