@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useMotionTemplate, animate } from "framer-motion";
 import { useEffect } from "react";
 
+import { useNavigate } from "react-router-dom";
 
 
 import {
@@ -31,6 +32,7 @@ import {
 } from "react-icons/md";
 
 export default function About() {
+  const navigate = useNavigate();
   return (
     <main className="bg-white text-gray-900 overflow-hidden">
 
@@ -119,6 +121,7 @@ export default function About() {
       className="mt-12 flex flex-wrap justify-center gap-4"
     >
       <motion.button
+        onClick={() => navigate("/live-webinars")}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         animate={{
@@ -137,13 +140,16 @@ export default function About() {
         </span>
       </motion.button>
 
+
       <motion.button
+        onClick={() => navigate("/contact")}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className="px-8 py-4 rounded-xl border border-white/30 hover:bg-white/10 font-semibold backdrop-blur-sm transition-all duration-300"
       >
         Get in Touch
       </motion.button>
+
     </motion.div>
   </div>
 </motion.section>
