@@ -24,6 +24,8 @@ export default function LiveWebinars() {
   const [openMonth, setOpenMonth] = useState(true);
   const [openSpeaker, setOpenSpeaker] = useState(true);
   const [openCategory, setOpenCategory] = useState(true);
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 
   /* ---------------- SAMPLE FILTER DATA ---------------- */
   const months = ["January", "February", "March", "April", "May", "June"];
@@ -32,7 +34,8 @@ export default function LiveWebinars() {
 
   /* ---------------- FETCH LIVE WEBINARS ---------------- */
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/live-webinars/")
+    fetch(`${API_BASE}/api/live-webinars/`)
+
       .then((res) => res.json())
       .then((data) => {
         setWebinars(data);
