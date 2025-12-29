@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -13,6 +13,8 @@ import {
   FiDollarSign,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 /* ================= PAGE ================= */
 export default function LiveWebinars() {
