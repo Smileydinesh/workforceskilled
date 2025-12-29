@@ -1,3 +1,4 @@
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -51,7 +52,8 @@ export default function LiveWebinars() {
 
   /* ================= FILTER METADATA ================= */
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/live-webinars/filters/")
+    fetch(`${API_BASE}/api/live-webinars/filters/`)
+
       .then((res) => res.json())
       .then(setFilters);
   }, []);
@@ -63,7 +65,8 @@ export default function LiveWebinars() {
 
   /* ================= INITIAL LOAD ================= */
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/live-webinars/?page=1")
+    fetch(`${API_BASE}/api/live-webinars/?page=1`)
+
       .then((res) => res.json())
       .then((data) => {
         setWebinars(data.results || []);
@@ -98,7 +101,8 @@ export default function LiveWebinars() {
     selectedInstructors.forEach((i) => params.append("instructor", i));
     selectedCategories.forEach((c) => params.append("category", c));
 
-    fetch(`http://127.0.0.1:8000/api/live-webinars/?${params.toString()}`)
+    fetch(`${API_BASE}/api/live-webinars/?${params.toString()}`)
+
       .then((res) => res.json())
       .then((data) => {
         setWebinars(data.results || []);

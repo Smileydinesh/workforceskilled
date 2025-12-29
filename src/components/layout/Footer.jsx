@@ -21,7 +21,7 @@ export default function Footer() {
   const [hoveredItem, setHoveredItem] = useState(null);
 
   return (
-<footer className="bg-gradient-to-b from-emerald-50 via-white to-emerald-50 text-emerald-900 relative overflow-hidden">
+<footer className="bg-white from-emerald-50 via-white to-emerald-50 text-emerald-900 relative overflow-hidden">
       {/* SUBTLE MOVING BACKGROUND */}
       <div className="absolute inset-0 pointer-events-none opacity-40">
         <div className="absolute -inset-x-full top-0 h-full bg-gradient-to-r from-transparent via-emerald-300/20 to-transparent animate-footer-flow" />
