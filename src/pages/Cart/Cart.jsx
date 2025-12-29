@@ -145,7 +145,7 @@ export default function Cart() {
                 It looks like you haven't added any courses to your cart yet. Start exploring our premium webinars!
               </p>
               <button
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/live-webinars")}
                 className="group px-8 py-3.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-emerald-900/20 inline-flex items-center gap-2"
               >
                 <span>Browse Courses</span>
