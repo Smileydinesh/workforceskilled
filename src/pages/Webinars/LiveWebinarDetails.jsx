@@ -7,6 +7,9 @@ import WebinarContent from "./WebinarContent";
 import PricingAside from "./PricingAside";
 import MeetYourSpeaker from "./MeetYourSpeaker";
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
+
 
 export default function LiveWebinarDetails() {
   const { webinar_id } = useParams();
@@ -21,9 +24,8 @@ export default function LiveWebinarDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:8000/api/live-webinars/${webinar_id}/`
-        );
+        const res = await fetch(`${API_BASE}/api/live-webinars/${webinar_id}/`)
+;
         const data = await res.json();
         setWebinar(data);
         setSelectedPlan({
@@ -43,7 +45,7 @@ export default function LiveWebinarDetails() {
   const addToCart = async (redirect = false) => {
     setIsAddingToCart(true);
     try {
-      await fetch("http://localhost:8000/api/cart/", {
+      await fetch(`${API_BASE}/api/cart/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

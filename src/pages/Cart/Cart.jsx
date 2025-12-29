@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { FiTrash2, FiShoppingCart, FiChevronRight, FiShield, FiLock, FiArrowLeft, FiZap, FiCheckCircle, FiPackage } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 
 export default function Cart() {
   const [cart, setCart] = useState({ items: [], total: 0 });
@@ -17,9 +19,10 @@ export default function Cart() {
   /* ---------------- FETCH CART ---------------- */
   const fetchCart = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/cart/", {
-        credentials: "include",
-      });
+      const res = await fetch(`${API_BASE}/api/cart/`, {
+              credentials: "include",
+            });
+
       const data = await res.json();
       setCart(data);
       
@@ -40,7 +43,7 @@ export default function Cart() {
   const removeItem = async (id) => {
     setIsRemoving(id);
     try {
-      await fetch("http://localhost:8000/api/cart/", {
+      await fetch(`${API_BASE}/api/cart/`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

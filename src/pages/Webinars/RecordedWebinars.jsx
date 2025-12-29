@@ -13,6 +13,8 @@ import {
   FiPlayCircle,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 
 /* ================= PAGE ================= */
 export default function RecordedWebinars() {
@@ -45,7 +47,7 @@ export default function RecordedWebinars() {
 
   /* ================= FILTER METADATA ================= */
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/recorded-webinars/filters/")
+    fetch(`${API_BASE}/api/recorded-webinars/filters/`)
       .then((res) => res.json())
       .then(setFilters)
       .finally(() => setInitialLoading(false));
@@ -53,7 +55,7 @@ export default function RecordedWebinars() {
 
   /* ================= INITIAL LOAD ================= */
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/recorded-webinars/")
+    fetch(`${API_BASE}/api/recorded-webinars/`)
       .then((res) => res.json())
       .then(setWebinars)
       .finally(() => setInitialLoading(false));
@@ -77,7 +79,7 @@ export default function RecordedWebinars() {
     selectedInstructors.forEach((i) => params.append("instructor", i));
     selectedCategories.forEach((c) => params.append("category", c));
 
-    fetch(`http://127.0.0.1:8000/api/recorded-webinars/?${params}`)
+    fetch(`${API_BASE}/api/recorded-webinars/?${params.toString()}`)
       .then((res) => res.json())
       .then(setWebinars)
       .finally(() => setIsFetching(false));
