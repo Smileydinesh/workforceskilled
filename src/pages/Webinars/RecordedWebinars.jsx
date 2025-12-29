@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FiSearch,
   FiChevronDown,
@@ -7,268 +7,346 @@ import {
   FiClock,
   FiUser,
   FiGrid,
-  FiList
+  FiList,
+  FiFilter,
+  FiDollarSign,
+  FiPlayCircle,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
-/* ---------------- PAGE ---------------- */
+/* ================= PAGE ================= */
 export default function RecordedWebinars() {
+  /* ---------- VIEW ---------- */
   const [view, setView] = useState("grid");
-  const [recordedWebinars, setRecordedWebinars] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  const [openMonth, setOpenMonth] = useState(true);
-  const [openSpeaker, setOpenSpeaker] = useState(true);
-  const [openCategory, setOpenCategory] = useState(true);
+  /* ---------- DATA ---------- */
+  const [webinars, setWebinars] = useState([]);
+  const [filters, setFilters] = useState({
+    months: [],
+    instructors: [],
+    categories: [],
+  });
 
+  /* ---------- LOADING ---------- */
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
+
+  /* ---------- FILTER STATE ---------- */
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [selectedMonths, setSelectedMonths] = useState([]);
+  const [selectedInstructors, setSelectedInstructors] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  /* ---------- UI ---------- */
+  const [openMonth, setOpenMonth] = useState(false);
+  const [openInstructor, setOpenInstructor] = useState(false);
+  const [openCategory, setOpenCategory] = useState(false);
+
+  /* ================= FILTER METADATA ================= */
   useEffect(() => {
-    fetch("http://localhost:8000/api/recorded-webinars/")
+    fetch("http://127.0.0.1:8000/api/recorded-webinars/filters/")
       .then((res) => res.json())
-      .then((data) => {
-        setRecordedWebinars(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to load recorded webinars", err);
-        setLoading(false);
-      });
+      .then(setFilters)
+      .finally(() => setInitialLoading(false));
   }, []);
 
-  const expandAll = () => {
-    setOpenMonth(true);
-    setOpenSpeaker(true);
-    setOpenCategory(true);
+  /* ================= INITIAL LOAD ================= */
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/recorded-webinars/")
+      .then((res) => res.json())
+      .then(setWebinars)
+      .finally(() => setInitialLoading(false));
+  }, []);
+
+  /* ================= DEBOUNCE SEARCH ================= */
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(search), 400);
+    return () => clearTimeout(t);
+  }, [search]);
+
+  /* ================= FETCH ON FILTER ================= */
+  useEffect(() => {
+    if (initialLoading) return;
+
+    setIsFetching(true);
+
+    const params = new URLSearchParams();
+    if (debouncedSearch) params.append("search", debouncedSearch);
+    selectedMonths.forEach((m) => params.append("month", m));
+    selectedInstructors.forEach((i) => params.append("instructor", i));
+    selectedCategories.forEach((c) => params.append("category", c));
+
+    fetch(`http://127.0.0.1:8000/api/recorded-webinars/?${params}`)
+      .then((res) => res.json())
+      .then(setWebinars)
+      .finally(() => setIsFetching(false));
+  }, [
+    debouncedSearch,
+    selectedMonths,
+    selectedInstructors,
+    selectedCategories,
+    initialLoading,
+  ]);
+
+  /* ================= HELPERS ================= */
+  const toggleValue = (value, setState) => {
+    setState((prev) =>
+      prev.includes(value)
+        ? prev.filter((v) => v !== value)
+        : [...prev, value]
+    );
   };
 
-  const collapseAll = () => {
-    setOpenMonth(false);
-    setOpenSpeaker(false);
-    setOpenCategory(false);
+  const clearFilters = () => {
+    setSearch("");
+    setSelectedMonths([]);
+    setSelectedInstructors([]);
+    setSelectedCategories([]);
   };
 
-  if (loading) {
+  /* ================= INITIAL LOADER ================= */
+  if (initialLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-emerald-950 text-yellow-400">
-        Loading recorded webinars...
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="h-10 w-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-emerald-950 text-emerald-50">
+    <div className="min-h-screen bg-[#F7FBF9]">
 
-      {/* HEADER */}
-      <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-yellow-600 py-14 px-10">
-        <h1 className="text-3xl font-bold text-white flex items-center gap-2">
-          ▶ Recorded Webinars
-        </h1>
-      </div>
+      {/* ================= HEADER ================= */}
+      <header className="bg-gradient-to-r from-emerald-700 to-teal-600 py-16 px-6">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-4xl font-bold text-white mb-2">
+            Recorded Webinars
+          </h1>
+          <p className="text-emerald-100">
+            Learn anytime with on-demand expert sessions
+          </p>
 
-      {/* MAIN */}
-      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-10">
-
-        {/* FILTER SIDEBAR */}
-        <aside className="bg-emerald-900/60 backdrop-blur border border-emerald-800 rounded-xl p-5 h-fit sticky top-24">
-          <h3 className="font-semibold mb-4 text-yellow-400">Filter</h3>
-
-          {/* Search */}
-          <div className="mb-5">
-            <label className="text-sm font-medium">Search</label>
-            <div className="relative mt-2">
-              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-400" />
-              <input
-                placeholder="Search webinars..."
-                className="w-full pl-9 pr-3 py-2 rounded-lg bg-emerald-950 border border-emerald-700 focus:ring-2 focus:ring-yellow-400 text-sm"
-              />
-            </div>
+          <div className="mt-6 max-w-xl relative">
+            <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-500" />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search recorded webinars…"
+              className="w-full pl-12 pr-4 py-4 rounded-xl shadow focus:ring-2 focus:ring-emerald-400 outline-none"
+            />
           </div>
+        </div>
+      </header>
 
-          <FilterBlock title="Month" open={openMonth} toggle={() => setOpenMonth(!openMonth)} items={[]} />
-          <FilterBlock title="Speaker" open={openSpeaker} toggle={() => setOpenSpeaker(!openSpeaker)} items={[]} />
-          <FilterBlock title="Category" open={openCategory} toggle={() => setOpenCategory(!openCategory)} items={[]} />
+      {/* ================= MAIN ================= */}
+      <main className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-10">
 
-          <div className="flex justify-between text-sm text-yellow-400 mt-6">
-            <button onClick={expandAll}>Expand All</button>
-            <button onClick={collapseAll}>Collapse All</button>
+        {/* ================= SIDEBAR ================= */}
+        <aside>
+          <div className="bg-white rounded-2xl shadow p-6 sticky top-24">
+            <div className="flex items-center gap-2 mb-6">
+              <FiFilter className="text-emerald-600" />
+              <h3 className="font-semibold">Filters</h3>
+            </div>
+
+            <FilterBlock
+              title="Month"
+              open={openMonth}
+              toggle={() => setOpenMonth(!openMonth)}
+              items={filters.months}
+              selected={selectedMonths}
+              onToggle={(v) => toggleValue(v, setSelectedMonths)}
+            />
+
+            <FilterBlock
+              title="Instructor"
+              open={openInstructor}
+              toggle={() => setOpenInstructor(!openInstructor)}
+              items={filters.instructors}
+              selected={selectedInstructors}
+              onToggle={(v) => toggleValue(v, setSelectedInstructors)}
+            />
+
+            <FilterBlock
+              title="Category"
+              open={openCategory}
+              toggle={() => setOpenCategory(!openCategory)}
+              items={filters.categories}
+              selected={selectedCategories}
+              onToggle={(v) => toggleValue(v, setSelectedCategories)}
+            />
+
+            <button
+              onClick={clearFilters}
+              className="mt-6 w-full py-2 rounded-lg bg-emerald-100 text-emerald-700 font-medium"
+            >
+              Clear Filters
+            </button>
           </div>
         </aside>
 
-        {/* RESULTS */}
+        {/* ================= RESULTS ================= */}
         <section>
-
-          {/* TOP BAR */}
-          <div className="flex items-center justify-between mb-6">
-            <p className="font-semibold">
-              {recordedWebinars.length} recorded webinars
+          <div className="flex justify-between items-center mb-8">
+            <p className="font-medium">
+              {webinars.length} recorded sessions found
             </p>
 
-            <div className="flex items-center gap-2 bg-emerald-900 border border-emerald-800 rounded-lg p-1">
+            <div className="flex bg-white rounded-lg shadow">
               <button
                 onClick={() => setView("grid")}
-                className={`p-2 rounded ${
-                  view === "grid"
-                    ? "bg-yellow-400 text-emerald-950"
-                    : "text-emerald-300 hover:bg-emerald-800"
-                }`}
+                className={`p-2 ${view === "grid" && "text-emerald-600"}`}
               >
                 <FiGrid />
               </button>
               <button
                 onClick={() => setView("list")}
-                className={`p-2 rounded ${
-                  view === "list"
-                    ? "bg-yellow-400 text-emerald-950"
-                    : "text-emerald-300 hover:bg-emerald-800"
-                }`}
+                className={`p-2 ${view === "list" && "text-emerald-600"}`}
               >
                 <FiList />
               </button>
             </div>
           </div>
 
-          {/* GRID VIEW */}
-          {view === "grid" && (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {recordedWebinars.map((w) => (
-                <motion.div
-                  key={w.webinar_id}
-                  whileHover={{ y: -6 }}
-                  className="bg-emerald-900/60 border border-emerald-800 rounded-2xl overflow-hidden"
-                >
-                  <div className="relative h-48">
-                    <img
-                      src={w.image}
-                      className="w-full h-full object-cover"
-                      alt={w.title}
-                    />
-                    <span className="absolute top-3 right-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
-                      ON-DEMAND
-                    </span>
-                  </div>
-
-                  <div className="p-5 space-y-3">
-                    <h3 className="font-bold text-sm leading-snug">
-                      {w.title}
-                    </h3>
-
-                    <div className="flex items-center gap-2 text-sm">
-                      <img
-                        src={w.speakerImage}
-                        className="w-8 h-8 rounded-full"
-                      />
-                      {w.speaker}
-                    </div>
-
-                    <div className="flex items-center gap-2 text-sm text-emerald-300">
-                      <FiClock /> {w.duration}
-                    </div>
-
-                    <p className="text-green-400 text-sm">Available 24/7</p>
-
-                    <div className="flex items-center justify-between pt-3">
-                      <span className="font-bold text-yellow-400">
-                        {w.price}
-                      </span>
-                      <Link
-                        to={`/recorded-webinars/${w.webinar_id}`}
-                        className="px-4 py-2 text-sm bg-yellow-400 text-emerald-950 rounded-lg"
-                      >
-                        Details
-                      </Link>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          {isFetching && (
+            <p className="text-sm text-gray-500 mb-4">
+              Updating results…
+            </p>
           )}
 
-          {/* LIST VIEW */}
-          {view === "list" && (
-            <div className="space-y-6">
-              {recordedWebinars.map((w) => (
-                <motion.div
-                  key={w.webinar_id}
-                  whileHover={{ y: -4 }}
-                  className="bg-emerald-900/60 border border-emerald-800 rounded-2xl overflow-hidden flex flex-col md:flex-row"
-                >
-                  <div className="relative md:w-80 h-56 md:h-auto">
-                    <img
-                      src={w.image}
-                      className="w-full h-full object-cover"
-                      alt={w.title}
-                    />
-                    <span className="absolute top-4 left-4 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
-                      ON-DEMAND
-                    </span>
-                  </div>
-
-                  <div className="flex-1 p-6 flex justify-between gap-6">
-                    <div>
-                      <h3 className="text-lg font-bold mb-2">
-                        {w.title}
-                      </h3>
-
-                      <div className="text-sm space-y-2">
-                        <div className="flex items-center gap-2">
-                          <FiUser /> {w.speaker}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <FiClock /> {w.duration}
-                        </div>
-                        <p className="text-green-400">Available 24/7</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col items-end justify-between">
-                      <img
-                        src={w.speakerImage}
-                        className="w-12 h-12 rounded-full"
-                      />
-                      <div className="text-right">
-                        <p className="text-xl font-bold text-yellow-400">
-                          {w.price}
-                        </p>
-                        <Link
-                          to={`/recorded-webinars/${w.webinar_id}`}
-                          className="px-4 py-2 text-sm bg-yellow-400 text-emerald-950 rounded-lg"
-                        >
-                          Details
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {webinars.map((w) => (
+              <RecordedWebinarCard key={w.webinar_id} w={w} />
+            ))}
+          </div>
         </section>
-      </div>
+      </main>
     </div>
   );
 }
 
-/* ---------------- FILTER BLOCK ---------------- */
-function FilterBlock({ title, open, toggle, items }) {
+/* ================= FILTER BLOCK ================= */
+function FilterBlock({ title, open, toggle, items, selected, onToggle }) {
   return (
-    <div className="mb-4">
+    <div className="mb-5">
       <button
         onClick={toggle}
-        className="flex items-center justify-between w-full text-sm font-medium"
+        className="flex justify-between w-full font-medium text-sm mb-2"
       >
         {title}
         {open ? <FiChevronUp /> : <FiChevronDown />}
       </button>
 
-      {open && (
-        <div className="mt-3 space-y-2 text-sm text-emerald-300">
-          {items.map((item) => (
-            <label key={item} className="flex items-center gap-2">
-              <input type="checkbox" className="accent-yellow-400" />
-              {item}
-            </label>
-          ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="space-y-2"
+          >
+            {items.map((item) => (
+              <label
+                key={item.value}
+                className="flex justify-between items-center text-sm"
+              >
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={selected.includes(item.value)}
+                    onChange={() => onToggle(item.value)}
+                    className="accent-emerald-600"
+                  />
+                  {item.label}
+                </div>
+                <span className="text-xs text-gray-400">
+                  {item.count}
+                </span>
+              </label>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
+
+/* ================= CARD ================= */
+/* ================= CARD ================= */
+function RecordedWebinarCard({ w }) {
+  return (
+    <motion.div
+      whileHover={{ y: -8 }}
+      className="bg-white rounded-2xl shadow overflow-hidden"
+    >
+      {/* IMAGE */}
+      <div className="relative h-48">
+        <img
+          src={w.cover_image}
+          alt={w.title}
+          className="w-full h-full object-cover"
+        />
+
+        {/* ON DEMAND BADGE */}
+        <span className="absolute top-4 left-4 bg-indigo-600 text-white text-xs px-3 py-1 rounded-full font-semibold">
+          ON DEMAND
+        </span>
+      </div>
+
+      {/* CONTENT */}
+      <div className="p-6">
+        {/* TITLE */}
+        <h3 className="font-bold text-lg mb-3">{w.title}</h3>
+
+        {/* INSTRUCTOR ROW (TEXT LEFT • IMAGE RIGHT) */}
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <p className="text-sm font-semibold text-gray-900">
+              {w.instructor?.name}
+            </p>
+            <p className="text-xs text-gray-500">
+              {w.instructor?.designation}
+              {w.instructor?.organization &&
+                ` • ${w.instructor.organization}`}
+            </p>
+          </div>
+
+          <img
+            src={w.instructor?.photo}
+            alt={w.instructor?.name}
+            className="w-10 h-10 rounded-full object-cover border border-gray-200"
+          />
+        </div>
+
+        {/* DURATION */}
+        <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+          <FiClock />
+          {w.duration_minutes} min
+        </div>
+
+        {/* AVAILABILITY */}
+        <p className="text-xs text-emerald-600 font-medium mb-4">
+          24/7 Available • Watch Anytime
+        </p>
+
+        {/* PRICE + CTA */}
+        <div className="flex items-center justify-between">
+          <span className="text-emerald-600 font-bold text-lg">
+            ₹ {w.display_price || "—"}
+          </span>
+
+          <Link
+            to={`/recorded-webinars/${w.webinar_id}`}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm hover:bg-emerald-700"
+          >
+            Watch Now
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+
+  

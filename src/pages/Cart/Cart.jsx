@@ -9,52 +9,56 @@ export default function Cart() {
   const [isRemoving, setIsRemoving] = useState(null);
   const [isHoveringCheckout, setIsHoveringCheckout] = useState(false);
   const [animateItems, setAnimateItems] = useState(false);
-  const API_BASE = import.meta.env.VITE_API_BASE_URL;
+  
 
   const navigate = useNavigate();
   const { fetchCartCount } = useCart();
 
   /* ---------------- FETCH CART ---------------- */
   const fetchCart = async () => {
-  try {
-    const res = await fetch(`${API_BASE}/api/cart/`, {
-      credentials: "include",
-    });
+    try {
+      const res = await fetch("http://localhost:8000/api/cart/", {
+        credentials: "include",
+      });
+      const data = await res.json();
+      setCart(data);
+      
+      // Trigger item animations after data loads
+      setTimeout(() => setAnimateItems(true), 100);
+    } catch (err) {
+      console.error("Failed to load cart");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    if (!res.ok) throw new Error("Failed to fetch cart");
-
-    const data = await res.json();
-    setCart(data);
-    setTimeout(() => setAnimateItems(true), 100);
-  } catch (err) {
-    console.error("Failed to load cart", err);
-  } finally {
-    setLoading(false);
-  }
-};
   useEffect(() => {
     fetchCart();
   }, []);
 
   /* ---------------- REMOVE ITEM ---------------- */
   const removeItem = async (id) => {
-  setIsRemoving(id);
-  try {
-    await fetch(`${API_BASE}/api/cart/`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ item_id: id }),
-    });
+    setIsRemoving(id);
+    try {
+      await fetch("http://localhost:8000/api/cart/", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ item_id: id }),
+      });
 
-    await fetchCart();
-    await fetchCartCount();
-  } catch (err) {
-    console.error("Failed to remove item", err);
-  } finally {
-    setIsRemoving(null);
-  }
-};
+      // 🔥 update cart instantly
+      await fetchCart();
+
+      // 🔥 update navbar counter instantly
+      await fetchCartCount();
+    } catch (err) {
+      console.error("Failed to remove item");
+    } finally {
+      setIsRemoving(null);
+    }
+  };
+
   /* ---------------- LOADING ---------------- */
   if (loading) {
     return (
@@ -367,7 +371,7 @@ export default function Cart() {
       </div>
 
       {/* Custom Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes slideUp {
           from {
             opacity: 0;
