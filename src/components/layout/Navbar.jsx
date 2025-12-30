@@ -9,8 +9,12 @@ import {
   FiX,
   FiSearch,
   FiLogOut,
+  FiInfo,
+  FiVideo,
+  FiPlayCircle,
+  FiMail,
 } from "react-icons/fi";
-import logo from "../../assets/images/icons/logo5.jpeg";
+import logo from "../../assets/images/icons/final.jpeg";
 import { useCart } from "../../context/CartContext";
 
 const links = [
@@ -20,11 +24,20 @@ const links = [
   { label: "Contact", href: "/contact" },
 ];
 
+const mobileIcons = {
+  About: FiInfo,
+  "Live Webinars": FiVideo,
+  "Recorded Webinars": FiPlayCircle,
+  Contact: FiMail,
+};
+
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const [user, setUser] = useState(null);
   const location = useLocation();
+  
 
   const { cartCount, fetchCartCount } = useCart();
   const navigate = useNavigate();
@@ -222,19 +235,43 @@ export default function Navbar() {
           </div>
 
           {/* MOBILE TOGGLE */}
-          <button onClick={() => setOpen(!open)} className="lg:hidden text-gray-900">
-            {open ? <FiX /> : <FiMenu />}
-          </button>
+          <div className="lg:hidden flex items-center gap-4">
+
+  {/* CART */}
+  <Link to="/cart" className="relative">
+    <FiShoppingCart className="text-gray-800 text-lg" />
+    {cartCount > 0 && (
+      <span className="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs font-bold px-2 rounded-full">
+        {cartCount}
+      </span>
+    )}
+  </Link>
+
+  {/* TOGGLE */}
+  <motion.button
+    onClick={() => setOpen(!open)}
+    animate={{
+      rotate: open ? 90 : 0,
+      scale: open ? 1.1 : 1,
+    }}
+    transition={{ type: "spring", stiffness: 260, damping: 18 }}
+    className="text-gray-900"
+  >
+    {open ? <FiX /> : <FiMenu />}
+  </motion.button>
+</div>
+
+
         </div>
 
         {/* MOBILE MENU */}
         <AnimatePresence>
           {open && (
             <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.25 }}
               className="
                 lg:hidden
                 bg-white
@@ -242,25 +279,207 @@ export default function Navbar() {
               "
             >
               <div className="px-4 py-6 space-y-3">
-                {links.map((link, index) => (
-                  <NavLink
-                    key={index}
-                    to={link.href}
-                    onClick={() => setOpen(false)}
-                    className="block p-3 rounded-xl text-gray-800 hover:bg-emerald-50"
-                  >
-                    {link.label}
-                  </NavLink>
-                ))}
+              <Link
+  to="/cart"
+  onClick={() => setOpen(false)}
+  className="
+    flex items-center gap-4
+  p-4 rounded-xl
+  bg-emerald-50
+  border border-emerald-200
+  transition-all duration-200
+  hover:bg-emerald-100
+  hover:shadow-sm
+  active:scale-[0.98]
+  "
+>
+  <div className="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white">
+    <FiShoppingCart />
+  </div>
 
-                {user && (
-                  <button
-                    onClick={handleLogout}
-                    className="w-full p-3 rounded-xl text-white bg-emerald-600 hover:bg-emerald-700 text-left"
-                  >
-                    Logout
-                  </button>
-                )}
+  <div className="flex-1">
+    <p className="font-semibold text-gray-900">Your Cart</p>
+    <p className="text-sm text-gray-600">
+      {cartCount} {cartCount === 1 ? "item" : "items"}
+    </p>
+  </div>
+
+  <span className="text-gray-400">›</span>
+</Link>
+
+<p className="mt-6 mb-3 text-xs font-bold tracking-widest text-gray-500">
+  WEBINARS
+</p>
+
+<div className="grid grid-cols-2 gap-4">
+  {/* LIVE */}
+  <Link
+    to="/live-webinars"
+    onClick={() => setOpen(false)}
+    className="p-4 rounded-xl
+  bg-gray-50
+  transition-all duration-200
+  hover:bg-gray-100
+  hover:shadow-sm
+  active:scale-[0.98]"
+  >
+    <div className="flex items-start gap-3">
+  {/* ICON */}
+  <div className="text-red-500 text-lg mt-1">
+    🔴
+  </div>
+
+  {/* TEXT */}
+  <div>
+    <p className="font-semibold text-gray-900">
+      Live Webinars 
+      <span className="
+    inline-flex items-center gap-1
+  px-2 py-0.5 text-xs font-semibold
+  rounded-full bg-red-100 text-red-600
+  transition
+  hover:shadow-sm
+  ">
+    <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+    LIVE
+  </span>
+    </p>
+    <p className="text-xs text-gray-600 mt-1">
+      Interactive real-time sessions
+    </p>
+  </div>
+</div>
+
+  </Link>
+
+  {/* RECORDED */}
+  <Link
+    to="/recorded-webinars"
+    onClick={() => setOpen(false)}
+    className="p-4 rounded-xl bg-gray-50 hover:bg-gray-100"
+  >
+    <div className="flex items-start gap-3">
+  {/* ICON */}
+  <div className="text-blue-500 text-lg mt-1">
+    ▶
+  </div>
+
+  {/* TEXT */}
+  <div>
+    <p className="font-semibold text-gray-900">
+      Recorded Webinars
+      <span className="
+    inline-flex items-center gap-1
+  px-2 py-0.5 text-xs font-semibold
+  rounded-full bg-blue-100 text-blue-600
+  transition
+  hover:shadow-sm
+  ">
+    ON DEMAND
+  </span>
+    </p>
+    <p className="text-xs text-gray-600 mt-1">
+      Access anytime, anywhere
+    </p>
+  </div>
+</div>
+
+  </Link>
+</div>
+
+<p className="mt-6 mb-3 text-xs font-bold tracking-widest text-gray-500">
+  NAVIGATION
+</p>
+
+<div className="space-y-3">
+
+  {/* ABOUT */}
+  <NavLink
+    to="/about"
+    onClick={() => setOpen(false)}
+    className="flex items-center gap-3
+  text-gray-800 font-medium
+  transition
+  hover:text-emerald-700
+  active:scale-[0.97]"
+  >
+    <FiInfo className="text-emerald-600 text-lg" />
+    About
+  </NavLink>
+
+  {/* CONTACT */}
+  <NavLink
+    to="/contact"
+    onClick={() => setOpen(false)}
+    className="flex items-center gap-3
+  text-gray-800 font-medium
+  transition
+  hover:text-emerald-700
+  active:scale-[0.97]"
+  >
+    <FiMail className="text-emerald-600 text-lg" />
+    Contact
+  </NavLink>
+
+</div>
+
+
+<div className="mt-8 pt-6 border-t border-gray-200 space-y-4 text-center">
+
+  {!user && (
+    <>
+      <Link
+        to="/login"
+        onClick={() => setOpen(false)}
+        className="block text-gray-800 font-medium
+  transition
+  hover:text-emerald-700
+  active:scale-[0.97]"
+      >
+        Login
+      </Link>
+
+      <Link
+        to="/signup"
+        onClick={() => setOpen(false)}
+        className="
+          block w-full py-3 rounded-xl
+  text-white font-semibold
+  bg-emerald-600
+  transition-all duration-200
+  hover:bg-emerald-700
+  hover:shadow-md
+  active:scale-[0.98]
+        "
+      >
+        Signup →
+      </Link>
+    </>
+  )}
+
+  {user && (
+  <button
+    onClick={handleLogout}
+    className="
+      w-full py-3 rounded-xl
+  bg-emerald-600 text-white
+  flex items-center justify-center gap-3
+  transition-all duration-200
+  hover:bg-emerald-700
+  active:scale-[0.98]
+    "
+  >
+    <FiLogOut className="text-lg" />
+    Logout
+  </button>
+)}
+
+</div>
+
+
+
+        
+                
               </div>
             </motion.div>
           )}
@@ -268,4 +487,4 @@ export default function Navbar() {
       </div>
     </nav>
   );
-}
+}  

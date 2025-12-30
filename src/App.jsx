@@ -39,10 +39,7 @@ export default function App() {
         {/* <Route path="/live-webinars/details" element={<LiveWebinarDetails />} /> */}
 
         <Route path="/recorded-webinars" element={<RecordedWebinars />} />
-       <Route
-  path="/recorded-webinars/:webinar_id"
-  element={<RecordedWebinarDetails />}
-/>
+        <Route path="/recorded-webinars/:webinar_id" element={<RecordedWebinarDetails />}/>
        
         <Route path="/cart" element={<Cart />} />
 
