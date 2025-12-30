@@ -14,11 +14,12 @@ import {
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 
 /* ================= PAGE ================= */
 export default function LiveWebinars() {
   const navigate = useNavigate();
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
   /* ---------- DATA ---------- */
   const [webinars, setWebinars] = useState([]);

@@ -202,7 +202,7 @@ export default function PricingAside({
         <div className="space-y-2">
           <button
             disabled={isAddingToCart}
-            onClick={() => addToCart(false)}
+            onClick={() => addToCart(true)}
             className="
               w-full py-2.5 rounded-xl font-semibold text-sm
               bg-emerald-600 text-white

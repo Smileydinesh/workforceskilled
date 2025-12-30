@@ -19,6 +19,7 @@ import logo from "../../assets/images/icons/final.jpeg";
 export default function Login() {
   const navigate = useNavigate();
 
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
   /* ---------------- STATE ---------------- */
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +34,7 @@ export default function Login() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:8000/api/accounts/login/", {
+      const res = await fetch(`${API_BASE}/api/accounts/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

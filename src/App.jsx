@@ -19,7 +19,8 @@ import ScrollToTop from "./components/common/ScrollToTop";
 import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import RecordedWebinarDetails from "./pages/Webinars/RecordedWebinarDetails";
-
+import ForgotPassword from "./pages/Auth/ForgotPassword";
+import ResetPassword from "./pages/Auth/ResetPassword";
 
 
 
@@ -56,6 +57,8 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         {/* TEMP fallback to avoid blank screen */}
         <Route

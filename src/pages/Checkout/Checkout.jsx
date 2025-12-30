@@ -22,11 +22,15 @@ import {
 
 export default function Checkout() {
   const navigate = useNavigate();
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
+  
 
   const [loading, setLoading] = useState(true);
   const [cart, setCart] = useState({ items: [], total: 0 });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeField, setActiveField] = useState(null);
+
 
   const [form, setForm] = useState({
     first_name: "",
@@ -65,7 +69,7 @@ export default function Checkout() {
   const fetchCheckoutData = async () => {
     try {
       const res = await fetch(
-        "http://localhost:8000/api/orders/checkout/",
+        `${API_BASE}/api/orders/checkout/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -123,7 +127,7 @@ export default function Checkout() {
     
     try {
       const res = await fetch(
-        "http://localhost:8000/api/orders/checkout/",
+        `${API_BASE}/api/orders/checkout/`,
         {
           method: "POST",
           headers: {

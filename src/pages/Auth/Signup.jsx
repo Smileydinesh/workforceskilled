@@ -21,6 +21,7 @@ import countryData from "country-data";
 
 export default function Signup() {
   const navigate = useNavigate();
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
   /* ---------------- COUNTRIES ---------------- */
   const countries = useMemo(() => {
@@ -191,7 +192,7 @@ export default function Signup() {
     };
 
     try {
-      const res = await fetch("http://localhost:8000/api/accounts/register/", {
+      const res = await fetch(`${API_BASE}/api/accounts/register/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

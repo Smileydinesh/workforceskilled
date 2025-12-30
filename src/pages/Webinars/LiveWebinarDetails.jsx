@@ -7,7 +7,7 @@ import WebinarContent from "./WebinarContent";
 import PricingAside from "./PricingAside";
 import MeetYourSpeaker from "./MeetYourSpeaker";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 
 
 
@@ -15,6 +15,7 @@ export default function LiveWebinarDetails() {
   const { webinar_id } = useParams();
   const navigate = useNavigate();
   const { fetchCartCount } = useCart();
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
   const [webinar, setWebinar] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -43,25 +44,39 @@ export default function LiveWebinarDetails() {
   }, [webinar_id]);
 
   const addToCart = async (redirect = false) => {
-    setIsAddingToCart(true);
-    try {
-      await fetch(`${API_BASE}/api/cart/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          webinar_id: webinar.webinar_id,
-          purchase_type: selectedPlan.type,
-        }),
-      });
-      await fetchCartCount();
-      if (redirect) navigate("/cart");
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsAddingToCart(false);
-    }
-  };
+  console.log("ADD TO CART CLICK");
+
+  if (!selectedPlan || !webinar) {
+    console.error("Missing data", { selectedPlan, webinar });
+    return;
+  }
+
+  setIsAddingToCart(true);
+
+  try {
+    const res = await fetch(`${API_BASE}/api/cart/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        webinar_id: webinar.webinar_id,
+        purchase_type: selectedPlan.type,
+        webinar_type: "LIVE",
+      }),
+    });
+
+    console.log("ADD CART RESPONSE:", res.status);
+
+    await fetchCartCount();
+    if (redirect) navigate("/cart");
+
+  } catch (err) {
+    console.error("ADD CART ERROR:", err);
+  } finally {
+    setIsAddingToCart(false);
+  }
+};
+
 
   if (loading || !webinar) return null;
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FiTrash2, FiShoppingCart, FiChevronRight, FiShield, FiLock, FiArrowLeft, FiZap, FiCheckCircle, FiPackage } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 
 
 export default function Cart() {
@@ -15,6 +15,7 @@ export default function Cart() {
 
   const navigate = useNavigate();
   const { fetchCartCount } = useCart();
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
   /* ---------------- FETCH CART ---------------- */
   const fetchCart = async () => {
@@ -95,7 +96,7 @@ export default function Cart() {
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
             <button 
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/live-webinars")}
               className="flex items-center gap-1 hover:text-emerald-600 transition-colors duration-300"
             >
               <FiArrowLeft className="text-xs" />

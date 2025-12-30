@@ -13,13 +13,14 @@ import {
   FiPlayCircle,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 
 
 /* ================= PAGE ================= */
 export default function RecordedWebinars() {
   /* ---------- VIEW ---------- */
   const [view, setView] = useState("grid");
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
   /* ---------- DATA ---------- */
   const [webinars, setWebinars] = useState([]);
