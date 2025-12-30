@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+
+
 import {
   FiUser,
   FiMail,
@@ -9,16 +11,18 @@ import {
   FiBriefcase,
   FiEye,
   FiEyeOff,
+  FiArrowLeft,
+  FiChevronRight
 } from "react-icons/fi";
 import { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/images/icons/logo5.jpeg";
-import countryData from "country-data"; // You'll need to install: npm install country-data
+import logo from "../../assets/images/icons/final.jpeg";
+import countryData from "country-data";
 
 export default function Signup() {
   const navigate = useNavigate();
 
-  // Get all countries with full data
+  /* ---------------- COUNTRIES ---------------- */
   const countries = useMemo(() => {
     const allCountries = countryData.countries.all;
     return Object.values(allCountries)
@@ -34,11 +38,19 @@ export default function Signup() {
       .sort((a, b) => a.name.localeCompare(b.name));
   }, []);
 
-  const [selectedCountry, setSelectedCountry] = useState(countries[0]);
+  
+
+  /* ---------------- DEFAULT US ---------------- */
+  const usCountry = countries.find(c => c.alpha2 === "US") || countries[0];
+
+  const [selectedCountry, setSelectedCountry] = useState(usCountry);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [countrySearch, setCountrySearch] = useState("");
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -50,43 +62,108 @@ export default function Signup() {
     agreeTerms: false,
   });
 
+
+
+  const filteredCountries = useMemo(
+    () =>
+      countries.filter((c) =>
+        c.name.toLowerCase().includes(countrySearch.toLowerCase())
+      ),
+    [countries, countrySearch]
+  );
+
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [strengthText, setStrengthText] = useState("");
+
+  /* ---------------- CALCULATE PROGRESS ---------------- */
+  useEffect(() => {
+    let filledFields = 0;
+    const totalFields = 7; // firstName, lastName, email, company, country, phone, password
+    
+    if (formData.firstName.trim()) filledFields++;
+    if (formData.lastName.trim()) filledFields++;
+    if (formData.email.trim()) filledFields++;
+    if (formData.company.trim()) filledFields++;
+    if (selectedCountry) filledFields++;
+    if (phoneNumber.trim()) filledFields++;
+    if (formData.password.trim()) filledFields++;
+    
+    setProgress(Math.round((filledFields / totalFields) * 100));
+  }, [formData, selectedCountry, phoneNumber]);
+
+  useEffect(() => {
+  const closeDropdown = () => setShowCountryDropdown(false);
+  window.addEventListener("click", closeDropdown);
+  return () => window.removeEventListener("click", closeDropdown);
+}, []);
 
   /* ---------------- PASSWORD STRENGTH ---------------- */
   useEffect(() => {
     let strength = 0;
     const p = formData.password;
+    const requirements = [];
+
+    if (p.length >= 8) {
+      strength += 20;
+      requirements.push("✓ 8+ characters");
+    } else {
+      requirements.push("✗ 8+ characters");
+    }
     
-    if (p.length >= 8) strength += 25;
-    if (/[A-Z]/.test(p)) strength += 25;
-    if (/[a-z]/.test(p)) strength += 25;
-    if (/\d/.test(p)) strength += 25;
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(p)) strength += 25;
+    if (/[A-Z]/.test(p)) {
+      strength += 20;
+      requirements.push("✓ Uppercase letter");
+    } else {
+      requirements.push("✗ Uppercase letter");
+    }
     
-    // Cap at 100
+    if (/[a-z]/.test(p)) {
+      strength += 20;
+      requirements.push("✓ Lowercase letter");
+    } else {
+      requirements.push("✗ Lowercase letter");
+    }
+    
+    if (/\d/.test(p)) {
+      strength += 20;
+      requirements.push("✓ Number");
+    } else {
+      requirements.push("✗ Number");
+    }
+    
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(p)) {
+      strength += 20;
+      requirements.push("✓ Special character");
+    } else {
+      requirements.push("✗ Special character");
+    }
+
     strength = Math.min(strength, 100);
     setPasswordStrength(strength);
-    
-    // Set strength text
-    if (p.length === 0) setStrengthText("");
-    else if (strength < 50) setStrengthText("Weak");
-    else if (strength < 75) setStrengthText("Fair");
-    else if (strength < 90) setStrengthText("Good");
-    else setStrengthText("Strong");
+
+    if (!p) {
+      setStrengthText("");
+    } else if (strength < 50) {
+      setStrengthText("Weak");
+    } else if (strength < 75) {
+      setStrengthText("Fair");
+    } else if (strength < 90) {
+      setStrengthText("Good");
+    } else {
+      setStrengthText("Strong");
+    }
   }, [formData.password]);
 
   /* ---------------- HANDLERS ---------------- */
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const handlePhoneChange = (e) => {
-    // Allow only numbers and + for international format
     const value = e.target.value.replace(/[^\d+]/g, "");
     setPhoneNumber(value);
   };
@@ -128,15 +205,14 @@ export default function Signup() {
         return;
       }
 
-      // Optional: store token if returned
       if (data.access) {
         localStorage.setItem("access_token", data.access);
         localStorage.setItem("refresh_token", data.refresh);
       }
 
-      alert("Account created successfully 🎉");
+      alert("Account created successfully");
       navigate("/login");
-    } catch (err) {
+    } catch {
       alert("Server error. Please try again.");
     } finally {
       setLoading(false);
@@ -144,342 +220,433 @@ export default function Signup() {
   };
 
   const strengthColor = () => {
-    if (passwordStrength < 50) return "bg-gradient-to-r from-red-500 to-red-600";
-    if (passwordStrength < 75) return "bg-gradient-to-r from-yellow-500 to-yellow-600";
-    return "bg-gradient-to-r from-green-500 to-emerald-600";
+    if (passwordStrength < 50) return "bg-red-500";
+    if (passwordStrength < 75) return "bg-yellow-400";
+    return "bg-emerald-500";
+  };
+
+  const strengthTextColor = () => {
+    if (passwordStrength < 50) return "text-red-500";
+    if (passwordStrength < 75) return "text-yellow-500";
+    return "text-emerald-500";
   };
 
   /* ---------------- UI ---------------- */
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-950 via-emerald-900 to-amber-900 flex items-center justify-center px-4 py-8 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-emerald-500/5 to-amber-500/5 rounded-full blur-3xl"></div>
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-100 flex flex-col items-center justify-center px-4 py-6">
+      {/* Back Button */}
+      <div className="w-full max-w-4xl mb-6">
+        <Link 
+          to="/login" 
+          className="inline-flex items-center text-emerald-700 hover:text-emerald-800 font-medium"
+        >
+          <FiArrowLeft className="mr-2" />
+          Back to Sign In
+        </Link>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-2xl bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl shadow-black/30 relative overflow-hidden"
-      >
-        {/* Header with logo and title */}
-        <div className="p-6 border-b border-white/10 bg-gradient-to-r from-emerald-900/50 to-amber-900/50">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-emerald-500 to-amber-400 flex items-center justify-center shadow-lg">
-              <img 
-                src={logo} 
-                alt="WorkforceSkilled Logo" 
-                className="w-10 h-10 rounded-md object-cover"
+      <div className="w-full max-w-4xl">
+
+      <div className="mb-10 text-center">
+  <img
+    src={logo}
+    alt="Logo"
+    className="mx-auto w-16 h-16 rounded-xl object-cover mb-4"
+  />
+
+  <h1 className="text-3xl font-bold text-emerald-700">
+    Create Your Account
+  </h1>
+
+  <p className="text-gray-500 mt-1">
+    Join thousands of learners and instructors in our comprehensive educational platform. Start your learning journey today.
+  </p>
+
+</div>
+
+
+        {/* Left Panel - Welcome Message */}
+        
+
+        {/* Right Panel - Registration Form */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-2xl shadow-xl p-8"
+        >
+          {/* Progress Bar */}
+          <div className="mb-8">
+            <div className="flex justify-between items-center mb-2">
+            
+              <h3 className="text-lg font-semibold text-gray-700">Registration Progress</h3>
+              <span className="text-emerald-600 font-bold">{progress}%</span>
+            </div>
+            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+              <motion.div 
+                className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600"
+                initial={{ width: "0%" }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.5 }}
               />
             </div>
-            <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-300 to-amber-300 bg-clip-text text-transparent">
-                WorkforceSkilled
-              </h1>
-              <p className="text-emerald-200/80 text-sm font-light mt-1">
-                Create your account and start your learning journey
-              </p>
-            </div>
           </div>
-        </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          {/* Personal Information */}
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-white/90 flex items-center gap-2">
-              <div className="w-1 h-6 bg-gradient-to-b from-emerald-400 to-amber-400 rounded-full"></div>
-              Personal Information
-            </h2>
-            
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-transparent rounded-xl blur-sm group-hover:blur-md transition-all duration-300"></div>
-                <div className="relative bg-white/5 border border-white/10 rounded-xl p-1">
-                  <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-300" />
-                  <input
-                    name="firstName"
-                    placeholder="First Name"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    className="w-full bg-transparent pl-10 pr-4 py-3 text-white placeholder:text-white/50 focus:outline-none"
-                    required
-                  />
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Personal Information Section */}
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                  <FiUser className="w-3 h-3" />
                 </div>
+                <h3 className="text-lg font-semibold text-gray-700">Personal Information</h3>
               </div>
               
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-transparent rounded-xl blur-sm group-hover:blur-md transition-all duration-300"></div>
-                <div className="relative bg-white/5 border border-white/10 rounded-xl p-1">
-                  <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-300" />
-                  <input
-                    name="lastName"
-                    placeholder="Last Name"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    className="w-full bg-transparent pl-10 pr-4 py-3 text-white placeholder:text-white/50 focus:outline-none"
-                    required
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    First Name*
+                  </label>
+                  <div className="relative">
+                    {/* <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> */}
+                    <input 
+                      name="firstName" 
+                      placeholder="Enter your first name" 
+                      value={formData.firstName} 
+                      onChange={handleInputChange} 
+                      required 
+                      className="pl-10 input"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Last Name*
+                  </label>
+                  <div className="relative">
+                    {/* <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> */}
+                    <input 
+                      name="lastName" 
+                      placeholder="Enter your last name" 
+                      value={formData.lastName} 
+                      onChange={handleInputChange} 
+                      required 
+                      className="pl-10 input"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address*
+                </label>
+                <div className="relative">
+                  {/* <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> */}
+                  <input 
+                    name="email" 
+                    type="email" 
+                    placeholder="Enter your email address" 
+                    value={formData.email} 
+                    onChange={handleInputChange} 
+                    required 
+                    className="pl-10 input"
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  We'll use this for account verification and notifications
+                </p>
+              </div>
+
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Company
+                </label>
+                <div className="relative">
+                  {/* <FiBriefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> */}
+                  <input 
+                    name="company" 
+                    placeholder="Enter your company name" 
+                    value={formData.company} 
+                    onChange={handleInputChange} 
+                    className="pl-10 input"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-amber-500/10 rounded-xl blur-sm group-hover:blur-md transition-all duration-300"></div>
-              <div className="relative bg-white/5 border border-white/10 rounded-xl p-1">
-                <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-300" />
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="Email Address"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full bg-transparent pl-10 pr-4 py-3 text-white placeholder:text-white/50 focus:outline-none"
-                  required
-                />
+            {/* Contact Information Section */}
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                  <FiGlobe className="w-3 h-3" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-700">Contact Information</h3>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-4">
+    <div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Country*
+  </label>
+
+  <div
+    className="relative"
+    onClick={(e) => e.stopPropagation()}
+  >
+    {/* Trigger Field */}
+    <div
+      onClick={() => setShowCountryDropdown((v) => !v)}
+      className="pl-10 pr-10 input cursor-pointer flex items-center"
+    >
+      {selectedCountry.name}
+    </div>
+
+    {/* <FiGlobe className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" /> */}
+    <FiChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 rotate-90 text-gray-400 w-5 h-5" />
+
+    {/* Dropdown */}
+    {showCountryDropdown && (
+      <div className="absolute z-20 mt-2 w-full rounded-xl border bg-white shadow-lg">
+
+        {/* SEARCH BAR (this was missing) */}
+        <div className="p-2 border-b">
+          <input
+            type="text"
+            value={countrySearch}
+            onChange={(e) => setCountrySearch(e.target.value)}
+            placeholder="Search options..."
+            className="w-full px-3 py-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-400"
+          />
+        </div>
+
+        {/* LIST */}
+        <div className="max-h-60 overflow-auto">
+          {filteredCountries.length > 0 ? (
+            filteredCountries.map((c) => (
+              <button
+                key={c.name}
+                type="button"
+                onClick={() => {
+                  setSelectedCountry(c);
+                  setCountrySearch("");
+                  setShowCountryDropdown(false);
+                }}
+                className="w-full text-left px-4 py-2 text-sm hover:bg-emerald-50"
+              >
+                {c.name}
+              </button>
+            ))
+          ) : (
+            <div className="px-4 py-2 text-sm text-gray-500">
+              No country found
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+  </div>
+</div>
+
+
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone Number*
+                  </label>
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      {/* <FiPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> */}
+                      <input 
+                        placeholder="Enter your phone number" 
+                        value={phoneNumber} 
+                        onChange={handlePhoneChange} 
+                        required 
+                        className="pl-10 input"
+                      />
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Format: {selectedCountry.code} XXX XXX XXXX
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-emerald-500/10 rounded-xl blur-sm group-hover:blur-md transition-all duration-300"></div>
-              <div className="relative bg-white/5 border border-white/10 rounded-xl p-1">
-                <FiBriefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-300" />
-                <input
-                  name="company"
-                  placeholder="Company (Optional)"
-                  value={formData.company}
-                  onChange={handleInputChange}
-                  className="w-full bg-transparent pl-10 pr-4 py-3 text-white placeholder:text-white/50 focus:outline-none"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Contact Information */}
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-white/90 flex items-center gap-2">
-              <div className="w-1 h-6 bg-gradient-to-b from-amber-400 to-emerald-400 rounded-full"></div>
-              Contact Information
-            </h2>
-            
-            <div className="grid md:grid-cols-2 gap-4">
-              {/* Country Selector */}
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-transparent rounded-xl blur-sm group-hover:blur-md transition-all duration-300"></div>
-                <div className="relative bg-white/5 border border-white/10 rounded-xl p-1">
-                  <FiGlobe className="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-300 z-10" />
-                  <select
-                    className="w-full bg-transparent pl-10 pr-4 py-3 text-white focus:outline-none appearance-none cursor-pointer"
-                    value={selectedCountry.name}
-                    onChange={(e) =>
-                      setSelectedCountry(
-                        countries.find((c) => c.name === e.target.value)
-                      )
-                    }
-                  >
-                    {countries.map((c) => (
-                      <option key={c.name} value={c.name} className="bg-slate-900 text-white">
-                        {c.name}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <span className="text-xl">{selectedCountry.flag}</span>
-                  </div>
+            {/* Account Security Section */}
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-6 h-6 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                  <FiLock className="w-3 h-3" />
                 </div>
+                <h3 className="text-lg font-semibold text-gray-700">Account Security</h3>
               </div>
-
-              {/* Phone Number Input */}
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-transparent rounded-xl blur-sm group-hover:blur-md transition-all duration-300"></div>
-                <div className="relative bg-white/5 border border-white/10 rounded-xl p-1">
-                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
-                    <span className="text-xl">{selectedCountry.flag}</span>
-                    <span className="text-emerald-300 font-medium">{selectedCountry.code}</span>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Password*
+                  </label>
+                  <div className="relative">
+                    {/* <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> */}
+                    <input 
+                      type={showPassword ? "text" : "password"} 
+                      name="password" 
+                      placeholder="Create a strong password" 
+                      value={formData.password} 
+                      onChange={handleInputChange} 
+                      required 
+                      className="pl-10 pr-10 input"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    >
+                      {showPassword ? <FiEyeOff className="w-5 h-5" /> : <FiEye className="w-5 h-5" />}
+                    </button>
                   </div>
-                  <FiPhone className="absolute left-16 top-1/2 transform -translate-y-1/2 text-white/50 text-sm" />
-                  <input
-                    className="w-full bg-transparent pl-24 pr-4 py-3 text-white placeholder:text-white/50 focus:outline-none"
-                    placeholder="Phone Number"
-                    value={phoneNumber}
-                    onChange={handlePhoneChange}
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Security Information */}
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-white/90 flex items-center gap-2">
-              <div className="w-1 h-6 bg-gradient-to-b from-emerald-400 to-yellow-400 rounded-full"></div>
-              Security Information
-            </h2>
-
-            {/* Password Input */}
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-yellow-500/10 rounded-xl blur-sm group-hover:blur-md transition-all duration-300"></div>
-              <div className="relative bg-white/5 border border-white/10 rounded-xl p-1">
-                <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-300" />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  className="w-full bg-transparent pl-10 pr-12 py-3 text-white placeholder:text-white/50 focus:outline-none"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white transition-colors"
-                >
-                  {showPassword ? <FiEyeOff /> : <FiEye />}
-                </button>
-              </div>
-            </div>
-
-            {/* Password Strength Meter */}
-            {formData.password && (
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-white/70">Password Strength</span>
-                  <span className={`font-medium ${
-                    passwordStrength < 50 ? "text-red-400" :
-                    passwordStrength < 75 ? "text-yellow-400" :
-                    "text-green-400"
-                  }`}>
-                    {strengthText}
-                  </span>
-                </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${passwordStrength}%` }}
-                    transition={{ duration: 0.3 }}
-                    className={`h-full ${strengthColor()} rounded-full`}
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-xs text-white/50">
-                  <div className="flex items-center gap-1">
-                    <div className={`w-1.5 h-1.5 rounded-full ${formData.password.length >= 8 ? 'bg-emerald-400' : 'bg-white/20'}`}></div>
-                    <span>8+ characters</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className={`w-1.5 h-1.5 rounded-full ${/[A-Z]/.test(formData.password) ? 'bg-emerald-400' : 'bg-white/20'}`}></div>
-                    <span>Uppercase letter</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className={`w-1.5 h-1.5 rounded-full ${/[a-z]/.test(formData.password) ? 'bg-emerald-400' : 'bg-white/20'}`}></div>
-                    <span>Lowercase letter</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className={`w-1.5 h-1.5 rounded-full ${/\d/.test(formData.password) ? 'bg-emerald-400' : 'bg-white/20'}`}></div>
-                    <span>Number</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Confirm Password Input */}
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-emerald-500/10 rounded-xl blur-sm group-hover:blur-md transition-all duration-300"></div>
-              <div className="relative bg-white/5 border border-white/10 rounded-xl p-1">
-                <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-yellow-300" />
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                  className="w-full bg-transparent pl-10 pr-12 py-3 text-white placeholder:text-white/50 focus:outline-none"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white transition-colors"
-                >
-                  {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Terms and Submit */}
-          <div className="space-y-6 pt-4">
-            <label className="flex items-start gap-3 group cursor-pointer">
-              <div className="relative mt-1">
-                <input
-                  type="checkbox"
-                  name="agreeTerms"
-                  checked={formData.agreeTerms}
-                  onChange={handleInputChange}
-                  required
-                  className="sr-only"
-                />
-                <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all duration-200 ${
-                  formData.agreeTerms 
-                    ? 'bg-gradient-to-r from-emerald-500 to-amber-500 border-transparent' 
-                    : 'border-white/30 group-hover:border-emerald-400'
-                }`}>
-                  {formData.agreeTerms && (
-                    <FiCheck className="text-white text-sm" />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Must be at least 8 characters with uppercase, lowercase, and number
+                  </p>
+                  
+                  {/* Password Requirements */}
+                  {formData.password && (
+                    <div className="mt-3">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-sm font-medium text-gray-700">Password Strength</span>
+                        <span className={`text-sm font-semibold ${strengthTextColor()}`}>
+                          {strengthText}
+                        </span>
+                      </div>
+                      <div className="h-2 bg-gray-200 rounded-full overflow-hidden mb-2">
+                        <div 
+                          className={`h-full ${strengthColor()} transition-all duration-300`}
+                          style={{ width: `${passwordStrength}%` }}
+                        />
+                      </div>
+                    </div>
                   )}
                 </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Confirm Password*
+                  </label>
+                  <div className="relative">
+                    {/* <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> */}
+                    <input 
+                      type={showConfirmPassword ? "text" : "password"} 
+                      name="confirmPassword" 
+                      placeholder="Confirm your password" 
+                      value={formData.confirmPassword} 
+                      onChange={handleInputChange} 
+                      required 
+                      className="pl-10 pr-10 input"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    >
+                      {showConfirmPassword ? <FiEyeOff className="w-5 h-5" /> : <FiEye className="w-5 h-5" />}
+                    </button>
+                  </div>
+                </div>
               </div>
-              <span className="text-sm text-white/80 leading-relaxed">
-                I agree to the{" "}
-                <span className="text-emerald-300 hover:text-emerald-200 transition-colors cursor-pointer">
-                  Terms of Service
-                </span>{" "}
-                and{" "}
-                <span className="text-amber-300 hover:text-amber-200 transition-colors cursor-pointer">
-                  Privacy Policy
-                </span>{" "}
-                of WorkforceSkilled
-              </span>
-            </label>
+            </div>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+            {/* Terms and Conditions */}
+            <div className="pt-4 border-t border-gray-200">
+              <label className="flex items-start gap-3">
+                <div className="relative mt-1">
+                  <input 
+                    type="checkbox" 
+                    name="agreeTerms" 
+                    checked={formData.agreeTerms} 
+                    onChange={handleInputChange} 
+                    required 
+                    className="w-5 h-5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                  />
+                  <FiCheck className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 text-white pointer-events-none" />
+                </div>
+                <span className="text-sm text-gray-600">
+                  I agree to the{" "}
+                  <Link to="/terms-and-conditions" className="text-emerald-600 font-medium hover:underline">
+                    Terms of Service
+                  </Link>{" "}
+                  and{" "}
+                  <Link to="/privacy-policy" className="text-emerald-600 font-medium hover:underline">
+                    Privacy Policy
+                  </Link>
+                  *
+                </span>
+              </label>
+            </div>
+
+            {/* Submit Button */}
+            <button
               type="submit"
               disabled={loading || !formData.agreeTerms}
-              className={`w-full py-4 rounded-xl font-semibold text-white transition-all duration-300 ${
+              className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 ${
                 loading || !formData.agreeTerms
-                  ? 'bg-gradient-to-r from-emerald-900/50 to-amber-900/50 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-emerald-600 to-amber-600 hover:from-emerald-500 hover:to-amber-500 hover:shadow-lg hover:shadow-emerald-500/25'
-              }`}
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 shadow-lg hover:shadow-xl"
+              } text-white`}
             >
               {loading ? (
-                <div className="flex items-center justify-center gap-2">
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                <span className="flex items-center justify-center">
+                  <svg className="animate-spin h-5 w-5 mr-3 text-white" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
                   Creating Account...
-                </div>
+                </span>
               ) : (
                 "Create Account"
               )}
-            </motion.button>
+            </button>
 
-            <div className="text-center">
-              <p className="text-white/70 text-sm">
-                Already have an account?{" "}
-                <Link 
-                  to="/login" 
-                  className="text-gradient bg-gradient-to-r from-emerald-300 to-amber-300 bg-clip-text text-transparent font-semibold hover:from-emerald-200 hover:to-amber-200 transition-all duration-300"
-                >
-                  Sign in here
-                </Link>
-              </p>
-            </div>
-          </div>
-        </form>
-      </motion.div>
+            {/* Sign In Link */}
+            <p className="text-center text-sm text-gray-600">
+              Already have an account?{" "}
+              <Link to="/login" className="text-emerald-600 font-semibold hover:underline">
+                Sign in here
+              </Link>
+            </p>
+          </form>
+        </motion.div>
+      </div>
+
+      {/* INPUT STYLE */}
+      <style>{`
+        .input {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.75rem;
+          outline: none;
+          font-size: 0.875rem;
+          transition: all 0.2s;
+          background-color: white;
+        }
+        .input:hover {
+          border-color: #10b981;
+        }
+        .input:focus {
+          border-color: #10b981;
+          box-shadow: 0 0 0 3px rgba(16,185,129,0.1);
+        }
+        .input:disabled {
+          background-color: #f9fafb;
+          cursor: not-allowed;
+        }
+        select.input {
+          background-image: none;
+          cursor: pointer;
+        }
+      `}</style>
     </div>
   );
 }
