@@ -15,7 +15,7 @@ import {
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import logo from "../../assets/images/icons/logo5.jpeg";
+import logo from "../../assets/images/icons/final.jpeg";
 
 export default function Footer() {
   const [hoveredItem, setHoveredItem] = useState(null);
