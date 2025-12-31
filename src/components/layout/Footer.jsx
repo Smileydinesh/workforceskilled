@@ -21,47 +21,45 @@ export default function Footer() {
   const [hoveredItem, setHoveredItem] = useState(null);
 
   return (
-    <footer className="bg-gradient-to-b from-gray-50 to-white text-gray-800 border-t border-emerald-100">
-      {/* Animated top accent line */}
-      <div className="h-1 bg-gradient-to-r from-emerald-400 via-teal-500 to-emerald-400 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent animate-shimmer" />
+    <footer className="bg-gradient-to-br from-slate-50 to-emerald-50/50 text-slate-800 border-t-2 border-emerald-200/50 relative overflow-hidden">
+      {/* Compact Animated Top Border */}
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-400/80 via-teal-400/80 to-emerald-500/80 shadow-md">
+        <div className="absolute inset-0 bg-gradient-to-r from-white/40 to-transparent animate-pulse" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-6 py-12 relative z-10">
         {/* COMPACT MAIN GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-          {/* BRAND - Compact */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-10">
+          {/* COMPACT BRAND - NEW LOGO STYLE */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3 group">
-              <div className="relative">
-                <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-emerald-400/30 to-teal-400/30 blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 p-0.5">
-                  <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden group-hover:scale-95 transition-transform duration-300">
-                    <img
-                      src={logo}
-                      alt="WorkForceSkilled Logo"
-                      className="w-6 h-6 object-contain group-hover:rotate-12 transition-transform duration-300"
-                    />
-                  </div>
+              {/* NEW MODERN LOGO DESIGN */}
+              <div className="relative p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-lg border-2 border-white/30 group-hover:shadow-emerald-400/40 transition-all duration-400">
+                <div className="w-12 h-12 bg-white/90 rounded-lg flex items-center justify-center shadow-md overflow-hidden group-hover:bg-white group-hover:scale-105 transition-all duration-400">
+                  <img
+                    src={logo}
+                    alt="WorkForceSkilled Logo"
+                    className="w-8 h-8 object-contain group-hover:rotate-12 transition-transform duration-500"
+                  />
                 </div>
+                {/* Logo Glow Ring */}
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 opacity-0 group-hover:opacity-20 blur-xl rounded-xl transition-all duration-500 animate-ping" />
               </div>
 
               <div>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-emerald-700 transition-colors duration-300">
-                  WorkForce<span className="text-emerald-600">Skilled</span>
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-emerald-900 bg-clip-text text-transparent">
+                  WorkForce<span className="text-emerald-600 font-black">Skilled</span>
                 </h3>
-                <p className="text-gray-600 text-xs font-medium">
-                  Professional Learning Hub
-                </p>
+                <p className="text-emerald-600 font-medium text-sm tracking-wide">Learning Hub</p>
               </div>
             </div>
 
-            <p className="text-gray-600 text-sm leading-relaxed pr-4">
-              Your trusted partner for expert compliance training solutions.
+            <p className="text-slate-600 text-sm leading-relaxed max-w-sm">
+              Expert compliance training with industry certifications.
             </p>
           </div>
 
-          {/* TRAINING - Compact */}
+          {/* TRAINING */}
           <FooterColumn
             title="Training"
             prefix="training"
@@ -89,7 +87,7 @@ export default function Footer() {
             ]}
           />
 
-          {/* COMPANY - Compact */}
+          {/* COMPANY */}
           <FooterColumn
             title="Company"
             prefix="company"
@@ -111,7 +109,7 @@ export default function Footer() {
             ]}
           />
 
-          {/* LEGAL - Compact */}
+          {/* LEGAL */}
           <FooterColumn
             title="Legal"
             prefix="legal"
@@ -146,32 +144,33 @@ export default function Footer() {
           />
         </div>
 
-        {/* ENHANCED CONTACT INFO */}
+        {/* COMPACT CONTACT INFO */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-gradient-to-r from-emerald-50 to-white border border-emerald-200 rounded-xl p-6 hover:border-emerald-500 hover:shadow-lg transition-all duration-300 group">
+          <div className="group bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-emerald-200/50 hover:border-emerald-400/70 hover:shadow-lg transition-all duration-400">
             <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 text-white group-hover:scale-105 transition-transform duration-300">
-                <FiMail size={22} />
+              <div className="p-3 bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-xl shadow-md group-hover:scale-105 transition-all duration-300">
+                <FiMail size={20} />
               </div>
-              <div className="flex-1">
-                <h4 className="font-semibold text-gray-900 mb-2 text-lg">Support Center</h4>
-                <p className="text-emerald-700 font-medium text-base mb-1">support@workforceskilled.com</p>
-                <p className="text-gray-600 text-sm">Response within 24 hours | Mon-Fri 9AM-6PM EST</p>
+              <div>
+                <h4 className="font-bold text-slate-900 mb-1 text-base">Support</h4>
+                <a href="mailto:support@workforceskilled.com" className="text-emerald-600 font-semibold hover:text-emerald-700 block mb-1">
+                  support@workforceskilled.com
+                </a>
+                <p className="text-xs text-slate-600">24hr response | Mon-Fri 9AM-6PM EST</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-teal-50 to-white border border-teal-200 rounded-xl p-6 hover:border-teal-500 hover:shadow-lg transition-all duration-300 group">
+          <div className="group bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-teal-200/50 hover:border-teal-400/70 hover:shadow-lg transition-all duration-400">
             <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-gradient-to-br from-teal-500 to-emerald-600 text-white group-hover:scale-105 transition-transform duration-300">
-                <FiMapPin size={22} />
+              <div className="p-3 bg-gradient-to-br from-teal-500 to-emerald-600 text-white rounded-xl shadow-md group-hover:scale-105 transition-all duration-300">
+                <FiMapPin size={20} />
               </div>
-              <div className="flex-1">
-                <h4 className="font-semibold text-gray-900 mb-2 text-lg">Our Location</h4>
-                <p className="text-gray-700 text-base leading-relaxed">
+              <div>
+                <h4 className="font-bold text-slate-900 mb-1 text-base">Location</h4>
+                <p className="text-slate-700 text-sm leading-tight">
                   375 Redondo Ave #1190<br />
-                  Long Beach, CA 90814<br />
-                  United States
+                  Long Beach, CA 90814
                 </p>
               </div>
             </div>
@@ -179,42 +178,31 @@ export default function Footer() {
         </div>
 
         {/* COMPACT CERTIFICATIONS */}
-        <div className="flex flex-wrap justify-center gap-4 mb-6">
-          {["SHRM Approved", "HRCI Certified", "ISO 9001 Compliant"].map((text, i) => (
+        <div className="flex flex-wrap justify-center gap-4 mb-8">
+          {["SHRM Approved", "HRCI Certified", "ISO 9001"].map((text, i) => (
             <div
               key={i}
-              className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white border border-emerald-200 text-sm font-medium text-emerald-700 hover:border-emerald-500 hover:shadow-md hover:scale-105 transition-all duration-300 group"
+              className="group flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/80 border border-emerald-200/60 backdrop-blur-sm text-sm font-semibold text-emerald-700 hover:border-emerald-400 hover:shadow-md hover:scale-105 transition-all duration-300 shadow-sm"
             >
-              <HiOutlineShieldCheck size={18} className="group-hover:scale-110 transition-transform duration-300" />
+              <HiOutlineShieldCheck size={16} className="group-hover:scale-110 transition-transform" />
               {text}
             </div>
           ))}
         </div>
 
         {/* COMPACT COPYRIGHT */}
-        <div className="pt-4 border-t border-gray-200">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-600">
-            <div className="text-center sm:text-left">
-              © {new Date().getFullYear()} WorkForceSkilled. All rights reserved.
-            </div>
+        <div className="pt-6 border-t border-slate-200/50">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-600 font-medium">
+            <span>© {new Date().getFullYear()} WorkForceSkilled. All rights reserved.</span>
             <div className="flex items-center gap-4">
-              <Link 
-                to="/terms-and-conditions" 
-                className="hover:text-emerald-600 hover:border-b hover:border-emerald-600 transition-all duration-300 pb-0.5"
-              >
+              <Link to="/terms-and-conditions" className="hover:text-emerald-600 hover:underline font-semibold transition-all duration-300">
                 Terms
               </Link>
-              <Link 
-                to="/privacy-policy" 
-                className="hover:text-emerald-600 hover:border-b hover:border-emerald-600 transition-all duration-300 pb-0.5"
-              >
+              <Link to="/privacy-policy" className="hover:text-emerald-600 hover:underline font-semibold transition-all duration-300">
                 Privacy
               </Link>
-              <Link 
-                to="/shipping-return-policy" 
-                className="hover:text-emerald-600 hover:border-b hover:border-emerald-600 transition-all duration-300 pb-0.5"
-              >
-                Shipping & Return
+              <Link to="/shipping-return-policy" className="hover:text-emerald-600 hover:underline font-semibold transition-all duration-300">
+                Shipping
               </Link>
             </div>
           </div>
@@ -222,29 +210,27 @@ export default function Footer() {
       </div>
 
       <style>{`
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
+        @keyframes shimmer-slow {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
         }
-        
-        .animate-shimmer {
-          animation: shimmer 2s ease-in-out infinite;
+        .animate-shimmer-slow {
+          animation: shimmer-slow 3s ease-in-out infinite;
+        }
+        .animate-ping {
+          animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
         }
       `}</style>
     </footer>
   );
 }
 
-/* ================= COMPACT FOOTER COLUMN ================= */
+/* COMPACT ENHANCED FOOTER COLUMN */
 function FooterColumn({ title, items, prefix, hoveredItem, setHoveredItem }) {
   return (
     <div>
-      <h4 className="text-gray-900 font-semibold mb-4 text-sm uppercase tracking-wider flex items-center gap-2">
-        <div className="w-1 h-3 bg-gradient-to-b from-emerald-500 to-teal-500 rounded-full" />
+      <h4 className="text-slate-900 font-bold mb-6 text-base uppercase tracking-wide flex items-center gap-2 pb-2">
+        <div className="w-1.5 h-6 bg-gradient-to-b from-emerald-500 to-teal-500 rounded-full shadow-sm" />
         {title}
       </h4>
       <ul className="space-y-2">
@@ -257,38 +243,33 @@ function FooterColumn({ title, items, prefix, hoveredItem, setHoveredItem }) {
                 to={item.path}
                 onMouseEnter={() => setHoveredItem(`${prefix}-${idx}`)}
                 onMouseLeave={() => setHoveredItem(null)}
-                className={`flex items-center gap-3 group py-1.5 rounded-lg border border-transparent transition-all duration-300 ${
+                className={`flex items-center gap-3 py-2.5 px-3 rounded-xl border border-transparent transition-all duration-400 group ${
                   isHovered 
-                    ? 'border-emerald-300 bg-emerald-50' 
-                    : 'hover:border-emerald-200 hover:bg-emerald-50/50'
+                    ? 'border-emerald-300/70 bg-emerald-50 shadow-md scale-105 translate-x-1' 
+                    : 'hover:border-emerald-200 hover:bg-emerald-50/60 hover:shadow-sm'
                 }`}
               >
-                {/* Icon with animation */}
-                <div className={`p-1.5 rounded-lg transition-all duration-300 ${
+                <div className={`p-2 rounded-lg transition-all duration-400 shrink-0 ${
                   isHovered 
-                    ? 'bg-emerald-100 border border-emerald-300 scale-110' 
-                    : 'bg-gray-100 group-hover:bg-emerald-100 group-hover:border group-hover:border-emerald-200'
+                    ? 'bg-emerald-500/90 shadow-lg' 
+                    : 'bg-slate-100 hover:bg-emerald-100/70'
                 }`}>
-                  <item.icon className={`transition-colors duration-300 ${
-                    isHovered ? 'text-emerald-600' : item.color
+                  <item.icon className={`transition-colors duration-400 ${
+                    isHovered ? 'text-white' : 'text-slate-600 group-hover:text-emerald-600'
                   }`} size={16} />
                 </div>
                 
-                {/* Text */}
-                <span className={`text-sm transition-all duration-300 ${
-                  isHovered 
-                    ? 'text-emerald-700 font-medium translate-x-1' 
-                    : 'text-gray-600 group-hover:text-emerald-700'
+                <span className={`text-sm font-medium transition-all duration-400 flex-1 ${
+                  isHovered ? 'text-emerald-800 font-semibold' : 'text-slate-700'
                 }`}>
                   {item.text}
                 </span>
                 
-                {/* Arrow indicator */}
                 <FiChevronRight
-                  className={`ml-auto transition-all duration-300 ${
+                  className={`ml-auto transition-all duration-400 ${
                     isHovered 
-                      ? 'opacity-100 translate-x-0 text-emerald-500' 
-                      : 'opacity-0 -translate-x-1'
+                      ? 'opacity-100 translate-x-1 text-emerald-500 scale-110' 
+                      : 'opacity-0 -translate-x-2 scale-90'
                   }`}
                   size={14}
                 />
