@@ -21,6 +21,8 @@ export default function LiveWebinarDetails() {
   const [loading, setLoading] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,39 +45,73 @@ export default function LiveWebinarDetails() {
     fetchData();
   }, [webinar_id]);
 
-  const addToCart = async (redirect = false) => {
-  console.log("ADD TO CART CLICK");
+  useEffect(() => {
+  if (!webinar || !selectedPlan) return;
 
-  if (!selectedPlan || !webinar) {
-    console.error("Missing data", { selectedPlan, webinar });
-    return;
-  }
+  const checkIfInCart = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/cart/`, {
+        credentials: "include",
+      });
 
-  setIsAddingToCart(true);
+      if (!res.ok) return;
 
-  try {
-    const res = await fetch(`${API_BASE}/api/cart/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        webinar_id: webinar.webinar_id,
-        purchase_type: selectedPlan.type,
-        webinar_type: "LIVE",
-      }),
-    });
+      const data = await res.json();
 
-    console.log("ADD CART RESPONSE:", res.status);
+      const exists = data.items?.some(
+        (item) =>
+          item.webinar_id === webinar.webinar_id &&
+          item.purchase_type === selectedPlan.type
+      );
 
-    await fetchCartCount();
-    if (redirect) navigate("/cart");
+      if (exists) {
+        setIsInCart(true);
+      }
+    } catch (err) {
+      console.error("CART CHECK ERROR:", err);
+    }
+  };
 
-  } catch (err) {
-    console.error("ADD CART ERROR:", err);
-  } finally {
-    setIsAddingToCart(false);
-  }
-};
+  checkIfInCart();
+}, [webinar, selectedPlan]);
+
+
+  const addToCart = async () => {
+    if (!selectedPlan || !webinar) {
+      console.error("Missing data", { selectedPlan, webinar });
+      return;
+    }
+
+    setIsAddingToCart(true);
+
+    try {
+      const res = await fetch(`${API_BASE}/api/cart/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          webinar_id: webinar.webinar_id,
+          purchase_type: selectedPlan.type,
+          webinar_type: "LIVE",
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`Add to cart failed: ${res.status}`);
+      }
+
+      await fetchCartCount();
+
+      // ✅ MARK ITEM AS ADDED (THIS UNLOCKS UI CHANGES)
+      setIsInCart(true);
+
+    } catch (err) {
+      console.error("ADD CART ERROR:", err);
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
+
 
 
   if (loading || !webinar) return null;
@@ -145,6 +181,8 @@ export default function LiveWebinarDetails() {
           addToCart={addToCart}
           buyNow={buyNow}
           isAddingToCart={isAddingToCart}
+          isInCart={isInCart}
+          navigate={navigate}
         />
       </section>
       <MeetYourSpeaker webinar={webinar} />

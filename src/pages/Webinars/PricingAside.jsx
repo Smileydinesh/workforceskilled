@@ -14,6 +14,8 @@ export default function PricingAside({
   addToCart,
   buyNow, 
   isAddingToCart,
+  isInCart,
+  navigate,
 }) {
   const pricing = webinar.pricing;
 
@@ -201,33 +203,67 @@ export default function PricingAside({
 
         {/* ================= CTA ================= */}
         <div className="space-y-2">
-          <button
-            disabled={isAddingToCart}
-            onClick={() => addToCart(true)}
-            className="
-              w-full py-2.5 rounded-xl font-semibold text-sm
-              bg-emerald-600 text-white
-              hover:bg-emerald-700
-              transition disabled:opacity-60
-            "
-          >
-            ADD TO CART – ${selectedPlan?.price}
-          </button>
 
-          <button
-            disabled={isAddingToCart}
-            onClick={buyNow}
-            className="
-              w-full py-2.5 rounded-xl font-semibold text-sm
-              bg-amber-500 text-white
-              hover:bg-amber-600
-              transition disabled:opacity-60
-            "
-          >
-            BUY NOW – ${selectedPlan?.price}
-          </button>
+  {/* ADD TO CART / ALREADY IN CART */}
+  {!isInCart ? (
+    <button
+      disabled={isAddingToCart}
+      onClick={addToCart}
+      className="
+        w-full py-2.5 rounded-xl font-semibold text-sm
+        bg-emerald-600 text-white
+        hover:bg-emerald-700
+        transition disabled:opacity-60
+      "
+    >
+      ADD TO CART – ${selectedPlan?.price}
+    </button>
+  ) : (
+    <div className="w-full p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-center">
+      <p className="text-sm font-semibold text-emerald-800">
+        This item is already in your cart
+      </p>
+      <button
+        onClick={() => navigate("/cart")}
+        className="text-sm text-emerald-700 underline mt-1"
+      >
+        View Cart
+      </button>
+    </div>
+  )}
 
-        </div>
+  {/* BUY NOW */}
+  <button
+    disabled={isAddingToCart}
+    onClick={buyNow}
+    className="
+      w-full py-2.5 rounded-xl font-semibold text-sm
+      bg-amber-500 text-white
+      hover:bg-amber-600
+      transition disabled:opacity-60
+    "
+  >
+    BUY NOW – ${selectedPlan?.price}
+  </button>
+
+  {/* VIEW CART BUTTON */}
+  {isInCart && (
+    <button
+      onClick={() => navigate("/cart")}
+      className="
+        w-full py-2.5 rounded-xl font-semibold text-sm
+        border border-emerald-300
+        text-emerald-700
+        hover:bg-emerald-50
+        transition
+      "
+    >
+      View Cart (1 item)
+    </button>
+  )}
+
+</div>
+
       </div>
 
       {/* ================= NOTES ================= */}

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 const testimonials = [
   {
@@ -145,16 +146,19 @@ export default function BottomContent() {
               ))}
             </div>
 
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="px-10 py-3.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-emerald-400/40 hover:from-emerald-700 hover:to-teal-700 transition-all duration-400 border border-emerald-500/40"
-            >
-              Start Training
-            </motion.button>
+            <Link to="/live-webinars">
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-10 py-3.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-emerald-400/40 hover:from-emerald-700 hover:to-teal-700 transition-all duration-400 border border-emerald-500/40"
+              >
+                Start Learning
+              </motion.button>
+            </Link>
+
           </motion.div>
         </div>
 
