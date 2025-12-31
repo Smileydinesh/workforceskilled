@@ -50,12 +50,12 @@ export default function Footer() {
                 <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-emerald-900 bg-clip-text text-transparent">
                   WorkForce<span className="text-emerald-600 font-black">Skilled</span>
                 </h3>
-                <p className="text-emerald-600 font-medium text-sm tracking-wide">Learning Hub</p>
+                <p className="text-emerald-600 font-medium text-sm tracking-wide">Professional Learning Hub</p>
               </div>
             </div>
 
             <p className="text-slate-600 text-sm leading-relaxed max-w-sm">
-              Expert compliance training with industry certifications.
+              Your trusted partner for expert WorkForceSkilled solutions. Stay ahead of regulatory requirements with our comprehensive webinars and certification programs.
             </p>
           </div>
 
