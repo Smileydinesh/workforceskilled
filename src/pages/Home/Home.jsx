@@ -11,7 +11,6 @@ export default function Home() {
     <main className="overflow-hidden">
       <HeroSection />
       <FeaturesSection />
-      
       <WebinarSection />
       <StatsSection />
       <BottomContent /> 
