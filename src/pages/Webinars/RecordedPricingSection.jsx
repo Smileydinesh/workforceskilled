@@ -6,6 +6,7 @@ export default function RecordedPricingSection({
   selectedPlan,
   setSelectedPlan,
   onAddToCart,
+  onBuyNow,
   isAddingToCart,
 }) {
   const pricing = webinar.pricing;
@@ -88,6 +89,35 @@ export default function RecordedPricingSection({
             </>
           )}
         </motion.button>
+
+        <motion.button
+  whileHover={{ scale: 1.02 }}
+  whileTap={{ scale: 0.98 }}
+  disabled={!price || isAddingToCart}
+  onClick={onBuyNow}
+  className="
+    w-full flex items-center justify-center gap-2 py-4 rounded-xl
+    font-bold text-lg
+    bg-gradient-to-r from-amber-500 to-amber-600
+    text-white
+    hover:from-amber-600 hover:to-amber-700
+    disabled:opacity-60 disabled:cursor-not-allowed
+    mt-3
+  "
+>
+  {isAddingToCart ? (
+    <>
+      <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+      <span>Processing…</span>
+    </>
+  ) : (
+    <>
+      <FiShoppingCart />
+      <span>Buy Now</span>
+    </>
+  )}
+</motion.button>
+
 
         {/* TRUST */}
         <div className="mt-8 pt-6 border-t border-gray-200 space-y-3 text-sm">

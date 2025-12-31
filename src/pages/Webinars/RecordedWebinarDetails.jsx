@@ -84,6 +84,55 @@ export default function RecordedWebinarDetails() {
     );
   }
 
+  const buyNow = async () => {
+    if (!webinar || isAddingToCart) return;
+
+    setIsAddingToCart(true);
+
+    try {
+      // 🔐 STEP 1: Check login
+      const authRes = await fetch(`${API_BASE}/api/auth/me/`, {
+        credentials: "include",
+      });
+
+      if (authRes.status === 401) {
+        navigate(`/login?next=/checkout`);
+        return;
+      }
+
+      // 🛒 STEP 2: Determine purchase type
+      const purchase_type =
+        selectedPlan === "SINGLE"
+          ? "RECORDED_SINGLE"
+          : "RECORDED_MULTI";
+
+      // 🛒 STEP 3: Add to cart
+      const res = await fetch(`${API_BASE}/api/cart/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          webinar_id: webinar.webinar_id,
+          purchase_type,
+          webinar_type: "RECORDED",
+        }),
+      });
+
+      if (!res.ok) throw new Error("Buy now failed");
+
+      await fetchCartCount();
+
+      // ✅ STEP 4: Go to checkout
+      navigate("/checkout");
+
+    } catch (err) {
+      console.error("RECORDED BUY NOW ERROR:", err);
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
+
+
   return (
     <>
       <RecordedHeroSection webinar={webinar} />
@@ -96,6 +145,7 @@ export default function RecordedWebinarDetails() {
           selectedPlan={selectedPlan}
           setSelectedPlan={setSelectedPlan}
           onAddToCart={addToCart}
+          onBuyNow={buyNow} 
           isAddingToCart={isAddingToCart}
         />
       </section>

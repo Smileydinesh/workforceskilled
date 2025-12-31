@@ -3,6 +3,8 @@ import FeaturesSection from "./FeaturesSection";
 import StatsSection from "./StatsSection";
 import WebinarSection from "./WebinarSection";
 import PricingSection from "./PricingSection";
+import BottomContent from './bottomcontent';
+
 
 export default function Home() {
   return (
@@ -12,6 +14,7 @@ export default function Home() {
       
       <WebinarSection />
       <StatsSection />
+      <BottomContent /> 
       <PricingSection />
     </main>
   );

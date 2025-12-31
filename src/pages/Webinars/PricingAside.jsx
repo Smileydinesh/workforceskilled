@@ -12,6 +12,7 @@ export default function PricingAside({
   selectedPlan,
   setSelectedPlan,
   addToCart,
+  buyNow, 
   isAddingToCart,
 }) {
   const pricing = webinar.pricing;
@@ -215,7 +216,7 @@ export default function PricingAside({
 
           <button
             disabled={isAddingToCart}
-            onClick={() => addToCart(true)}
+            onClick={buyNow}
             className="
               w-full py-2.5 rounded-xl font-semibold text-sm
               bg-amber-500 text-white
@@ -225,6 +226,7 @@ export default function PricingAside({
           >
             BUY NOW – ${selectedPlan?.price}
           </button>
+
         </div>
       </div>
 

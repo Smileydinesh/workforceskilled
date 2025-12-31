@@ -80,6 +80,49 @@ export default function LiveWebinarDetails() {
 
   if (loading || !webinar) return null;
 
+  const buyNow = async () => {
+    if (!selectedPlan || !webinar) return;
+
+    setIsAddingToCart(true);
+
+    try {
+      // 🔐 STEP 1: Check login
+      const authRes = await fetch(`${API_BASE}/api/auth/me/`, {
+        credentials: "include",
+      });
+
+      if (authRes.status === 401) {
+        navigate(`/login?next=/checkout`);
+        return;
+      }
+
+      // 🛒 STEP 2: Add item to cart
+      const res = await fetch(`${API_BASE}/api/cart/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          webinar_id: webinar.webinar_id,
+          purchase_type: selectedPlan.type,
+          webinar_type: "LIVE",
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to add to cart");
+
+      await fetchCartCount();
+
+      // ✅ STEP 3: Go to checkout
+      navigate("/checkout");
+
+    } catch (err) {
+      console.error("BUY NOW ERROR:", err);
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
+
+
   return (
 <main className="min-h-screen bg-[#F7FBF9] text-gray-900">
 
@@ -100,6 +143,7 @@ export default function LiveWebinarDetails() {
           selectedPlan={selectedPlan}
           setSelectedPlan={setSelectedPlan}
           addToCart={addToCart}
+          buyNow={buyNow}
           isAddingToCart={isAddingToCart}
         />
       </section>
