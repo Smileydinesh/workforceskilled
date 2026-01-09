@@ -6,6 +6,7 @@ import {
   FiCalendar,
   FiDollarSign,
 } from "react-icons/fi";
+import { formatPstEst } from "../../utils/timezone";
 
 export default function HomeLiveWebinarsSection() {
   const [webinars, setWebinars] = useState([]);
@@ -86,136 +87,132 @@ export default function HomeLiveWebinarsSection() {
 }
 
 function WebinarCard({ w, onClick, index }) {
-  const date = new Date(w.start_datetime);
   const status = getWebinarStatus(w.start_datetime, w.duration_minutes);
+
+  // PST / EST formatting
+  const { date, day, month, pst, est } = formatPstEst(w.start_datetime);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.08 }}
-      whileHover={{ 
-        y: -8, 
-        scale: 1.03,
-        transition: { type: "spring", stiffness: 350, damping: 25 }
-      }}
-      className="group relative bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl hover:shadow-emerald-400/20 border border-slate-100/50 hover:border-emerald-200/70 overflow-hidden cursor-pointer h-full transition-all duration-500"
+      whileHover={{ y: -8, scale: 1.03 }}
+      className="group relative bg-white/90 backdrop-blur-sm rounded-[24px]
+                 shadow-xl hover:shadow-emerald-400/20
+                 border border-slate-100 hover:border-emerald-200
+                 overflow-hidden cursor-pointer transition-all duration-500"
       onClick={onClick}
     >
-      {/* Perfect Image Size */}
-      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
-        <motion.img
+      {/* IMAGE */}
+      <div className="relative h-52 overflow-hidden">
+        <img
           src={w.cover_image}
           alt={w.title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-          whileHover={{ scale: 1.1 }}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
 
-        {/* Status Badge */}
-        <motion.span
-          initial={{ scale: 0.9 }}
-          animate={{ scale: 1 }}
-          className={`absolute top-4 left-4 z-20 px-3.5 py-1.5 rounded-full text-xs font-bold shadow-lg backdrop-blur-sm border ${
-            status.type === "live"
-              ? "bg-gradient-to-r from-red-500/95 to-red-600/95 text-white border-red-400/50 shadow-red-500/40 animate-pulse"
-              : status.type === "hours"
-              ? "bg-gradient-to-r from-orange-500/95 to-orange-600/95 text-white border-orange-400/50 shadow-orange-500/40"
-              : status.type === "days"
-              ? "bg-gradient-to-r from-emerald-500/95 to-teal-500/95 text-white border-emerald-400/50 shadow-emerald-500/40"
-              : "bg-slate-500/90 text-white border-slate-400/50 shadow-slate-500/30"
-          }`}
+        {/* DARK GRADIENT */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+
+        {/* STATUS BADGE */}
+        <span
+          className={`absolute top-5 left-5 z-20 text-xs px-4 py-2 rounded-full font-bold shadow-xl
+            ${
+              status.type === "live"
+                ? "bg-red-600 text-white animate-pulse"
+                : status.type === "hours"
+                ? "bg-orange-500 text-white"
+                : status.type === "days"
+                ? "bg-emerald-600 text-white"
+                : "bg-gray-500 text-white"
+            }`}
         >
           {status.label}
-        </motion.span>
+        </span>
 
-        {/* Date Badge */}
-        <motion.div 
-          initial={{ scale: 0.9, rotate: -5 }}
-          animate={{ scale: 1, rotate: 0 }}
-          className="absolute top-4 right-4 bg-white/95 backdrop-blur-md rounded-xl px-3 py-2.5 text-center shadow-lg border border-slate-200/60 hover:shadow-md hover:scale-105 transition-all duration-400"
-        >
-          <p className="text-xl font-black text-emerald-600 group-hover:text-emerald-700">{date.getDate()}</p>
-          <p className="text-xs uppercase tracking-widest text-slate-600 font-medium">
-            {date.toLocaleString("default", { month: "short" })}
-          </p>
-        </motion.div>
+        {/* DATE ARROW BADGE */}
+        <div className="absolute top-5 right-0 z-20">
+          <div
+            className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-xl"
+            style={{
+              clipPath: "polygon(0 0, 100% 0, 85% 50%, 100% 100%, 0 100%)",
+              paddingRight: "22px",
+            }}
+          >
+            <div className="px-5 py-3 text-center">
+              <div className="text-2xl font-black leading-none">{day}</div>
+              <div className="text-xs uppercase tracking-wider">{month}</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Content */}
-      <div className="p-6">
-        <motion.h3 
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          whileHover={{ y: -2 }}
-          className="font-bold text-xl mb-4 leading-tight line-clamp-2 text-slate-900 group-hover:text-slate-800 transition-all duration-400"
-        >
+      {/* CONTENT */}
+      <div className="p-6 space-y-4">
+        {/* TITLE */}
+        <h3 className="text-xl font-bold text-gray-900 leading-tight line-clamp-2 group-hover:text-emerald-700 transition">
           {w.title}
-        </motion.h3>
+        </h3>
 
-        {/* Instructor */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="flex items-center gap-3 mb-5 p-3 bg-gradient-to-r from-emerald-50/70 to-teal-50/70 rounded-xl border border-emerald-200/40 hover:shadow-sm transition-all duration-400"
-        >
-          <div className="relative">
-            <img
-              src={w.instructor.photo}
-              alt={w.instructor.name}
-              className="w-12 h-12 rounded-2xl object-cover ring-2 ring-white shadow-md group-hover:scale-105 transition-transform duration-400"
-            />
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold text-slate-900 truncate group-hover:text-emerald-800">
-              {w.instructor.name}
-            </p>
-            <p className="text-xs text-slate-600 truncate">
+        {/* INSTRUCTOR */}
+        <div className="flex items-center gap-3 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-3 border">
+          <img
+            src={w.instructor.photo}
+            alt={w.instructor.name}
+            className="w-12 h-12 rounded-full object-cover shadow"
+          />
+          <div className="min-w-0">
+            <p className="text-sm font-bold truncate">{w.instructor.name}</p>
+            <p className="text-xs text-gray-600 truncate">
               {w.instructor.designation}
-              {w.instructor.organization && ` • ${w.instructor.organization}`}
+              {w.instructor.organization &&
+                ` • ${w.instructor.organization}`}
             </p>
           </div>
-        </motion.div>
-
-        {/* Meta */}
-        <div className="flex items-center gap-4 text-sm text-slate-600 mb-6 bg-slate-50/60 backdrop-blur-sm rounded-xl p-3 border border-slate-200/40">
-          <span className="flex items-center gap-1.5 font-medium">
-            <FiClock className="text-emerald-500 text-base" />
-            {w.duration_minutes} min
-          </span>
-          <span className="flex items-center gap-1.5 font-medium">
-            <FiCalendar className="text-emerald-500 text-base" />
-            {w.time_display}
-          </span>
         </div>
 
-        {/* Footer */}
-        <div className="flex items-center justify-between pt-1">
-          <motion.span 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-xl font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent"
-          >
-            <FiDollarSign className="inline -ml-1 mr-1 text-emerald-500" />
-            {w.display_price}
-          </motion.span>
+        {/* DATE */}
+        <div className="flex items-center gap-2 text-sm text-gray-700">
+          <FiCalendar className="text-emerald-600" />
+          {date}
+        </div>
 
-          <motion.button
+        {/* PST / EST TIME */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-gradient-to-br from-emerald-600 to-teal-600 text-white rounded-xl p-3 shadow">
+            <p className="text-xs opacity-90">PST</p>
+            <p className="font-bold text-sm">{pst.replace(" PST", "")}</p>
+          </div>
+
+          <div className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-xl p-3 shadow">
+            <p className="text-xs opacity-90">EST</p>
+            <p className="font-bold text-sm">{est.replace(" EST", "")}</p>
+          </div>
+        </div>
+
+        {/* FOOTER */}
+        <div className="flex items-center justify-between pt-2">
+          <span className="text-xl font-black text-emerald-600 flex items-center gap-1">
+            <FiDollarSign />
+            {w.display_price}
+          </span>
+
+          <button
             onClick={(e) => {
               e.stopPropagation();
               onClick();
             }}
-            whileHover={{ scale: 1.07 }}
-            whileTap={{ scale: 0.96 }}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold text-sm shadow-lg hover:shadow-emerald-400/40 hover:-translate-y-0.5 transition-all duration-400 border border-emerald-400/50"
+            className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-semibold shadow-md hover:scale-105 transition"
           >
             Join Now
-          </motion.button>
+          </button>
         </div>
       </div>
     </motion.div>
   );
 }
+
 
 function getWebinarStatus(startDatetime, durationMinutes = 90) {
   const start = new Date(startDatetime);

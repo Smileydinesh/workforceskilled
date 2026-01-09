@@ -7,10 +7,6 @@ import WebinarContent from "./WebinarContent";
 import PricingAside from "./PricingAside";
 import MeetYourSpeaker from "./MeetYourSpeaker";
 
-
-
-
-
 export default function LiveWebinarDetails() {
   const { webinar_id } = useParams();
   const navigate = useNavigate();
@@ -32,10 +28,10 @@ export default function LiveWebinarDetails() {
         const data = await res.json();
         setWebinar(data);
         setSelectedPlan({
-          label: "Live – Single Attendee",
-          price: data.pricing.live_single_price,
-          type: "LIVE_SINGLE",
-        });
+  label: "Live – Single Attendee",
+  price: data?.pricing?.live_single_price ?? 0,
+  type: "LIVE_SINGLE",
+});
       } catch (err) {
         console.error(err);
       } finally {
@@ -114,7 +110,22 @@ export default function LiveWebinarDetails() {
 
 
 
-  if (loading || !webinar) return null;
+  if (loading) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="h-10 w-10 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
+
+if (!webinar) {
+  return (
+    <div className="min-h-screen flex items-center justify-center text-red-600">
+      Webinar not found
+    </div>
+  );
+}
+
 
   const buyNow = async () => {
     if (!selectedPlan || !webinar) return;

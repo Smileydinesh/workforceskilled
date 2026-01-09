@@ -47,9 +47,11 @@ export default function HeroSection({ webinar }) {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 font-medium">Date</p>
-                  <p className="text-sm text-gray-900 font-semibold">
-                    {webinar.date_display}
-                  </p>
+                 {webinar.date_display && (
+  <p className="text-sm text-gray-900 font-semibold">
+    {webinar.date_display}
+  </p>
+)}
                 </div>
               </div>
 
@@ -60,9 +62,14 @@ export default function HeroSection({ webinar }) {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 font-medium">Time</p>
-                  <p className="text-sm text-gray-900 font-semibold">
-                    {webinar.time_display}
-                  </p>
+                  {webinar.pst && webinar.est && (
+  <p className="text-sm text-gray-900 font-semibold space-y-1">
+    <span className="block">PST: {webinar.pst}</span>
+    <span className="block text-gray-600">EST: {webinar.est}</span>
+  </p>
+)}
+
+
                 </div>
               </div>
 

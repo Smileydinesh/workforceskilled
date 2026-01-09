@@ -37,6 +37,7 @@ export default function Navbar() {
   const [searchFocused, setSearchFocused] = useState(false);
   const [user, setUser] = useState(null);
   const location = useLocation();
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   
 
   const { cartCount, fetchCartCount } = useCart();
@@ -188,26 +189,56 @@ export default function Navbar() {
 
               {/* AUTH */}
               {user ? (
-                <>
-                  <span className="text-gray-700 text-sm font-semibold">
-                    Hi, {user.first_name}
-                  </span>
+  <div className="flex items-center gap-3">
 
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleLogout}
-                    className="
-                      px-5 py-2.5 rounded-xl text-sm font-semibold
-                      text-white bg-emerald-600 hover:bg-emerald-700
-                      transition-all flex items-center gap-2
-                    "
-                  >
-                    <FiLogOut />
-                    Logout
-                  </motion.button>
-                </>
-              ) : (
+    {/* USER + DASHBOARD PILL */}
+    <Link
+      to="/userdashboard"
+      className="
+        flex flex-col justify-center
+        w-30
+        px-5
+        rounded-xl
+        bg-white
+        border border-emerald-300
+        hover:bg-emerald-50
+        transition
+        shadow-sm
+        leading-tight
+      "
+    >
+      <span className="text-sm font-semibold text-emerald-700">
+        Hi, {user.first_name}
+      </span>
+
+      <span className="text-xs font-semibold text-gray-800 mt-1 hover:text-emerald-700">
+        Dashboard
+      </span>
+    </Link>
+
+    {/* LOGOUT BUTTON */}
+    <button
+      onClick={handleLogout}
+      className="
+        px-4 py-3
+        rounded-xl
+        text-sm font-semibold
+        text-white
+        bg-red-500
+        hover:bg-red-600
+        transition
+        shadow-sm
+      "
+    >
+      Logout
+    </button>
+
+  </div>
+) : (
+
+
+
+
                 <>
                   <Link
                     to="/login"

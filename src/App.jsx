@@ -21,6 +21,7 @@ import Checkout from "./pages/Checkout/Checkout";
 import RecordedWebinarDetails from "./pages/Webinars/RecordedWebinarDetails";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
+import UserDashboard from "./pages/Dashboard/UserDashboard";
 
 
 
@@ -35,7 +36,13 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/live-webinars" element={<LiveWebinars />} />
-        <Route path="/live-webinars/:webinar_id" element={<LiveWebinarDetails />}/>
+        <Route
+  path="/live-webinars/:webinar_id"
+  element={<LiveWebinarDetails />}
+/>
+
+
+        <Route path="/userdashboard" element={<UserDashboard />}/>
 
         {/* <Route path="/live-webinars/details" element={<LiveWebinarDetails />} /> */}
 
