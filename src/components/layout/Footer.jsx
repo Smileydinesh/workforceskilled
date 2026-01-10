@@ -21,7 +21,7 @@ export default function Footer() {
   const [hoveredItem, setHoveredItem] = useState(null);
 
   return (
-    <footer className="bg-gradient-to-br from-slate-50 to-emerald-50/50 text-slate-800 border-t-2 border-emerald-200/50 relative overflow-hidden">
+    <footer className="bg-gradient-to-br from-blue-500/10 via-emerald-500/15 to-blue-600/10 text-slate-800 border-t-2 border-emerald-200/50 relative overflow-hidden">
       {/* Compact Animated Top Border */}
       <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-400/80 via-teal-400/80 to-emerald-500/80 shadow-md">
         <div className="absolute inset-0 bg-gradient-to-r from-white/40 to-transparent animate-pulse" />

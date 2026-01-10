@@ -173,7 +173,8 @@ export default function LiveWebinars() {
       </header>
 
       {/* ================= MAIN ================= */}
-      <main className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-10">
+      <main className="w-full px-6 py-12 grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-10">
+
         {/* ================= SIDEBAR ================= */}
         <aside>
           <div className="bg-white rounded-2xl shadow p-6 sticky top-24">
@@ -401,12 +402,12 @@ function WebinarCard({ w, onClick }) {
   return (
     <motion.div
       onClick={onClick}
-      whileHover={{ y: -10 }}
+      whileHover={{ y: -8 }}
       transition={{ type: "spring", stiffness: 260, damping: 18 }}
-      className="group relative bg-white overflow-hidden cursor-pointer max-w-[420px] border border-gray-100 hover:border-emerald-300 transition-all duration-300 hover:shadow-2xl rounded-3xl"
+      className="group relative bg-white overflow-hidden cursor-pointer w-full border border-gray-100 hover:border-emerald-300 transition-all duration-300 hover:shadow-2xl rounded-3xl"
     >
       {/* ================= IMAGE ================= */}
-      <div className="relative h-52 overflow-hidden">
+      <div className="relative h-44 overflow-hidden">
         <img
           src={w.cover_image}
           alt={w.title}
@@ -416,9 +417,9 @@ function WebinarCard({ w, onClick }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
         {/* STATUS BADGE */}
-        <div className="absolute top-5 left-5">
+        <div className="absolute top-4 left-4">
           <div
-            className={`text-white text-xs font-bold px-4 py-2 rounded-full shadow-xl flex items-center gap-2
+            className={`text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-xl flex items-center gap-2
               ${
                 status.type === "live"
                   ? "bg-red-600 animate-pulse"
@@ -435,17 +436,17 @@ function WebinarCard({ w, onClick }) {
         </div>
 
         {/* DATE ARROW BADGE */}
-        <div className="absolute top-5 right-0">
+        <div className="absolute top-4 right-0">
           <div
             className="relative bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-xl"
             style={{
               clipPath: "polygon(0 0, 100% 0, 85% 50%, 100% 100%, 0 100%)",
-              paddingRight: "24px",
+              paddingRight: "22px",
             }}
           >
-            <div className="flex flex-col items-center px-5 py-3">
-              <div className="text-2xl font-black leading-none">{day}</div>
-              <div className="text-xs font-bold tracking-wider mt-0.5">
+            <div className="flex flex-col items-center px-4 py-2.5">
+              <div className="text-xl font-black leading-none">{day}</div>
+              <div className="text-[11px] font-bold tracking-wider mt-0.5">
                 {month}
               </div>
             </div>
@@ -454,19 +455,19 @@ function WebinarCard({ w, onClick }) {
       </div>
 
       {/* ================= CONTENT ================= */}
-      <div className="p-6 space-y-4">
+      <div className="p-5 space-y-3">
         {/* TITLE */}
-        <h3 className="text-xl font-bold text-gray-900 leading-tight line-clamp-2 group-hover:text-emerald-600 transition-colors min-h-[3.5rem]">
+        <h3 className="text-lg font-bold text-gray-900 leading-snug line-clamp-2 group-hover:text-emerald-600 transition-colors min-h-[3rem]">
           {w.title}
         </h3>
 
         {/* INSTRUCTOR */}
-        <div className="flex items-center gap-3 bg-gradient-to-r from-gray-50 to-emerald-50 rounded-2xl p-3 border border-gray-100">
+        <div className="flex items-center gap-3 bg-gradient-to-r from-gray-50 to-emerald-50 rounded-xl p-2.5 border border-gray-100">
           <div className="relative">
             <img
               src={w.instructor.photo}
               alt={w.instructor.name}
-              className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md"
+              className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md"
             />
             <div className="absolute -bottom-1 -right-1 bg-emerald-600 rounded-full p-1">
               <FiUser className="w-3 h-3 text-white" />
@@ -489,7 +490,7 @@ function WebinarCard({ w, onClick }) {
         </div>
 
         {/* DATE */}
-        <div className="flex items-start gap-3 bg-gray-50 rounded-xl p-3 border-l-4 border-emerald-500">
+        <div className="flex items-start gap-3 bg-gray-50 rounded-xl p-2.5 border-l-4 border-emerald-500">
           <FiCalendar className="w-5 h-5 text-emerald-600 mt-0.5" />
           <span className="text-sm font-medium text-gray-700 leading-snug">
             {date}
@@ -497,37 +498,37 @@ function WebinarCard({ w, onClick }) {
         </div>
 
         {/* TIME GRID */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl px-4 py-2 text-white shadow-md">
-            <div className="text-xs font-semibold opacity-90 mb-0.5">PST</div>
-            <div className="text-[13px] font-bold">{pst.replace(" PST", "")}</div>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg px-3 py-2 text-white shadow-md">
+            <div className="text-[10px] font-semibold opacity-90">PST</div>
+            <div className="text-xs font-bold">{pst.replace(" PST", "")}</div>
           </div>
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl px-4 py-2 text-white shadow-md">
-            <div className="text-xs font-semibold opacity-90 mb-0.5">EST</div>
-            <div className="text-[13px] font-bold">{est.replace(" EST", "")}</div>
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg px-3 py-2 text-white shadow-md">
+            <div className="text-[10px] font-semibold opacity-90">EST</div>
+            <div className="text-xs font-bold">{est.replace(" EST", "")}</div>
           </div>
         </div>
 
         {/* FOOTER */}
-        <div className="flex items-center justify-between pt-2">
-          <div className="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-2">
+        <div className="flex items-center justify-between pt-1">
+          <div className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-1.5">
             <FiClock className="w-4 h-4 text-emerald-600" />
-            <span className="text-sm font-bold text-gray-700">
+            <span className="text-xs font-bold text-gray-700">
               {w.duration_minutes} min
             </span>
           </div>
 
-          <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-blue-600">
+          <div className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-blue-600">
             ${w.display_price}
           </div>
         </div>
       </div>
 
       {/* JOIN BUTTON */}
-      <div className="px-6 pb-6">
+      <div className="px-5 pb-5">
         <button
           onClick={onClick}
-          className="w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white font-bold py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-[1.02] flex items-center justify-center gap-2"
+          className="w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white font-bold py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-[1.02] flex items-center justify-center gap-2"
         >
           <span>Join Now</span>
           <FiArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

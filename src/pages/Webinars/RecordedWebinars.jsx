@@ -145,7 +145,8 @@ export default function RecordedWebinars() {
       </header>
 
       {/* ================= MAIN ================= */}
-      <main className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-10">
+      <main className="w-full px-6 py-12 grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-10">
+
 
         {/* ================= SIDEBAR ================= */}
         <aside>
@@ -285,7 +286,7 @@ function RecordedWebinarCard({ w }) {
   return (
     <motion.div
       whileHover={{ y: -8 }}
-      className="group bg-white overflow-hidden max-w-md border-2 border-gray-100 hover:border-emerald-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 cursor-pointer rounded-[24px]"
+      className="group bg-white overflow-hidden w-full border-2 border-gray-100 hover:border-emerald-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 cursor-pointer rounded-[24px]"
     >
       {/* IMAGE */}
       <div className="relative h-52 overflow-hidden">
