@@ -110,7 +110,7 @@ export default function HeroSection() {
             animate={{ y: [0, -20, 0] }}
             transition={{ repeat: Infinity, duration: 6 }}
             className="absolute top-0 left-10 w-44 h-44 rounded-3xl
-                       backdrop-blur-xl bg-white/20 border border-white/30
+                         border border-white/30
                        shadow-2xl overflow-hidden"
           >
             <img

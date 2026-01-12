@@ -228,7 +228,7 @@ export default function MeetYourSpeaker({ webinar }) {
       </div>
 
       {/* Animation Styles */}
-      <style jsx>{`
+      <style>{`
         @keyframes slideIn {
           from {
             opacity: 0;

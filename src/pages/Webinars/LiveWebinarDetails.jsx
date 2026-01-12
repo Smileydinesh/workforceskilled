@@ -128,46 +128,46 @@ if (!webinar) {
 
 
   const buyNow = async () => {
-    if (!selectedPlan || !webinar) return;
+  if (!selectedPlan || !webinar) return;
 
-    setIsAddingToCart(true);
+  setIsAddingToCart(true);
 
-    try {
-      // 🔐 STEP 1: Check login
-      const authRes = await fetch(`${API_BASE}/api/auth/me/`, {
-        credentials: "include",
-      });
+  try {
+    // 🔐 STEP 1: Check login using Cart API (correct endpoint)
+    const authRes = await fetch(`${API_BASE}/api/cart/`, {
+      credentials: "include",
+    });
 
-      if (authRes.status === 401) {
-        navigate(`/login?next=/checkout`);
-        return;
-      }
-
-      // 🛒 STEP 2: Add item to cart
-      const res = await fetch(`${API_BASE}/api/cart/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          webinar_id: webinar.webinar_id,
-          purchase_type: selectedPlan.type,
-          webinar_type: "LIVE",
-        }),
-      });
-
-      if (!res.ok) throw new Error("Failed to add to cart");
-
-      await fetchCartCount();
-
-      // ✅ STEP 3: Go to checkout
-      navigate("/checkout");
-
-    } catch (err) {
-      console.error("BUY NOW ERROR:", err);
-    } finally {
-      setIsAddingToCart(false);
+    if (authRes.status === 401 || authRes.status === 403) {
+      navigate(`/login?next=/checkout`);
+      return;
     }
-  };
+
+    // 🛒 STEP 2: Add item to cart
+    const res = await fetch(`${API_BASE}/api/cart/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        webinar_id: webinar.webinar_id,
+        purchase_type: selectedPlan.type,
+        webinar_type: "LIVE",
+      }),
+    });
+
+    if (!res.ok) throw new Error("Failed to add to cart");
+
+    await fetchCartCount();
+
+    // ✅ STEP 3: Go to checkout
+    navigate("/checkout");
+
+  } catch (err) {
+    console.error("BUY NOW ERROR:", err);
+  } finally {
+    setIsAddingToCart(false);
+  }
+};
 
 
   return (

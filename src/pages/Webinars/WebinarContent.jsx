@@ -87,20 +87,12 @@ export default function WebinarContent({ webinar }) {
 
           {/* Content */}
           <div className="space-y-4 pl-4 border-l-2 border-amber-200/50 ml-3 group-hover/overview:border-amber-300 transition-colors duration-300">
-            {Array.isArray(webinar.overview)
-              ? webinar.overview.map((para, index) => (
-                  <div
-                    key={index}
-                    className="relative group/para"
-                  >
-                    <div className="absolute -left-5 top-2 w-2.5 h-2.5 rounded-full bg-amber-300 opacity-0 group-hover/para:opacity-100 transform group-hover/para:scale-125 transition-all duration-300"></div>
-                    <p className="text-gray-700 leading-relaxed pl-2 group-hover/para:pl-4 group-hover/para:text-gray-800 transition-all duration-300">
-                      {para}
-                    </p>
-                    <div className="h-0.5 w-0 group-hover/para:w-full bg-gradient-to-r from-amber-200/50 to-transparent mt-2 transition-all duration-500 rounded-full"></div>
-                  </div>
-                ))
-              : <p className="text-gray-700 leading-relaxed pl-2">{webinar.overview}</p>}
+            <div
+  className="webinar-content prose max-w-none text-gray-700"
+  dangerouslySetInnerHTML={{ __html: webinar.overview }}
+/>
+
+
           </div>
         </div>
       </div>
@@ -125,28 +117,12 @@ export default function WebinarContent({ webinar }) {
           </div>
 
           {/* Benefits List */}
-          <ul className="space-y-3">
-            {webinar.why_attend?.map((point, index) => (
-              <li
-                key={index}
-                className="group/point flex items-start gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-white hover:to-emerald-50/50 transition-all duration-300 hover:translate-x-1 hover:shadow-md border border-transparent hover:border-emerald-200"
-              >
-                <div className="relative shrink-0">
-                  <div className="absolute -inset-1.5 bg-emerald-400/10 rounded-full blur-md group-hover/point:bg-emerald-400/20 transition-all duration-300"></div>
-                  <div className="relative w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-sm">
-                    <FiCheckCircle className="text-white text-sm" />
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <span className="text-gray-700 group-hover/point:text-gray-900 font-medium transition-colors duration-300">
-                    {point}
-                  </span>
-                  <div className="h-0.5 w-0 group-hover/point:w-full bg-gradient-to-r from-emerald-400/30 to-transparent mt-2 transition-all duration-500 rounded-full"></div>
-                </div>
-                <FiChevronRight className="text-emerald-400 opacity-0 group-hover/point:opacity-100 transform group-hover/point:translate-x-1 transition-all duration-300" />
-              </li>
-            ))}
-          </ul>
+          <div
+  className="webinar-content prose max-w-none"
+  dangerouslySetInnerHTML={{ __html: webinar.why_attend }}
+/>
+
+
         </div>
       </div>
 
@@ -170,28 +146,12 @@ export default function WebinarContent({ webinar }) {
           </div>
 
           {/* Benefits List */}
-          <ul className="space-y-3">
-            {webinar.who_benefits?.points?.map((point, index) => (
-              <li
-                key={index}
-                className="group/point flex items-start gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-white hover:to-purple-50/50 transition-all duration-300 hover:translate-x-1 hover:shadow-md border border-transparent hover:border-purple-200"
-              >
-                <div className="relative shrink-0">
-                  <div className="absolute -inset-1.5 bg-purple-400/10 rounded-full blur-md group-hover/point:bg-purple-400/20 transition-all duration-300"></div>
-                  <div className="relative w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-sm">
-                    <FiUsers className="text-white text-sm" />
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <span className="text-gray-700 group-hover/point:text-gray-900 font-medium transition-colors duration-300">
-                    {point}
-                  </span>
-                  <div className="h-0.5 w-0 group-hover/point:w-full bg-gradient-to-r from-purple-400/30 to-transparent mt-2 transition-all duration-500 rounded-full"></div>
-                </div>
-                <FiChevronRight className="text-purple-400 opacity-0 group-hover/point:opacity-100 transform group-hover/point:translate-x-1 transition-all duration-300" />
-              </li>
-            ))}
-          </ul>
+          <div
+  className="webinar-content prose max-w-none"
+  dangerouslySetInnerHTML={{ __html: webinar.who_benefits }}
+/>
+
+
         </div>
       </div>
 
@@ -215,28 +175,12 @@ export default function WebinarContent({ webinar }) {
           </div>
 
           {/* Areas List */}
-          <ul className="space-y-3">
-            {webinar.areas_covered?.map((area, index) => (
-              <li
-                key={index}
-                className="group/area flex items-start gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-white hover:to-cyan-50/50 transition-all duration-300 hover:translate-x-1 hover:shadow-md border border-transparent hover:border-cyan-200"
-              >
-                <div className="relative shrink-0">
-                  <div className="absolute -inset-1.5 bg-cyan-400/10 rounded-full blur-md group-hover/area:bg-cyan-400/20 transition-all duration-300"></div>
-                  <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center shadow-sm">
-                    <div className="text-white font-bold text-xs">{index + 1}</div>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <span className="text-gray-700 group-hover/area:text-gray-900 font-medium transition-colors duration-300">
-                    {area}
-                  </span>
-                  <div className="h-0.5 w-0 group-hover/area:w-full bg-gradient-to-r from-cyan-400/30 to-transparent mt-2 transition-all duration-500 rounded-full"></div>
-                </div>
-                <FiChevronRight className="text-cyan-400 opacity-0 group-hover/area:opacity-100 transform group-hover/area:translate-x-1 transition-all duration-300" />
-              </li>
-            ))}
-          </ul>
+          <div
+  className="webinar-content"
+  dangerouslySetInnerHTML={{ __html: webinar.areas_covered }}
+/>
+
+
         </div>
       </div>
 
@@ -255,7 +199,7 @@ export default function WebinarContent({ webinar }) {
       </div>
 
       {/* Animation Styles */}
-      <style jsx>{`
+      <style>{`
         @keyframes slideIn {
           from {
             opacity: 0;
@@ -308,6 +252,44 @@ export default function WebinarContent({ webinar }) {
         div[ref]:nth-child(4) { animation-delay: 0.4s; }
         div[ref]:nth-child(5) { animation-delay: 0.5s; }
       `}</style>
+      <style>{`
+.webinar-content ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.75rem;
+}
+
+.webinar-content li {
+  position: relative;
+  padding-left: 2.4rem;
+  margin-bottom: 0.9rem;
+  font-size: 0.95rem;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.webinar-content li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #10b981, #14b8a6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+}
+`}</style>
     </section>
   );
 }
+
+
+
+
