@@ -4,220 +4,149 @@ import {
   FiHash,
   FiCheckCircle,
   FiChevronRight,
-  FiPlay,
-  FiUsers,
 } from "react-icons/fi";
+import refundImage from "../../assets/images/moneyback.png";
 import { useState } from "react";
 
-export default function HeroSection({ webinar = {
-  status: "UPCOMING",
-  title: "Master Modern Web Development: From Zero to Hero",
-  date_display: "January 25, 2026",
-  pst: "10:00 AM",
-  est: "1:00 PM",
-  duration_minutes: 90,
-  webinar_id: "WEB-2026-001"
-}}) {
+export default function HeroSection({ webinar }) {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
   return (
-    <section className="relative w-full min-h-[70vh] flex items-center px-4 sm:px-6 lg:px-8 py-8 overflow-hidden bg-gradient-to-br from-emerald-900 via-green-900 to-emerald-900">
-      {/* Animated mesh background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(34,197,94,0.1),transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(22,163,74,0.15),transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(16,185,129,0.1),transparent_50%)]"></div>
+    <section className="relative w-full px-4 sm:px-6 pt-8 pb-10 sm:pt-10 sm:pb-12 overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-800 via-teal-800 to-emerald-900">
+        <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/30 via-transparent to-emerald-900/20"></div>
+        <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-white/5 to-transparent"></div>
         
-        {/* Floating orbs */}
-        {[...Array(5)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full mix-blend-screen filter blur-xl opacity-20 animate-float-slow"
-            style={{
-              width: `${Math.random() * 300 + 100}px`,
-              height: `${Math.random() * 300 + 100}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              background: `radial-gradient(circle, ${
-                i % 2 === 0 ? 'rgba(22,163,74,0.4)' : 'rgba(16,185,129,0.4)'
-              }, transparent)`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${15 + i * 2}s`,
-            }}
-          />
-        ))}
+        {/* Animated dots */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-emerald-400/20 rounded-full animate-float"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${10 + Math.random() * 8}s`,
+              }}
+            />
+          ))}
+        </div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto w-full z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* LEFT: Content */}
-          <div className="space-y-8">
-            {/* Status badge */}
-            <div className="animate-fadeIn">
-              <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-5 py-2.5 shadow-2xl">
-                <div className="relative">
-                  <div className={`w-3 h-3 rounded-full ${
-                    webinar.status === "LIVE" ? "bg-green-400 animate-pulse" : "bg-amber-400"
-                  }`}></div>
-                  <div className={`absolute inset-0 w-3 h-3 rounded-full ${
-                    webinar.status === "LIVE" ? "bg-green-400" : "bg-amber-400"
-                  } animate-ping`}></div>
-                </div>
-                <span className="text-white font-semibold text-sm tracking-wide">
-                  {webinar.status}
-                </span>
-              </div>
-            </div>
-
-            {/* Title */}
-            <div className="space-y-4 animate-fadeIn" style={{ animationDelay: "0.1s" }}>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
-                {webinar.title}
-              </h1>
-              <p className="text-lg text-slate-300 leading-relaxed max-w-xl">
-                Join thousands of professionals in this transformative learning experience. 
-                Get expert insights and actionable strategies.
-              </p>
-            </div>
-
-            {/* Quick stats */}
-            <div className="flex items-center gap-6 animate-fadeIn" style={{ animationDelay: "0.2s" }}>
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center">
-                  <FiUsers className="text-emerald-300 text-lg" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-white">2.5K+</p>
-                  <p className="text-xs text-slate-400">Attendees</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-full bg-green-500/20 border border-green-400/30 flex items-center justify-center">
-                  <FiClock className="text-green-300 text-lg" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-white">{webinar.duration_minutes}</p>
-                  <p className="text-xs text-slate-400">Minutes</p>
-                </div>
-              </div>
-            </div>
-
-            {/* CTA buttons */}
-            <div className="flex flex-wrap items-center gap-4 animate-fadeIn" style={{ animationDelay: "0.3s" }}>
-              <button className="group relative px-8 py-4 bg-gradient-to-r from-emerald-600 to-green-600 text-white font-bold rounded-xl shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="relative flex items-center gap-2">
-                  <FiPlay className="text-lg" />
-                  <span>Buy Now</span>
-                </div>
-              </button>
-              
-              <button className="px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-300">
-                Learn More
-              </button>
-            </div>
+      <div className="relative max-w-7xl mx-auto grid lg:grid-cols-[1fr_320px] gap-6 lg:gap-8 items-start z-10">
+        {/* ================= LEFT CONTENT ================= */}
+        <div className="space-y-6">
+          {/* Status Badge */}
+          <div className="animate-slideUp" style={{ animationDelay: "0.1s" }}>
+            <span
+              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold border shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg
+                ${
+                  webinar.status === "LIVE"
+                    ? "bg-gradient-to-r from-emerald-500 to-green-500 text-white border-emerald-400 shadow-emerald-500/20 animate-pulse-subtle"
+                    : "bg-gradient-to-r from-amber-500 to-orange-500 text-white border-amber-400 shadow-amber-500/20"
+                }`}
+            >
+              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+              {webinar.status}
+            </span>
           </div>
 
-          {/* RIGHT: Schedule Card */}
-          <div className="animate-fadeIn" style={{ animationDelay: "0.4s" }}>
-            <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 shadow-2xl">
-              {/* Glow effect */}
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-600 to-green-600 rounded-3xl opacity-20 blur-xl"></div>
+          {/* Title */}
+          <div className="animate-slideUp" style={{ animationDelay: "0.2s" }}>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] font-bold max-w-4xl leading-tight text-white">
+              <span className="bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent animate-gradient-shift">
+                {webinar.title}
+              </span>
+            </h1>
+          </div>
+
+          {/* ================= SCHEDULE BOX ================= */}
+          <div 
+            className="animate-slideUp transition-all duration-300 hover:shadow-xl"
+            style={{ animationDelay: "0.3s" }}
+          >
+            <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-5 sm:p-6 shadow-lg overflow-hidden group/schedule">
+              {/* Top accent line */}
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-500"></div>
               
-              <div className="relative space-y-6">
-                {/* Money Back Guarantee - Moved to TOP */}
-                <div 
-                  className="relative p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-400/30 rounded-2xl cursor-pointer"
-                  onMouseEnter={() => setIsTooltipVisible(true)}
-                  onMouseLeave={() => setIsTooltipVisible(false)}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-lg">
-                      <FiCheckCircle className="text-white text-2xl" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-bold text-white mb-1">100% Money-Back Guarantee</p>
-                      <div className="flex items-center gap-1 text-green-300 text-xs">
-                        <span>View refund policy</span>
-                        <FiChevronRight className="text-xs" />
-                      </div>
-                    </div>
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center transition-transform group-hover/schedule:rotate-6 duration-300">
+                    <FiCalendar className="text-white text-base" />
                   </div>
-
-                  {/* Tooltip - Positioned at top */}
-                  {isTooltipVisible && (
-                    <div className="absolute left-0 right-0 -top-2 -mt-2 bg-white rounded-xl shadow-2xl p-5 border border-slate-200 z-50 animate-fadeIn origin-top scale-95">
-                      <div className="space-y-3">
-                        <p className="text-sm font-bold text-slate-900">Refund Policy</p>
-                        <div className="space-y-2">
-                          <div className="flex items-start gap-2">
-                            <FiCheckCircle className="text-green-500 flex-shrink-0 mt-0.5" />
-                            <span className="text-xs text-slate-700">Full refund within 5 working days</span>
-                          </div>
-                          <div className="flex items-start gap-2">
-                            <FiCheckCircle className="text-amber-500 flex-shrink-0 mt-0.5" />
-                            <span className="text-xs text-slate-700">No refunds after 5 working days</span>
-                          </div>
-                          <div className="flex items-start gap-2">
-                            <FiCheckCircle className="text-green-500 flex-shrink-0 mt-0.5" />
-                            <span className="text-xs text-slate-700">Cancel subscription anytime</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  <h3 className="text-lg font-bold text-white">
+                    Webinar Schedule
+                  </h3>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <h3 className="text-2xl font-bold text-white">Event Details</h3>
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center shadow-lg">
-                    <FiCalendar className="text-white text-xl" />
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  {/* Date */}
-                  <div className="group p-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-all duration-300 cursor-pointer">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 border border-emerald-400/30 flex items-center justify-center">
-                          <FiCalendar className="text-emerald-300 text-lg" />
-                        </div>
-                        <div>
-                          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Date</p>
-                          <p className="text-lg font-bold text-white">{webinar.date_display}</p>
-                        </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {/* DATE */}
+                  <div className="group/date bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-4 transition-all duration-300 hover:bg-white/10 hover:border-emerald-400/30 hover:shadow-md">
+                    <div className="flex gap-3 items-start">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border border-emerald-400/20 flex items-center justify-center transition-transform group-hover/date:scale-110 duration-300">
+                        <FiCalendar className="text-emerald-300 text-sm" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-emerald-200/80 mb-1 uppercase tracking-wider">Date</p>
+                        {webinar.date_display && (
+                          <p className="text-base font-semibold text-white group-hover/date:text-emerald-100 transition-colors duration-300">
+                            {webinar.date_display}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
 
-                  {/* Time */}
-                  <div className="group p-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-all duration-300 cursor-pointer">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500/20 to-green-600/20 border border-green-400/30 flex items-center justify-center">
-                          <FiClock className="text-green-300 text-lg" />
-                        </div>
-                        <div>
-                          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Time</p>
-                          <p className="text-lg font-bold text-white">{webinar.pst} PST</p>
-                          <p className="text-sm text-slate-400">{webinar.est} EST</p>
-                        </div>
+                  {/* TIME */}
+                  <div className="group/time bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-4 transition-all duration-300 hover:bg-white/10 hover:border-emerald-400/30 hover:shadow-md">
+                    <div className="flex gap-3 items-start">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border border-emerald-400/20 flex items-center justify-center transition-transform group-hover/time:scale-110 duration-300">
+                        <FiClock className="text-emerald-300 text-sm" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-emerald-200/80 mb-1 uppercase tracking-wider">Time</p>
+                        {webinar.pst && webinar.est && (
+                          <div className="space-y-1">
+                            <p className="text-sm font-semibold text-white group-hover/time:text-emerald-100 transition-colors duration-300">
+                              PST: {webinar.pst}
+                            </p>
+                            <p className="text-xs text-emerald-200/80">
+                              EST: {webinar.est}
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
 
-                  {/* Webinar ID */}
-                  <div className="group p-5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-all duration-300 cursor-pointer">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-500/20 to-teal-600/20 border border-teal-400/30 flex items-center justify-center">
-                          <FiHash className="text-teal-300 text-lg" />
-                        </div>
-                        <div>
-                          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Webinar ID</p>
-                          <p className="text-lg font-mono font-bold text-white">{webinar.webinar_id}</p>
-                        </div>
+                  {/* DURATION */}
+                  <div className="group/duration bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-4 transition-all duration-300 hover:bg-white/10 hover:border-emerald-400/30 hover:shadow-md">
+                    <div className="flex gap-3 items-start">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border border-emerald-400/20 flex items-center justify-center transition-transform group-hover/duration:scale-110 duration-300">
+                        <FiClock className="text-emerald-300 text-sm" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-emerald-200/80 mb-1 uppercase tracking-wider">Duration</p>
+                        <p className="text-base font-semibold text-white group-hover/duration:text-emerald-100 transition-colors duration-300">
+                          {webinar.duration_minutes} minutes
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* WEBINAR ID */}
+                  <div className="group/id bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-4 transition-all duration-300 hover:bg-white/10 hover:border-emerald-400/30 hover:shadow-md">
+                    <div className="flex gap-3 items-start">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border border-emerald-400/20 flex items-center justify-center transition-transform group-hover/id:scale-110 duration-300">
+                        <FiHash className="text-emerald-300 text-sm" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-emerald-200/80 mb-1 uppercase tracking-wider">Webinar ID</p>
+                        <p className="text-base font-mono font-semibold text-white group-hover/id:text-emerald-100 transition-colors duration-300">
+                          {webinar.webinar_id}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -226,36 +155,167 @@ export default function HeroSection({ webinar = {
             </div>
           </div>
         </div>
+
+        {/* ================= RIGHT CONTENT ================= */}
+        <div className="relative lg:mt-16">
+          {/* Guarantee Card */}
+          <div 
+            className="relative animate-slideUp"
+            style={{ animationDelay: "0.4s" }}
+          >
+            <div className="relative bg-gradient-to-br from-white to-emerald-50 rounded-xl p-5 shadow-xl border border-emerald-100">
+              {/* Top badge */}
+              <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">
+                100% GUARANTEE
+              </div>
+              
+              {/* Image */}
+              <div className="mb-4 pt-2">
+                <img
+                  src={refundImage}
+                  alt="100% Money Back Guarantee"
+                  className="max-w-[140px] mx-auto transform transition-transform duration-300 hover:scale-105"
+                />
+              </div>
+
+              {/* Text with Tooltip Trigger */}
+              <div 
+                className="text-center cursor-pointer group"
+                onMouseEnter={() => setIsTooltipVisible(true)}
+                onMouseLeave={() => setIsTooltipVisible(false)}
+              >
+                <p className="text-sm font-semibold text-gray-800 mb-1 group-hover:text-emerald-700 transition-colors duration-300">
+                  Refund / Cancellation Policy
+                </p>
+                <div className="inline-flex items-center gap-1 text-emerald-600 font-medium text-xs group-hover:gap-1.5 transition-all duration-300">
+                  <span>Learn More</span>
+                  <FiChevronRight className="transform group-hover:translate-x-0.5 transition-transform duration-300" />
+                </div>
+              </div>
+
+              {/* Tooltip positioned to the side */}
+              <div
+                className={`
+                  absolute top-0 left-full ml-4
+                  w-72
+                  transition-all duration-300 ease-out
+                  pointer-events-none
+                  z-50
+                  ${isTooltipVisible ? 'opacity-100 visible translate-x-0' : 'opacity-0 invisible -translate-x-2'}
+                `}
+              >
+                <div className="relative bg-white border border-emerald-200 rounded-lg p-4 shadow-2xl">
+                  {/* Tooltip arrow */}
+                  <div className="absolute top-6 -left-2 w-3 h-3 bg-white border-l border-b border-emerald-200 transform rotate-45"></div>
+                  
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-7 h-7 rounded-md bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                      <FiCheckCircle className="text-emerald-600 text-sm" />
+                    </div>
+                    <p className="text-sm font-bold text-gray-800">
+                      Refund Policy
+                    </p>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    <div className="flex items-start gap-2.5 group/item">
+                      <div className="w-4 h-4 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-200">
+                        <FiCheckCircle className="text-emerald-500 w-2.5 h-2.5" />
+                      </div>
+                      <span className="text-sm text-gray-700 leading-tight">Full refund within 5 working days</span>
+                    </div>
+
+                    <div className="flex items-start gap-2.5 group/item">
+                      <div className="w-4 h-4 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-200">
+                        <FiCheckCircle className="text-amber-500 w-2.5 h-2.5" />
+                      </div>
+                      <span className="text-sm text-gray-700 leading-tight">No refunds after 5 working days</span>
+                    </div>
+
+                    <div className="flex items-start gap-2.5 group/item">
+                      <div className="w-4 h-4 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:scale-110 transition-transform duration-200">
+                        <FiCheckCircle className="text-emerald-500 w-2.5 h-2.5" />
+                      </div>
+                      <span className="text-sm text-gray-700 leading-tight">Subscription cancellation anytime</span>
+                    </div>
+
+                    <a
+                      href="/refund-policy"
+                      className="inline-flex items-center gap-1.5 mt-3 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold text-xs rounded-md transition-all duration-300 group/link"
+                    >
+                      View Full Refund Policy
+                      <FiChevronRight className="transform group-hover/link:translate-x-1 transition-transform duration-300" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
+      {/* Animation styles */}
       <style>{`
-        @keyframes fadeIn {
-        from {
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(15px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0) translateX(0);
+          }
+          25% {
+            transform: translateY(-15px) translateX(8px);
+          }
+          50% {
+            transform: translateY(-8px) translateX(-8px);
+          }
+          75% {
+            transform: translateY(-12px) translateX(4px);
+          }
+        }
+        
+        @keyframes gradientShift {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+        
+        @keyframes pulseSubtle {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.8;
+          }
+        }
+        
+        .animate-slideUp {
+          animation: slideUp 0.5s ease-out forwards;
           opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-        
-        @keyframes float-slow {
-         0%, 100% {
-          transform: translate(0, 0);
-        }
-         50% {
-          transform: translate(30px, -30px);
-        }
         }
         
-        .animate-fadeIn {
-        animation: fadeIn 0.8s ease-out forwards;
-        opacity: 0;
+        .animate-float {
+          animation: float linear infinite;
         }
         
-        .animate-float-slow {
-        animation: float-slow ease-in-out infinite;
+        .animate-gradient-shift {
+          background-size: 200% 200%;
+          animation: gradientShift 4s ease-in-out infinite;
+        }
+        
+        .animate-pulse-subtle {
+          animation: pulseSubtle 2s ease-in-out infinite;
         }
       `}</style>
     </section>
