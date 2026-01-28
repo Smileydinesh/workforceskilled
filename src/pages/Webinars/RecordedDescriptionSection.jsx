@@ -1,10 +1,24 @@
-import { FiStar, FiAward, FiUsers, FiChevronRight } from "react-icons/fi";
+import {
+  FiStar,
+  FiAward,
+  FiUsers,
+  FiChevronRight,
+} from "react-icons/fi";
 
 export default function RecordedDescriptionSection({ webinar }) {
   return (
-    <section className="mt-1 rounded-2xl border border-emerald-200/60 bg-gradient-to-b from-emerald-50/60 via-white to-white backdrop-blur-xl p-6 sm:p-8 space-y-8">
-
-      <h2 className="text-2xl sm:text-3xl font-bold text-emerald-900">
+    <section
+      className="
+        mt-2
+        rounded-2xl
+        border border-sky-200
+        bg-white
+        p-6 sm:p-8
+        space-y-10
+      "
+    >
+      {/* TITLE */}
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
         Recording Details
       </h2>
 
@@ -12,14 +26,23 @@ export default function RecordedDescriptionSection({ webinar }) {
       {webinar.overview && (
         <section>
           <div className="flex items-center gap-3 mb-4">
-            <FiStar className="text-amber-500" />
-            <h3 className="text-xl font-semibold text-emerald-900">
+            <div className="p-2 rounded-lg bg-sky-100">
+              <FiStar className="text-sky-600" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900">
               Overview
             </h3>
           </div>
 
           <div
-            className="webinar-content prose max-w-none"
+            className="
+              webinar-content
+              prose
+              prose-gray
+              max-w-none
+              text-gray-700
+              leading-relaxed
+            "
             dangerouslySetInnerHTML={{ __html: webinar.overview }}
           />
         </section>
@@ -29,14 +52,23 @@ export default function RecordedDescriptionSection({ webinar }) {
       {webinar.why_attend && (
         <section>
           <div className="flex items-center gap-3 mb-4">
-            <FiAward className="text-emerald-600" />
-            <h3 className="text-xl font-semibold text-emerald-900">
+            <div className="p-2 rounded-lg bg-sky-100">
+              <FiAward className="text-sky-600" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900">
               Why You Should Attend
             </h3>
           </div>
 
           <div
-            className="webinar-content prose max-w-none"
+            className="
+              webinar-content
+              prose
+              prose-gray
+              max-w-none
+              text-gray-700
+              leading-relaxed
+            "
             dangerouslySetInnerHTML={{ __html: webinar.why_attend }}
           />
         </section>
@@ -46,14 +78,23 @@ export default function RecordedDescriptionSection({ webinar }) {
       {webinar.who_benefits && (
         <section>
           <div className="flex items-center gap-3 mb-4">
-            <FiUsers className="text-emerald-600" />
-            <h3 className="text-xl font-semibold text-emerald-900">
+            <div className="p-2 rounded-lg bg-sky-100">
+              <FiUsers className="text-sky-600" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900">
               Who Will Benefit
             </h3>
           </div>
 
           <div
-            className="webinar-content prose max-w-none"
+            className="
+              webinar-content
+              prose
+              prose-gray
+              max-w-none
+              text-gray-700
+              leading-relaxed
+            "
             dangerouslySetInnerHTML={{ __html: webinar.who_benefits }}
           />
         </section>
@@ -63,14 +104,23 @@ export default function RecordedDescriptionSection({ webinar }) {
       {webinar.areas_covered && (
         <section>
           <div className="flex items-center gap-3 mb-4">
-            <FiChevronRight className="text-emerald-600" />
-            <h3 className="text-xl font-semibold text-emerald-900">
+            <div className="p-2 rounded-lg bg-sky-100">
+              <FiChevronRight className="text-sky-600" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900">
               Areas Covered in the Session
             </h3>
           </div>
 
           <div
-            className="webinar-content prose max-w-none"
+            className="
+              webinar-content
+              prose
+              prose-gray
+              max-w-none
+              text-gray-700
+              leading-relaxed
+            "
             dangerouslySetInnerHTML={{ __html: webinar.areas_covered }}
           />
         </section>

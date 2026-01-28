@@ -22,8 +22,9 @@ import RecordedWebinarDetails from "./pages/Webinars/RecordedWebinarDetails";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import UserDashboard from "./pages/Dashboard/UserDashboard";
-
-
+import SubscriptionCheckout from "./pages/subscriptions/SubscriptionCheckout";
+import DemoVideoPage from "./pages/Demo/DemoVideoPage";
+import SearchResults from "./pages/search/SearchResults";
 
 
 export default function App() {
@@ -53,6 +54,10 @@ export default function App() {
 
         <Route path="/checkout" element={<Checkout />} />
 
+        <Route path="/demo" element={<DemoVideoPage />} />
+
+        <Route path="/search" element={<SearchResults />} />
+
 
 
         <Route path="/terms-and-conditions" element={<TermsConditions />}/>
@@ -66,6 +71,7 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/subscriptions/checkout" element={<SubscriptionCheckout />}/>
 
         {/* TEMP fallback to avoid blank screen */}
         <Route

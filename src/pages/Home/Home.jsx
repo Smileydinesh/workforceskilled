@@ -4,17 +4,19 @@ import StatsSection from "./StatsSection";
 import WebinarSection from "./WebinarSection";
 import PricingSection from "./PricingSection";
 import BottomContent from './bottomcontent';
+import InstructorSlider from "./InstructorSlider";
 
 
 export default function Home() {
   return (
     <main className="overflow-hidden">
       <HeroSection />
-      <FeaturesSection />
+      {/* <FeaturesSection /> */}
       <WebinarSection />
-      <StatsSection />
-      <BottomContent /> 
-      <PricingSection />
+      {/* <StatsSection /> */}
+      {/* <BottomContent />  */}
+      {/* <PricingSection /> */}
+       <InstructorSlider />
     </main>
   );
 }

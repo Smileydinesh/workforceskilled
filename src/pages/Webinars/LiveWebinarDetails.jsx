@@ -6,6 +6,7 @@ import HeroSection from "./HeroSection";
 import WebinarContent from "./WebinarContent";
 import PricingAside from "./PricingAside";
 import MeetYourSpeaker from "./MeetYourSpeaker";
+import WebinarHero from "./WebinarHero";
 
 export default function LiveWebinarDetails() {
   const { webinar_id } = useParams();
@@ -18,6 +19,28 @@ export default function LiveWebinarDetails() {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
+  const [subscriptions, setSubscriptions] = useState([]);
+  const [selectedSubscription, setSelectedSubscription] = useState(null);
+
+
+
+  useEffect(() => {
+  const fetchSubscriptions = async () => {
+    try {
+      const res = await fetch(
+        `${API_BASE}/api/subscriptions/plans/`
+      );
+      const data = await res.json();
+      setSubscriptions(data);
+    } catch (err) {
+      console.error("SUBSCRIPTION FETCH ERROR", err);
+    }
+  };
+
+  fetchSubscriptions();
+}, []);
+
+
 
 
   useEffect(() => {
@@ -27,11 +50,21 @@ export default function LiveWebinarDetails() {
 ;
         const data = await res.json();
         setWebinar(data);
-        setSelectedPlan({
-  label: "Live – Single Attendee",
-  price: data?.pricing?.live_single_price ?? 0,
+        const hasLiveSubscription =
+  data?.pricing?.live_single_price === 0;
+
+setSelectedPlan({
+  label: hasLiveSubscription
+    ? "Live – Included"
+    : "Live – Single Attendee",
+  price: hasLiveSubscription
+    ? 0
+    : data?.pricing?.live_single_price ?? 0,
   type: "LIVE_SINGLE",
+  included: hasLiveSubscription,
 });
+
+
       } catch (err) {
         console.error(err);
       } finally {
@@ -71,8 +104,15 @@ export default function LiveWebinarDetails() {
   checkIfInCart();
 }, [webinar, selectedPlan]);
 
+  const isLivePlan =
+    selectedPlan?.type?.startsWith("LIVE");
+
+  const isSubscriptionLive =
+    isLivePlan && selectedPlan?.price === 0;
+
 
   const addToCart = async () => {
+    if (isSubscriptionLive) return;
     if (!selectedPlan || !webinar) {
       console.error("Missing data", { selectedPlan, webinar });
       return;
@@ -128,6 +168,7 @@ if (!webinar) {
 
 
   const buyNow = async () => {
+  if (isSubscriptionLive) return;
   if (!selectedPlan || !webinar) return;
 
   setIsAddingToCart(true);
@@ -172,8 +213,20 @@ if (!webinar) {
 
   return (
 <main className="min-h-screen bg-[#F7FBF9] text-gray-900">
+      <WebinarHero
+  webinar={webinar}
+  selectedPlan={selectedPlan}
+  setSelectedPlan={setSelectedPlan}
+  addToCart={addToCart}
+  buyNow={buyNow}
+  isSubscriptionLive={isSubscriptionLive}
+  subscriptions={subscriptions}
+  selectedSubscription={selectedSubscription}
+  setSelectedSubscription={setSelectedSubscription}
+  navigate={navigate}
+/>
 
-      <HeroSection webinar={webinar} />
+      {/* <HeroSection webinar={webinar} /> */}
 
       {/* Hero → Content Bridge */}
      <div className="relative -mt-12">
@@ -181,20 +234,11 @@ if (!webinar) {
 </div>
 
 
-      <section className="relative max-w-[1420px] mx-auto px-3 sm:px-4 pb-0 grid lg:grid-cols-[1fr_380px] gap-6">
+      <section className="">
 
 
         <WebinarContent webinar={webinar} />
-        <PricingAside
-          webinar={webinar}
-          selectedPlan={selectedPlan}
-          setSelectedPlan={setSelectedPlan}
-          addToCart={addToCart}
-          buyNow={buyNow}
-          isAddingToCart={isAddingToCart}
-          isInCart={isInCart}
-          navigate={navigate}
-        />
+        
       </section>
       <MeetYourSpeaker webinar={webinar} />
     </main>

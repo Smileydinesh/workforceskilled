@@ -137,7 +137,7 @@ export default function RecordedWebinarDetails() {
     <>
       <RecordedHeroSection webinar={webinar} />
 
-      <section className="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-[1fr_420px] gap-14">
+      <section className="max-w-9xl mx-auto grid lg:grid-cols-[1fr_420px] gap-14">
         <RecordedDescriptionSection webinar={webinar} />
 
         <RecordedPricingSection
@@ -151,7 +151,7 @@ export default function RecordedWebinarDetails() {
       </section>
 
       {/* FULL WIDTH INSTRUCTOR */}
-      <section className="max-w-7xl mx-auto px-6 pb-20">
+      <section className="max-w-8xl mx-auto px-6 pb-20">
         <RecordedInstructorSection instructor={webinar.instructor} />
       </section>
     </>

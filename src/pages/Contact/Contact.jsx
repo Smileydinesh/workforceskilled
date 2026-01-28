@@ -5,7 +5,7 @@ import { TbMessage2 } from "react-icons/tb";
 
 export default function Contact() {
   return (
-    <section className="relative bg-gradient-to-br from-gray-50 via-white to-emerald-50 py-24 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-sky-50 via-white to-sky-50 py-24 overflow-hidden pt-2 pb-4">
       {/* Animated Floating Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Floating Mail */}
@@ -62,7 +62,7 @@ export default function Contact() {
           }}
           className="absolute bottom-1/3 left-20"
         >
-          <div className="text-3xl opacity-15 text-emerald-400">
+          <div className="text-3xl opacity-15 text-sky-400">
             <FiSmartphone />
           </div>
         </motion.div>
@@ -91,65 +91,44 @@ export default function Contact() {
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* Top Header with enhanced styling */}
+      <div className="relative max-w-7xl mx-auto sm:px-6">
+        {/* Top Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto mb-20 text-center"
+          className="max-w-3xl pt-2 mx-auto text-center"
         >
-          {/* Enhanced badge */}
-          <motion.span
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2 mb-6 px-5 py-2.5 rounded-full text-sm font-semibold
-              bg-gradient-to-r from-emerald-100 to-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm"
-          >
-            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-            Get in Touch
-          </motion.span>
-
-          <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            Contact <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">Us</span>
+          <h1 className="text-5xl font-bold text-gray-900 leading-tight pb-3">
+            Contact <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-sky-500">Us</span>
           </h1>
-
-          <p className="text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto">
-            We'd love to hear from you! Whether you have questions, need support,
-            or want to learn more about our services, our team is here to help.
-            Reach out to us today, and let's start working together to ensure
-            your organization stays compliant and secure.
-          </p>
         </motion.div>
 
         {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-
           {/* LEFT SIDE - Contact Cards */}
           <div className="space-y-6">
-            {/* Email Card with enhanced styling */}
+            {/* Email Card */}
             <motion.div
               whileHover={{ y: -8, scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
               className="group relative bg-white rounded-2xl p-6 shadow-lg border border-gray-100
-                hover:shadow-2xl hover:border-emerald-200 transition-all duration-300"
+                hover:shadow-2xl hover:border-sky-200 transition-all duration-300"
             >
-              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-50 to-transparent rounded-2xl opacity-0 
+              <div className="absolute -inset-1 bg-gradient-to-r from-sky-50 to-transparent rounded-2xl opacity-0 
                 group-hover:opacity-100 transition-opacity duration-500" />
               
               <div className="relative flex items-start gap-5">
-                <div className="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100 
-                  text-emerald-600 group-hover:from-emerald-100 group-hover:to-emerald-50 transition-all duration-300">
+                <div className="p-4 rounded-xl bg-gradient-to-br from-sky-50 to-sky-100 
+                  text-sky-600 group-hover:from-sky-100 group-hover:to-sky-50 transition-all duration-300">
                   <FiMail className="text-2xl" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-bold text-gray-900 text-lg mb-2">
                     Email Us
                   </h3>
-                  <p className="text-emerald-600 font-semibold text-base">
-                    support@workforceskilled.com
+                  <p className="text-sky-600 font-semibold text-base">
+                    <a href="mailto:support@workforceskilled.com">support@workforceskilled.com</a>
                   </p>
                   <p className="text-gray-500 text-sm mt-2">
                     For general inquiries and support
@@ -158,7 +137,7 @@ export default function Contact() {
               </div>
             </motion.div>
 
-            {/* Location Card with enhanced styling */}
+            {/* Location Card */}
             <motion.div
               whileHover={{ y: -8, scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300, delay: 0.05 }}
@@ -186,12 +165,12 @@ export default function Contact() {
               </div>
             </motion.div>
 
-            {/* Quick Response Card with enhanced styling */}
+            {/* Quick Response Card */}
             <motion.div
               whileHover={{ y: -8, scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300, delay: 0.1 }}
               className="group relative overflow-hidden rounded-2xl p-6 text-white
-                bg-gradient-to-br from-emerald-600 via-emerald-500 to-teal-600 shadow-xl hover:shadow-2xl"
+                bg-gradient-to-br from-sky-600 via-sky-500 to-sky-700 shadow-xl hover:shadow-2xl"
             >
               {/* Animated background effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent 
@@ -217,7 +196,7 @@ export default function Contact() {
             </motion.div>
           </div>
 
-          {/* RIGHT SIDE – Enhanced Form */}
+          {/* RIGHT SIDE – Form */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -226,14 +205,14 @@ export default function Contact() {
             className="relative"
           >
             {/* Form background glow */}
-            <div className="absolute -inset-4 bg-gradient-to-r from-emerald-100/30 to-teal-100/30 
+            <div className="absolute -inset-4 bg-gradient-to-r from-sky-100/30 to-sky-100/30 
               rounded-3xl blur-xl opacity-50" />
             
             <div className="relative bg-white rounded-3xl p-8 shadow-2xl border border-gray-100 
               backdrop-blur-sm bg-white/95">
               <div className="flex items-center gap-3 mb-8">
-                <div className="p-3 rounded-xl bg-gradient-to-br from-emerald-100 to-teal-100">
-                  <FiMessageCircle className="text-2xl text-emerald-600" />
+                <div className="p-3 rounded-xl bg-gradient-to-br from-sky-100 to-sky-100">
+                  <FiMessageCircle className="text-2xl text-sky-600" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">
                   Send us a Message
@@ -247,7 +226,7 @@ export default function Contact() {
                       type="text"
                       placeholder="Full Name *"
                       className="w-full px-5 py-4 rounded-xl border border-gray-200 bg-gray-50 
-                        focus:bg-white focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100 
+                        focus:bg-white focus:border-sky-400 focus:ring-4 focus:ring-sky-100 
                         focus:outline-none transition-all duration-300"
                     />
                   </div>
@@ -256,7 +235,7 @@ export default function Contact() {
                       type="email"
                       placeholder="Email Address *"
                       className="w-full px-5 py-4 rounded-xl border border-gray-200 bg-gray-50 
-                        focus:bg-white focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100 
+                        focus:bg-white focus:border-sky-400 focus:ring-4 focus:ring-sky-100 
                         focus:outline-none transition-all duration-300"
                     />
                   </div>
@@ -268,7 +247,7 @@ export default function Contact() {
                       type="text"
                       placeholder="Company"
                       className="w-full px-5 py-4 rounded-xl border border-gray-200 bg-gray-50 
-                        focus:bg-white focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100 
+                        focus:bg-white focus:border-sky-400 focus:ring-4 focus:ring-sky-100 
                         focus:outline-none transition-all duration-300"
                     />
                   </div>
@@ -277,7 +256,7 @@ export default function Contact() {
                       type="tel"
                       placeholder="Phone Number"
                       className="w-full px-5 py-4 rounded-xl border border-gray-200 bg-gray-50 
-                        focus:bg-white focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100 
+                        focus:bg-white focus:border-sky-400 focus:ring-4 focus:ring-sky-100 
                         focus:outline-none transition-all duration-300"
                     />
                   </div>
@@ -286,7 +265,7 @@ export default function Contact() {
                 <div className="relative">
                   <select
                     className="w-full px-5 py-4 rounded-xl border border-gray-200 bg-gray-50 
-                      focus:bg-white focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100 
+                      focus:bg-white focus:border-sky-400 focus:ring-4 focus:ring-sky-100 
                       focus:outline-none transition-all duration-300 appearance-none"
                   >
                     <option>Select a subject *</option>
@@ -303,10 +282,10 @@ export default function Contact() {
 
                 <div className="relative">
                   <textarea
-                    rows="5"
+                    rows={5}
                     placeholder="Your Message *"
                     className="w-full px-5 py-4 rounded-xl border border-gray-200 bg-gray-50 
-                      focus:bg-white focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100 
+                      focus:bg-white focus:border-sky-400 focus:ring-4 focus:ring-sky-100 
                       focus:outline-none transition-all duration-300 resize-none"
                   />
                 </div>
@@ -315,8 +294,8 @@ export default function Contact() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   className="w-full flex items-center justify-center gap-3
-                    bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600
-                    hover:from-emerald-500 hover:via-emerald-400 hover:to-teal-500
+                    bg-gradient-to-r from-sky-600 via-sky-500 to-sky-600
+                    hover:from-sky-500 hover:via-sky-400 hover:to-sky-500
                     text-white font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl
                     transition-all duration-300 group"
                 >
@@ -328,7 +307,7 @@ export default function Contact() {
           </motion.div>
         </div>
 
-        {/* Enhanced READY TO JOIN SECTION */}
+        {/* READY TO JOIN SECTION */}
         <motion.section
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -336,13 +315,13 @@ export default function Contact() {
           viewport={{ once: true }}
           className="relative mt-32 overflow-hidden"
         >
-          {/* Enhanced Floating Icons */}
+          {/* Floating Icons */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             {[
-              { icon: "📧", top: "10%", left: "5%", color: "text-emerald-300/30", duration: 8 },
+              { icon: "📧", top: "10%", left: "5%", color: "text-sky-300/30", duration: 8 },
               { icon: "📱", top: "40%", right: "8%", color: "text-yellow-300/30", duration: 10 },
-              { icon: "💬", top: "70%", left: "15%", color: "text-teal-300/40", duration: 9 },
-              { icon: "📍", top: "20%", right: "15%", color: "text-emerald-400/20", duration: 7 },
+              { icon: "💬", top: "70%", left: "15%", color: "text-sky-300/40", duration: 9 },
+              { icon: "📍", top: "20%", right: "15%", color: "text-sky-400/20", duration: 7 },
             ].map((item, idx) => (
               <motion.div
                 key={idx}
@@ -366,52 +345,17 @@ export default function Contact() {
           </div>
 
           {/* Container */}
-          <div className="relative max-w-6xl mx-auto px-4">
-
-            {/* Enhanced Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="text-center max-w-3xl mx-auto mb-16"
-            >
-              <motion.span
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 mb-6 px-5 py-2.5 rounded-full text-sm font-semibold
-                  bg-gradient-to-r from-emerald-100 to-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm"
-              >
-                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                Careers & Opportunities
-              </motion.span>
-
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Ready To Join With{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">
-                  Exceptional Quality
-                </span>
-              </h2>
-
-              <p className="text-gray-600 text-lg leading-relaxed">
-                At ComplianceTrained, we're always looking for passionate individuals to
-                join our team. If you're eager to make an impact in the world of
-                compliance training, work in a collaborative environment, and grow your
-                career, we'd love to hear from you.
-              </p>
-            </motion.div>
-
-            {/* Enhanced Cards */}
+          <div className="relative max-w-6xl mx-auto">
+            {/* Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
                   icon: <FiTarget className="text-2xl" />,
                   title: "Make Impact",
                   description: "Shape the future of compliance training",
-                  color: "from-emerald-50 to-teal-50",
-                  iconColor: "text-emerald-600",
-                  bgColor: "bg-emerald-100"
+                  color: "from-sky-50 to-sky-100",
+                  iconColor: "text-sky-600",
+                  bgColor: "bg-sky-100"
                 },
                 {
                   icon: <FiUsers className="text-2xl" />,
@@ -425,9 +369,9 @@ export default function Contact() {
                   icon: <FiTrendingUp className="text-2xl" />,
                   title: "Grow Career",
                   description: "Unlimited growth opportunities",
-                  color: "from-teal-50 to-emerald-50",
-                  iconColor: "text-teal-600",
-                  bgColor: "bg-teal-100"
+                  color: "from-sky-50 to-sky-100",
+                  iconColor: "text-sky-600",
+                  bgColor: "bg-sky-100"
                 }
               ].map((card, idx) => (
                 <motion.div
@@ -438,7 +382,7 @@ export default function Contact() {
                   viewport={{ once: true }}
                   whileHover={{ y: -10, scale: 1.02 }}
                   className="group relative bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 
-                    shadow-lg border border-gray-100 hover:shadow-2xl hover:border-emerald-200 
+                    shadow-lg border border-gray-100 hover:shadow-2xl hover:border-sky-200 
                     transition-all duration-300 overflow-hidden"
                 >
                   {/* Animated background */}
@@ -460,32 +404,12 @@ export default function Contact() {
                     {/* Hover arrow */}
                     <div className="mt-6 opacity-0 group-hover:opacity-100 translate-x-[-10px] 
                       group-hover:translate-x-0 transition-all duration-300">
-                      <div className="w-8 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full" />
+                      <div className="w-8 h-0.5 bg-gradient-to-r from-sky-400 to-sky-500 rounded-full" />
                     </div>
                   </div>
                 </motion.div>
               ))}
             </div>
-
-            {/* CTA Button */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              viewport={{ once: true }}
-              className="text-center mt-12"
-            >
-              {/* <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-3 px-8 py-4 rounded-xl
-                  bg-gradient-to-r from-gray-900 to-gray-800 hover:from-gray-800 hover:to-gray-700
-                  text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                View Open Positions
-                <div className="w-2 h-2 border-r-2 border-b-2 border-white rotate-[-45deg] translate-y-[-1px]" />
-              </motion.button> */}
-            </motion.div>
           </div>
         </motion.section>
       </div>
