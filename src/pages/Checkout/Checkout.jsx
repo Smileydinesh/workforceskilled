@@ -24,13 +24,10 @@ export default function Checkout() {
   const navigate = useNavigate();
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
-  
-
   const [loading, setLoading] = useState(true);
   const [cart, setCart] = useState({ items: [], total: 0 });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeField, setActiveField] = useState(null);
-
 
   const [form, setForm] = useState({
     first_name: "",
@@ -158,11 +155,11 @@ export default function Checkout() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-emerald-50/20 to-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-sky-50/20 to-gray-50">
         <div className="text-center">
           <div className="relative mb-6">
-            <div className="w-20 h-20 border-4 border-emerald-200 rounded-full">
-              <div className="absolute inset-0 m-2 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-20 h-20 border-4 border-sky-200 rounded-full">
+              <div className="absolute inset-0 m-2 border-4 border-sky-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
             <div className="absolute -inset-4 border-4 border-amber-200 rounded-full animate-ping"></div>
           </div>
@@ -201,10 +198,10 @@ export default function Checkout() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-emerald-50/20 to-gray-50 py-12 px-4 sm:px-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-sky-50/20 to-gray-50 py-12 px-4 sm:px-6">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 -left-20 w-64 h-64 bg-emerald-100/30 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 -left-20 w-64 h-64 bg-sky-100/30 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 -right-20 w-64 h-64 bg-amber-100/20 rounded-full blur-3xl"></div>
       </div>
 
@@ -214,26 +211,26 @@ export default function Checkout() {
           <div className="flex items-center">
             {/* Step 1 */}
             <div className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold shadow-lg">
+              <div className="w-10 h-10 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold shadow-lg">
                 1
               </div>
               <div className="ml-3">
-                <div className="text-sm font-medium text-emerald-600">Cart</div>
+                <div className="text-sm font-medium text-sky-600">Cart</div>
                 <div className="text-xs text-gray-500">Review Items</div>
               </div>
             </div>
             
             {/* Connector */}
-            <div className="w-16 h-1 bg-emerald-200 mx-4"></div>
+            <div className="w-16 h-1 bg-sky-200 mx-4"></div>
             
             {/* Step 2 */}
             <div className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 text-white flex items-center justify-center font-bold shadow-lg shadow-emerald-200">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-sky-600 to-sky-700 text-white flex items-center justify-center font-bold shadow-lg shadow-sky-200">
                 <FiUser className="text-lg" />
               </div>
               <div className="ml-3">
                 <div className="text-sm font-medium text-gray-800">Details</div>
-                <div className="text-xs text-emerald-600">Billing Info</div>
+                <div className="text-xs text-sky-600">Billing Info</div>
               </div>
             </div>
             
@@ -267,8 +264,8 @@ export default function Checkout() {
           {/* Form Header */}
           <motion.div variants={itemVariants} className="bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-200 shadow-xl p-8">
             <div className="flex items-center gap-4 mb-6">
-              <div className="p-3 rounded-2xl bg-gradient-to-br from-emerald-100 to-emerald-50 border border-emerald-200">
-                <FiUser className="text-2xl text-emerald-600" />
+              <div className="p-3 rounded-2xl bg-gradient-to-br from-sky-100 to-sky-50 border border-sky-200">
+                <FiUser className="text-2xl text-sky-600" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-gray-800">Contact Information</h2>
@@ -284,7 +281,7 @@ export default function Checkout() {
                 </label>
                 <div className={`relative rounded-xl transition-all duration-300 ${
                   activeField === 'first_name' 
-                    ? 'ring-2 ring-emerald-500 ring-offset-2' 
+                    ? 'ring-2 ring-sky-500 ring-offset-2' 
                     : ''
                 }`}>
                   <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -298,7 +295,7 @@ export default function Checkout() {
                     onBlur={() => setActiveField(null)}
                     placeholder="John"
                     required
-                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 transition-colors duration-300"
+                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-sky-500 transition-colors duration-300"
                   />
                 </div>
               </motion.div>
@@ -310,7 +307,7 @@ export default function Checkout() {
                 </label>
                 <div className={`relative rounded-xl transition-all duration-300 ${
                   activeField === 'last_name' 
-                    ? 'ring-2 ring-emerald-500 ring-offset-2' 
+                    ? 'ring-2 ring-sky-500 ring-offset-2' 
                     : ''
                 }`}>
                   <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -324,7 +321,7 @@ export default function Checkout() {
                     onBlur={() => setActiveField(null)}
                     placeholder="Doe"
                     required
-                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 transition-colors duration-300"
+                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-sky-500 transition-colors duration-300"
                   />
                 </div>
               </motion.div>
@@ -337,7 +334,7 @@ export default function Checkout() {
               </label>
               <div className={`relative rounded-xl transition-all duration-300 ${
                 activeField === 'email' 
-                  ? 'ring-2 ring-emerald-500 ring-offset-2' 
+                  ? 'ring-2 ring-sky-500 ring-offset-2' 
                   : ''
               }`}>
                 <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -352,7 +349,7 @@ export default function Checkout() {
                   onBlur={() => setActiveField(null)}
                   placeholder="john@example.com"
                   required
-                  className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 transition-colors duration-300"
+                  className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-sky-500 transition-colors duration-300"
                 />
               </div>
             </motion.div>
@@ -365,7 +362,7 @@ export default function Checkout() {
                 </label>
                 <div className={`relative rounded-xl transition-all duration-300 ${
                   activeField === 'phone' 
-                    ? 'ring-2 ring-emerald-500 ring-offset-2' 
+                    ? 'ring-2 ring-sky-500 ring-offset-2' 
                     : ''
                 }`}>
                   <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -379,7 +376,7 @@ export default function Checkout() {
                     onBlur={() => setActiveField(null)}
                     placeholder="+1 (555) 123-4567"
                     required
-                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 transition-colors duration-300"
+                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-sky-500 transition-colors duration-300"
                   />
                 </div>
               </motion.div>
@@ -391,7 +388,7 @@ export default function Checkout() {
                 </label>
                 <div className={`relative rounded-xl transition-all duration-300 ${
                   activeField === 'company' 
-                    ? 'ring-2 ring-emerald-500 ring-offset-2' 
+                    ? 'ring-2 ring-sky-500 ring-offset-2' 
                     : ''
                 }`}>
                   <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -404,7 +401,7 @@ export default function Checkout() {
                     onFocus={() => setActiveField('company')}
                     onBlur={() => setActiveField(null)}
                     placeholder="Your Company Inc."
-                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 transition-colors duration-300"
+                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-sky-500 transition-colors duration-300"
                   />
                 </div>
               </motion.div>
@@ -430,7 +427,7 @@ export default function Checkout() {
               </label>
               <div className={`relative rounded-xl transition-all duration-300 ${
                 activeField === 'address' 
-                  ? 'ring-2 ring-emerald-500 ring-offset-2' 
+                  ? 'ring-2 ring-sky-500 ring-offset-2' 
                   : ''
               }`}>
                 <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -445,7 +442,7 @@ export default function Checkout() {
                   placeholder="123 Main Street, Apt 4B"
                   required
                   rows="3"
-                  className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 transition-colors duration-300 resize-none"
+                  className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-sky-500 transition-colors duration-300 resize-none"
                 />
               </div>
             </motion.div>
@@ -458,7 +455,7 @@ export default function Checkout() {
                 </label>
                 <div className={`relative rounded-xl transition-all duration-300 ${
                   activeField === 'city' 
-                    ? 'ring-2 ring-emerald-500 ring-offset-2' 
+                    ? 'ring-2 ring-sky-500 ring-offset-2' 
                     : ''
                 }`}>
                   <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -472,7 +469,7 @@ export default function Checkout() {
                     onBlur={() => setActiveField(null)}
                     placeholder="New York"
                     required
-                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 transition-colors duration-300"
+                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-sky-500 transition-colors duration-300"
                   />
                 </div>
               </motion.div>
@@ -484,7 +481,7 @@ export default function Checkout() {
                 </label>
                 <div className={`relative rounded-xl transition-all duration-300 ${
                   activeField === 'state' 
-                    ? 'ring-2 ring-emerald-500 ring-offset-2' 
+                    ? 'ring-2 ring-sky-500 ring-offset-2' 
                     : ''
                 }`}>
                   <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -498,7 +495,7 @@ export default function Checkout() {
                     onBlur={() => setActiveField(null)}
                     placeholder="NY"
                     required
-                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 transition-colors duration-300"
+                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-sky-500 transition-colors duration-300"
                   />
                 </div>
               </motion.div>
@@ -510,7 +507,7 @@ export default function Checkout() {
                 </label>
                 <div className={`relative rounded-xl transition-all duration-300 ${
                   activeField === 'zip_code' 
-                    ? 'ring-2 ring-emerald-500 ring-offset-2' 
+                    ? 'ring-2 ring-sky-500 ring-offset-2' 
                     : ''
                 }`}>
                   <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -524,7 +521,7 @@ export default function Checkout() {
                     onBlur={() => setActiveField(null)}
                     placeholder="10001"
                     required
-                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 transition-colors duration-300"
+                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-sky-500 transition-colors duration-300"
                   />
                 </div>
               </motion.div>
@@ -537,7 +534,7 @@ export default function Checkout() {
               </label>
               <div className={`relative rounded-xl transition-all duration-300 ${
                 activeField === 'country' 
-                  ? 'ring-2 ring-emerald-500 ring-offset-2' 
+                  ? 'ring-2 ring-sky-500 ring-offset-2' 
                   : ''
               }`}>
                 <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -551,7 +548,7 @@ export default function Checkout() {
                   onBlur={() => setActiveField(null)}
                   placeholder="United States"
                   required
-                  className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 transition-colors duration-300"
+                  className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-sky-500 transition-colors duration-300"
                 />
               </div>
             </motion.div>
@@ -561,7 +558,7 @@ export default function Checkout() {
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <Link 
               to="/cart"
-              className="group flex items-center gap-2 px-6 py-3.5 text-gray-700 hover:text-emerald-700 font-medium transition-all duration-300"
+              className="group flex items-center gap-2 px-6 py-3.5 text-gray-700 hover:text-sky-700 font-medium transition-all duration-300"
             >
               <FiChevronLeft className="group-hover:-translate-x-1 transition-transform duration-300" />
               <span>Back to Cart</span>
@@ -570,7 +567,7 @@ export default function Checkout() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="group relative px-8 py-4 bg-gradient-to-r from-emerald-600 via-emerald-700 to-emerald-800 hover:from-emerald-700 hover:to-emerald-900 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:shadow-emerald-900/30 transition-all duration-500 transform hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="group relative px-8 py-4 bg-gradient-to-r from-sky-600 via-sky-700 to-sky-800 hover:from-sky-700 hover:to-sky-900 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:shadow-sky-900/30 transition-all duration-500 transform hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               <div className="flex items-center justify-center gap-3">
                 {isSubmitting ? (
@@ -599,8 +596,8 @@ export default function Checkout() {
           {/* Order Summary */}
           <div className="bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-200 shadow-xl p-7 sticky top-28">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-50 border border-emerald-200">
-                <FiPackage className="text-xl text-emerald-600" />
+              <div className="p-2 rounded-xl bg-gradient-to-br from-sky-100 to-sky-50 border border-sky-200">
+                <FiPackage className="text-xl text-sky-600" />
               </div>
               <h3 className="text-xl font-bold text-gray-800">Order Summary</h3>
             </div>
@@ -609,7 +606,6 @@ export default function Checkout() {
             <div className="space-y-4 mb-6 max-h-80 overflow-y-auto pr-2">
               <AnimatePresence>
                 {Array.isArray(cart.items) && cart.items.map((item, i) => (
-
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, y: 20 }}
@@ -627,9 +623,8 @@ export default function Checkout() {
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-800 truncate">{item.title}</p>
                       <p className="text-xs text-gray-500">{item.instructor}</p>
-                      <p className="text-xs text-emerald-600 font-medium">
+                      <p className="text-xs text-sky-600 font-medium">
                         {item.purchase_type?.replaceAll("_", " ") || "Standard"}
-
                       </p>
                     </div>
                     <div className="text-right">
@@ -658,7 +653,7 @@ export default function Checkout() {
               <div className="flex justify-between items-center pt-2">
                 <span className="text-lg font-bold text-gray-800">Total Amount</span>
                 <div className="text-right">
-                  <div className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-700 bg-clip-text text-transparent">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-sky-600 to-sky-700 bg-clip-text text-transparent">
                     ${cart.total}
                   </div>
                   <div className="text-sm text-gray-500">USD • One-time payment</div>
@@ -667,9 +662,9 @@ export default function Checkout() {
             </div>
 
             {/* Security Banner */}
-            <div className="p-4 rounded-xl bg-gradient-to-r from-emerald-50 to-emerald-100 border border-emerald-200">
+            <div className="p-4 rounded-xl bg-gradient-to-r from-sky-50 to-sky-100 border border-sky-200">
               <div className="flex items-start gap-3">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-sky-500 to-sky-600">
                   <FiShield className="text-lg text-white" />
                 </div>
                 <div>
@@ -685,7 +680,7 @@ export default function Checkout() {
             <div className="mt-6 pt-6 border-t border-gray-200">
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
-                  <FiCheckCircle className="text-emerald-500 flex-shrink-0" />
+                  <FiCheckCircle className="text-sky-500 flex-shrink-0" />
                   <span>30-Day Money Back Guarantee</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-600">
@@ -693,7 +688,7 @@ export default function Checkout() {
                   <span>Your data is protected and private</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-600">
-                  <FiShield className="text-emerald-500 flex-shrink-0" />
+                  <FiShield className="text-sky-500 flex-shrink-0" />
                   <span>Enterprise-grade security</span>
                 </div>
               </div>
@@ -713,7 +708,7 @@ export default function Checkout() {
                 </p>
                 <a 
                   href="mailto:support@academy.com" 
-                  className="text-emerald-600 hover:text-emerald-700 font-medium text-sm transition-colors"
+                  className="text-sky-600 hover:text-sky-700 font-medium text-sm transition-colors"
                 >
                   support@workforceskilled.com
                 </a>

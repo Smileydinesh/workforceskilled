@@ -3,8 +3,6 @@ import { FiTrash2, FiShoppingCart, FiChevronRight, FiShield, FiLock, FiArrowLeft
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 
-
-
 export default function Cart() {
   const [cart, setCart] = useState({ items: [], total: 0 });
   const [loading, setLoading] = useState(true);
@@ -12,7 +10,6 @@ export default function Cart() {
   const [isHoveringCheckout, setIsHoveringCheckout] = useState(false);
   const [animateItems, setAnimateItems] = useState(false);
   
-
   const navigate = useNavigate();
   const { fetchCartCount } = useCart();
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
@@ -21,8 +18,8 @@ export default function Cart() {
   const fetchCart = async () => {
     try {
       const res = await fetch(`${API_BASE}/api/cart/`, {
-              credentials: "include",
-            });
+        credentials: "include",
+      });
 
       const data = await res.json();
       setCart(data);
@@ -66,11 +63,11 @@ export default function Cart() {
   /* ---------------- LOADING ---------------- */
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-emerald-50/20 to-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-sky-50/20 to-gray-50">
         <div className="text-center">
           <div className="relative mb-6">
-            <div className="w-20 h-20 border-4 border-emerald-200 rounded-full">
-              <div className="absolute inset-0 m-2 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-20 h-20 border-4 border-sky-200 rounded-full">
+              <div className="absolute inset-0 m-2 border-4 border-sky-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
             <div className="absolute -inset-4 border-4 border-amber-200 rounded-full animate-ping"></div>
           </div>
@@ -82,10 +79,10 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-emerald-50/20 to-gray-50 py-16 px-4 sm:px-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-sky-50/20 to-gray-50 py-16 px-4 sm:px-6">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 -left-20 w-64 h-64 bg-emerald-100/30 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 -left-20 w-64 h-64 bg-sky-100/30 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 -right-20 w-64 h-64 bg-amber-100/20 rounded-full blur-3xl"></div>
       </div>
 
@@ -97,19 +94,19 @@ export default function Cart() {
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
             <button 
               onClick={() => navigate("/live-webinars")}
-              className="flex items-center gap-1 hover:text-emerald-600 transition-colors duration-300"
+              className="flex items-center gap-1 hover:text-sky-600 transition-colors duration-300"
             >
               <FiArrowLeft className="text-xs" />
               <span>Back to Courses</span>
             </button>
             <FiChevronRight className="text-xs" />
-            <span className="text-emerald-600 font-medium">Your Cart</span>
+            <span className="text-sky-600 font-medium">Your Cart</span>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="p-3 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-lg">
+                <div className="p-3 rounded-2xl bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-lg">
                   <FiShoppingCart className="text-2xl" />
                 </div>
                 {cart.items.length > 0 && (
@@ -125,8 +122,8 @@ export default function Cart() {
             </div>
             
             {cart.items.length > 0 && (
-              <div className="px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200">
-                <span className="text-emerald-700 font-medium">
+              <div className="px-4 py-2 rounded-full bg-sky-50 border border-sky-200">
+                <span className="text-sky-700 font-medium">
                   {cart.items.length} item{cart.items.length !== 1 ? 's' : ''} • ${cart.total}
                 </span>
               </div>
@@ -138,8 +135,8 @@ export default function Cart() {
         {cart.items.length === 0 && (
           <div className="animate-slide-up">
             <div className="max-w-lg mx-auto bg-white/80 backdrop-blur-sm rounded-3xl border border-gray-200 shadow-xl p-12 text-center">
-              <div className="w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-emerald-100 to-emerald-50 flex items-center justify-center border border-emerald-200">
-                <FiShoppingCart className="text-4xl text-emerald-500" />
+              <div className="w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-sky-100 to-sky-50 flex items-center justify-center border border-sky-200">
+                <FiShoppingCart className="text-4xl text-sky-500" />
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-3">Your Cart is Empty</h2>
               <p className="text-gray-500 mb-8">
@@ -147,7 +144,7 @@ export default function Cart() {
               </p>
               <button
                 onClick={() => navigate("/live-webinars")}
-                className="group px-8 py-3.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-emerald-900/20 inline-flex items-center gap-2"
+                className="group px-8 py-3.5 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white font-semibold rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-sky-900/20 inline-flex items-center gap-2"
               >
                 <span>Browse Courses</span>
                 <FiZap className="group-hover:translate-x-1 transition-transform duration-300" />
@@ -163,10 +160,10 @@ export default function Cart() {
             {/* LEFT - ITEMS */}
             <div className="space-y-4">
               {/* Security Banner */}
-              <div className="bg-gradient-to-r from-emerald-50 to-amber-50 rounded-2xl border border-emerald-200 p-5 mb-2">
+              <div className="bg-gradient-to-r from-sky-50 to-amber-50 rounded-2xl border border-sky-200 p-5 mb-2">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-50 border border-emerald-200">
-                    <FiShield className="text-xl text-emerald-600" />
+                  <div className="p-3 rounded-xl bg-gradient-to-br from-sky-100 to-sky-50 border border-sky-200">
+                    <FiShield className="text-xl text-sky-600" />
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-800">Secure Checkout</h4>
@@ -179,7 +176,7 @@ export default function Cart() {
               {cart.items.map((item, index) => (
                 <div
                   key={item.id}
-                  className={`bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-200 hover:border-emerald-300 transition-all duration-500 hover:shadow-xl hover:shadow-emerald-100/50 overflow-hidden ${
+                  className={`bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-200 hover:border-sky-300 transition-all duration-500 hover:shadow-xl hover:shadow-sky-100/50 overflow-hidden ${
                     animateItems ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                   }`}
                   style={{ 
@@ -204,12 +201,12 @@ export default function Cart() {
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                         <div className="flex-1">
-                          <h3 className="font-bold text-gray-800 text-lg mb-2 line-clamp-2 hover:text-emerald-700 transition-colors duration-300">
+                          <h3 className="font-bold text-gray-800 text-lg mb-2 line-clamp-2 hover:text-sky-700 transition-colors duration-300">
                             {item.title}
                           </h3>
                           
                           <div className="flex flex-wrap items-center gap-3 mb-3">
-                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-medium border border-emerald-200">
+                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-medium border border-sky-200">
                               <FiPackage className="text-xs" />
                               {item.purchase_type.replaceAll("_", " ")}
                             </span>
@@ -219,15 +216,15 @@ export default function Cart() {
 
                           {/* Features */}
                           <div className="flex flex-wrap gap-2">
-                            <div className="flex items-center gap-1 text-xs text-emerald-600">
+                            {/* <div className="flex items-center gap-1 text-xs text-sky-600">
                               <FiCheckCircle className="text-xs" />
                               <span>Certificate</span>
-                            </div>
+                            </div> */}
                             <div className="flex items-center gap-1 text-xs text-amber-600">
                               <FiCheckCircle className="text-xs" />
                               <span>Lifetime Access</span>
                             </div>
-                            <div className="flex items-center gap-1 text-xs text-emerald-600">
+                            <div className="flex items-center gap-1 text-xs text-sky-600">
                               <FiCheckCircle className="text-xs" />
                               <span>Q&A Support</span>
                             </div>
@@ -237,7 +234,7 @@ export default function Cart() {
                         {/* Price and Actions */}
                         <div className="flex flex-col items-end gap-3">
                           <div className="text-right">
-                            <div className="text-2xl font-bold text-emerald-600">${item.subtotal}</div>
+                            <div className="text-2xl font-bold text-sky-600">${item.subtotal}</div>
                             <div className="text-sm text-gray-500">
                               <span className="text-gray-600 font-medium">${item.price}</span>
                               <span className="mx-1">×</span>
@@ -280,8 +277,8 @@ export default function Cart() {
               {/* Order Summary Card */}
               <div className="bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-200 shadow-xl p-7 h-fit sticky top-28">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-50 border border-emerald-200">
-                    <FiPackage className="text-xl text-emerald-600" />
+                  <div className="p-2 rounded-xl bg-gradient-to-br from-sky-100 to-sky-50 border border-sky-200">
+                    <FiPackage className="text-xl text-sky-600" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-800">Order Summary</h3>
                 </div>
@@ -295,7 +292,7 @@ export default function Cart() {
                   
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600">Discount</span>
-                    <span className="font-semibold text-emerald-600">$0.00</span>
+                    <span className="font-semibold text-sky-600">$0.00</span>
                   </div>
                   
                   <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
@@ -303,7 +300,7 @@ export default function Cart() {
                   <div className="flex justify-between items-center pt-2">
                     <span className="text-lg font-bold text-gray-800">Total Amount</span>
                     <div className="text-right">
-                      <div className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-700 bg-clip-text text-transparent">
+                      <div className="text-3xl font-bold bg-gradient-to-r from-sky-600 to-sky-700 bg-clip-text text-transparent">
                         ${cart.total}
                       </div>
                       <div className="text-sm text-gray-500">USD • One-time payment</div>
@@ -316,7 +313,7 @@ export default function Cart() {
                   onClick={() => navigate("/checkout")}
                   onMouseEnter={() => setIsHoveringCheckout(true)}
                   onMouseLeave={() => setIsHoveringCheckout(false)}
-                  className="w-full py-4 rounded-xl font-bold text-lg bg-gradient-to-r from-emerald-600 via-emerald-700 to-emerald-800 hover:from-emerald-700 hover:to-emerald-900 text-white shadow-lg hover:shadow-xl hover:shadow-emerald-900/30 transition-all duration-500 transform hover:-translate-y-1 active:translate-y-0"
+                  className="w-full py-4 rounded-xl font-bold text-lg bg-gradient-to-r from-sky-600 via-sky-700 to-sky-800 hover:from-sky-700 hover:to-sky-900 text-white shadow-lg hover:shadow-xl hover:shadow-sky-900/30 transition-all duration-500 transform hover:-translate-y-1 active:translate-y-0"
                 >
                   <div className="flex items-center justify-center gap-3">
                     <span>Proceed to Checkout</span>
@@ -330,7 +327,7 @@ export default function Cart() {
                 <div className="mt-8 pt-6 border-t border-gray-200">
                   <div className="space-y-3">
                     <div className="flex items-center gap-3 text-sm text-gray-600">
-                      <FiShield className="text-emerald-500 flex-shrink-0" />
+                      <FiShield className="text-sky-500 flex-shrink-0" />
                       <span>30-Day Money Back Guarantee</span>
                     </div>
                     <div className="flex items-center gap-3 text-sm text-gray-600">
@@ -338,7 +335,7 @@ export default function Cart() {
                       <span>Secure SSL Encrypted Payment</span>
                     </div>
                     <div className="flex items-center gap-3 text-sm text-gray-600">
-                      <FiCheckCircle className="text-emerald-500 flex-shrink-0" />
+                      <FiCheckCircle className="text-sky-500 flex-shrink-0" />
                       <span>Instant Access After Purchase</span>
                     </div>
                   </div>
@@ -348,7 +345,7 @@ export default function Cart() {
                 <div className="mt-6 pt-6 border-t border-gray-200">
                   <button
                     onClick={() => navigate("/")}
-                    className="w-full py-3 rounded-xl border border-gray-300 text-gray-700 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-300 font-medium"
+                    className="w-full py-3 rounded-xl border border-gray-300 text-gray-700 hover:border-sky-300 hover:bg-sky-50 hover:text-sky-700 transition-all duration-300 font-medium"
                   >
                     Continue Shopping
                   </button>
