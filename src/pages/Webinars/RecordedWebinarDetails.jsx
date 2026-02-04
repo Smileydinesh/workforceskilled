@@ -137,21 +137,32 @@ export default function RecordedWebinarDetails() {
     <>
       <RecordedHeroSection webinar={webinar} />
 
-      <section className="max-w-9xl mx-auto grid lg:grid-cols-[1fr_420px] gap-14">
-        <RecordedDescriptionSection webinar={webinar} />
+      <section className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div className="grid lg:grid-cols-[minmax(0,1fr)_380px] gap-8 items-start">
+    
+    {/* LEFT : DESCRIPTION */}
+    <div className="space-y-8">
+      <RecordedDescriptionSection webinar={webinar} />
+    </div>
 
-        <RecordedPricingSection
-          webinar={webinar}
-          selectedPlan={selectedPlan}
-          setSelectedPlan={setSelectedPlan}
-          onAddToCart={addToCart}
-          onBuyNow={buyNow} 
-          isAddingToCart={isAddingToCart}
-        />
-      </section>
+    {/* RIGHT : PRICING */}
+    <div className="lg:sticky lg:top-24">
+      <RecordedPricingSection
+        webinar={webinar}
+        selectedPlan={selectedPlan}
+        setSelectedPlan={setSelectedPlan}
+        onAddToCart={addToCart}
+        onBuyNow={buyNow}
+        isAddingToCart={isAddingToCart}
+      />
+    </div>
+
+  </div>
+</section>
+
 
       {/* FULL WIDTH INSTRUCTOR */}
-      <section className="max-w-8xl mx-auto px-6 pb-20">
+      <section className="max-w-8xl mx-auto px-6 pb-20 mt-4">
         <RecordedInstructorSection instructor={webinar.instructor} />
       </section>
     </>

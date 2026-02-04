@@ -7,6 +7,8 @@ import {
   FiPackage,
   FiRefreshCw,
 } from "react-icons/fi";
+import { MdWorkspacePremium } from "react-icons/md";
+
 import { HiOutlineUserGroup } from "react-icons/hi";
 import {
   MdOutlineLiveTv,
@@ -71,6 +73,7 @@ export default function Footer() {
               { text: "Live Webinars", path: "/live-webinars", icon: MdOutlineLiveTv },
               { text: "Recorded Webinars", path: "/recorded-webinars", icon: MdOutlinePlayCircle },
               { text: "Join With Us", path: "/signup", icon: MdRocketLaunch },
+              { text: "Subscription Plans", path: "subscriptions/checkout", icon: MdWorkspacePremium },
             ]}
           />
 

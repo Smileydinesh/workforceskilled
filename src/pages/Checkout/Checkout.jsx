@@ -19,10 +19,16 @@ import {
   FiHome,
   FiNavigation
 } from "react-icons/fi";
+import PayPalButton from "../../components/payments/PayPalButton";
+
 
 export default function Checkout() {
   const navigate = useNavigate();
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
+  const [readyForPayment, setReadyForPayment] = useState(false);
+  const [orderId, setOrderId] = useState(null);
+
+
 
   const [loading, setLoading] = useState(true);
   const [cart, setCart] = useState({ items: [], total: 0 });
@@ -75,20 +81,19 @@ export default function Checkout() {
         }
       );
 
-      if (res.status === 401) {
-        navigate("/login");
-        return;
+      if (!res.ok) {
+        const errData = await res.json();
+        console.error("Checkout API error:", JSON.stringify(errData, null, 2));
+
+        if (errData.detail === "Cart is empty") {
+          navigate("/cart");
+        }
+        return; // ⛔ stop here
       }
 
       const data = await res.json();
 
-      if (data.detail === "Cart is empty") {
-        navigate("/cart");
-        return;
-      }
-
       setCart(data.cart);
-
       setForm({
         first_name: data.user.first_name || "",
         last_name: data.user.last_name || "",
@@ -101,12 +106,14 @@ export default function Checkout() {
         state: "",
         zip_code: "",
       });
+
     } catch (err) {
       console.error("Checkout fetch error:", err);
     } finally {
       setLoading(false);
     }
   };
+
 
   /* ------------------------------------
      INPUT HANDLER
@@ -115,43 +122,48 @@ export default function Checkout() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  
+
   /* ------------------------------------
      SUBMIT CHECKOUT (STEP 2)
   ------------------------------------ */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    try {
-      const res = await fetch(
-        `${API_BASE}/api/orders/checkout/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          credentials: "include",
-          body: JSON.stringify(form),
-        }
-      );
 
-      if (res.ok) {
-        // Add success animation before navigation
-        await new Promise(resolve => setTimeout(resolve, 800));
-        navigate("/payment");
-      } else {
-        const errorData = await res.json();
-        console.error("Checkout error:", errorData);
-        alert("Checkout failed. Please try again.");
+    try {
+      const res = await fetch(`${API_BASE}/api/orders/checkout/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        throw new Error("Checkout failed");
       }
+
+      const data = await res.json();
+
+      // 🔥 ORDER CREATED → SHOW PAYPAL
+      setOrderId(data.order_id);
+      setReadyForPayment(true); // ✅ VERY IMPORTANT
+
+
     } catch (err) {
-      console.error("Network error:", err);
-      alert("Network error. Please check your connection.");
+      console.error(err);
+      alert("Checkout failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
+
+
+
+
 
   if (loading) {
     return (
@@ -274,7 +286,7 @@ export default function Checkout() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              {/* First Name */}
+              
               <motion.div variants={itemVariants} className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   First Name
@@ -300,7 +312,7 @@ export default function Checkout() {
                 </div>
               </motion.div>
 
-              {/* Last Name */}
+              
               <motion.div variants={itemVariants} className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Last Name
@@ -327,7 +339,7 @@ export default function Checkout() {
               </motion.div>
             </div>
 
-            {/* Email */}
+          
             <motion.div variants={itemVariants} className="mt-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
@@ -355,7 +367,7 @@ export default function Checkout() {
             </motion.div>
 
             <div className="grid md:grid-cols-2 gap-6 mt-6">
-              {/* Phone */}
+              
               <motion.div variants={itemVariants} className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Phone Number
@@ -381,7 +393,6 @@ export default function Checkout() {
                 </div>
               </motion.div>
 
-              {/* Company */}
               <motion.div variants={itemVariants} className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Company <span className="text-gray-400 font-normal">(Optional)</span>
@@ -577,7 +588,7 @@ export default function Checkout() {
                   </>
                 ) : (
                   <>
-                    <span>Continue to Payment</span>
+                    <span>Proceed to Secure Payment</span>
                     <FiChevronRight className="group-hover:translate-x-1 transition-transform duration-300" />
                   </>
                 )}
@@ -605,7 +616,7 @@ export default function Checkout() {
             {/* Items List */}
             <div className="space-y-4 mb-6 max-h-80 overflow-y-auto pr-2">
               <AnimatePresence>
-                {Array.isArray(cart.items) && cart.items.map((item, i) => (
+                {cart?.items?.length > 0 && cart.items.map((item, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, y: 20 }}
@@ -614,11 +625,7 @@ export default function Checkout() {
                     transition={{ delay: i * 0.1 }}
                     className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors duration-300"
                   >
-                    <img
-                        src={item.cover_image}
-                        alt={item.title}
-                        className="w-12 h-12 rounded-lg object-cover border"
-                    />
+                    
 
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-800 truncate">{item.title}</p>
@@ -661,10 +668,36 @@ export default function Checkout() {
               </div>
             </div>
 
+            {/* ================= PAYPAL PAYMENT ================= */}
+            {/* ================= PAYPAL PAYMENT ================= */}
+{readyForPayment && cart.total > 0 && orderId && (
+  <div className="mt-6 bg-white border-2 border-sky-500 rounded-2xl p-5 shadow-lg">
+
+    {/* Micro copy */}
+    
+
+    {/* Instruction */}
+    {/* <p className="text-sm font-semibold text-gray-800 mb-4">
+      Enter your card details
+    </p> */}
+
+    {/* PayPal iframe */}
+    <PayPalButton
+      orderId={orderId}
+      onSuccess={() => {
+        navigate("/userdashboard");
+      }}
+    />
+  </div>
+)}
+
+
+
+
             {/* Security Banner */}
-            <div className="p-4 rounded-xl bg-gradient-to-r from-sky-50 to-sky-100 border border-sky-200">
-              <div className="flex items-start gap-3">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-sky-500 to-sky-600">
+            {/* <div className="">
+              <div className=""> */}
+                {/* <div className="p-2 rounded-lg bg-gradient-to-br from-sky-500 to-sky-600">
                   <FiShield className="text-lg text-white" />
                 </div>
                 <div>
@@ -672,12 +705,12 @@ export default function Checkout() {
                   <p className="text-sm text-gray-600">
                     Powered by Stripe • 256-bit SSL encryption • PCI DSS compliant
                   </p>
-                </div>
-              </div>
-            </div>
+                </div> */}
+              {/* </div>
+            </div> */}
 
             {/* Guarantees */}
-            <div className="mt-6 pt-6 border-t border-gray-200">
+            {/* <div className="mt-6 pt-6 border-t border-gray-200">
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <FiCheckCircle className="text-sky-500 flex-shrink-0" />
@@ -692,7 +725,7 @@ export default function Checkout() {
                   <span>Enterprise-grade security</span>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Need Help Section */}

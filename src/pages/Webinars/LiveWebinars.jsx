@@ -132,20 +132,20 @@ export default function LiveWebinars(webinar) {
           showFilters ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="bg-gradient-to-r from-white via-blue-50 to-white px-6 py-6 grid grid-cols-1 lg:grid-cols-6 gap-5 items-end shadow-xl border-b border-blue-100">
+        <div className="bg-gradient-to-r from-white via-sky-50 to-white px-6 py-6 grid grid-cols-1 lg:grid-cols-6 gap-5 items-end shadow-xl border-b border-sky-100">
           <div>
-            <label className="text-sm font-medium text-blue-800 mb-2 block">
+            <label className="text-sm font-medium text-sky-800 mb-2 block">
               Search By
             </label>
             <div className="relative group">
-              <FiSearch className="absolute left-3 top-3 text-blue-500 group-focus-within:text-blue-600 transition-colors duration-300 text-base" />
+              <FiSearch className="absolute left-3 top-3 text-sky-500 group-focus-within:text-sky-600 transition-colors duration-300 text-base" />
               <input
                 value={search}
                 onChange={(e) => {
                   setPage(1);
                   setSearch(e.target.value);
                 }}
-                className="w-full pl-10 pr-4 py-2.5 text-base bg-white border border-blue-200 rounded-lg text-gray-900 placeholder-blue-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
+                className="w-full pl-10 pr-4 py-2.5 text-base bg-white border border-sky-200 rounded-lg text-gray-900 placeholder-sky-500 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all duration-300"
                 placeholder="Search webinars..."
               />
             </div>
@@ -178,13 +178,13 @@ export default function LiveWebinars(webinar) {
                 setPage(1);
                 setShowFilters(false);
               }}
-              className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-2.5 px-4 rounded-lg font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 active:scale-95 text-sm"
+              className="flex-1 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white py-2.5 px-4 rounded-lg font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 active:scale-95 text-sm"
             >
               Search
             </button>
             <button
               onClick={() => setShowFilters(false)}
-              className="p-2.5 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors duration-300"
+              className="p-2.5 text-sky-500 hover:text-sky-700 hover:bg-sky-50 rounded-lg transition-colors duration-300"
               title="Close filters"
             >
               <FiX size={20} />
@@ -194,31 +194,31 @@ export default function LiveWebinars(webinar) {
 
         {/* ================= FILTER SUMMARY ================= */}
         {hasActiveFilters && (
-          <div className="bg-gradient-to-r from-blue-50 to-blue-100 px-6 py-4 text-sm flex flex-wrap gap-6 shadow-sm border-b border-blue-200">
-            <span className="text-blue-800">
+          <div className="bg-gradient-to-r from-sky-50 to-sky-100 px-6 py-4 text-sm flex flex-wrap gap-6 shadow-sm border-b border-sky-200">
+            <span className="text-sky-800">
               Topic:{" "}
-              <span className="text-blue-900 font-medium">
+              <span className="text-sky-900 font-medium">
                 {search || "Not Specified"}
               </span>
             </span>
 
-            <span className="text-blue-800">
+            <span className="text-sky-800">
               Category:{" "}
-              <span className="text-blue-900 font-medium">
+              <span className="text-sky-900 font-medium">
                 {getLabel(filters.categories, selectedCategory, "All")}
               </span>
             </span>
 
-            <span className="text-blue-800">
+            <span className="text-sky-800">
               Speaker:{" "}
-              <span className="text-blue-900 font-medium">
+              <span className="text-sky-900 font-medium">
                 {getLabel(filters.instructors, selectedInstructor, "Any")}
               </span>
             </span>
 
-            <span className="text-blue-800">
+            <span className="text-sky-800">
               Month:{" "}
-              <span className="text-blue-900 font-medium">
+              <span className="text-sky-900 font-medium">
                 {getLabel(filters.months, selectedMonth, "Any")}
               </span>
             </span>
@@ -251,8 +251,8 @@ export default function LiveWebinars(webinar) {
 
       {/* ================= RESULTS COUNT ================= */}
       {hasActiveFilters && (
-        <div className="px-6 py-4 bg-gradient-to-r from-blue-100 to-blue-50 border-b border-blue-200">
-          <div className="text-blue-900 text-sm">
+        <div className="px-6 py-4 bg-gradient-to-r from-sky-100 to-sky-50 border-b border-sky-200">
+          <div className="text-sky-900 text-sm">
             Showing <span className="font-bold">{totalCount}</span> results
             {search && <span className="ml-2">for "{search}"</span>}
           </div>
@@ -283,6 +283,7 @@ export default function LiveWebinars(webinar) {
             setPage(1);
             setPageSize(v);
           }}
+           variant="bottom"
         />
       </div>
     </div>
@@ -293,14 +294,14 @@ export default function LiveWebinars(webinar) {
 function Select({ label, value, onChange, options }) {
   return (
     <div>
-      <label className="text-sm font-medium text-blue-800 mb-1.5 block">
+      <label className="text-sm font-medium text-sky-800 mb-1.5 block">
         {label}
       </label>
       <div className="relative group">
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full py-2.5 px-3 text-sm bg-white border border-blue-200 rounded-lg text-gray-900 appearance-none cursor-pointer hover:border-blue-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
+          className="w-full py-2.5 px-3 text-sm bg-white border border-sky-200 rounded-lg text-gray-900 appearance-none cursor-pointer hover:border-sky-300 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all duration-300"
         >
           <option value="" className="bg-white">
             All
@@ -312,7 +313,7 @@ function Select({ label, value, onChange, options }) {
           ))}
         </select>
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-          <div className="w-2 h-2 border-r-2 border-b-2 border-blue-500 rotate-45"></div>
+          <div className="w-2 h-2 border-r-2 border-b-2 border-sky-500 rotate-45"></div>
         </div>
       </div>
     </div>
@@ -330,6 +331,7 @@ function PaginationBar({
   onPageChange,
   onPageSizeChange,
   showHeader = false,
+  variant = "top",
   onToggleFilters,
   hasActiveFilters,
   search,
@@ -357,19 +359,19 @@ function PaginationBar({
       <button
         disabled={page === 1}
         onClick={() => onPageChange(1)}
-        className="flex items-center gap-1 px-3 py-1.5 bg-blue-100 hover:bg-blue-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg transition-all duration-300 hover:shadow-md active:scale-95 group border border-blue-200 text-xs"
+        className="flex items-center gap-1 px-3 py-1.5 bg-sky-100 hover:bg-sky-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg transition-all duration-300 hover:shadow-md active:scale-95 group border border-sky-200 text-xs"
       >
-        <FiChevronsLeft className="text-xs group-hover:-translate-x-1 transition-transform duration-300 text-blue-900" />
-        <span className="text-xs text-blue-900 font-semibold">First</span>
+        <FiChevronsLeft className="text-xs group-hover:-translate-x-1 transition-transform duration-300 text-sky-900" />
+        <span className="text-xs text-sky-900 font-semibold">First</span>
       </button>
 
       <button
         disabled={page === 1}
         onClick={() => onPageChange(page - 1)}
-        className="flex items-center gap-1 px-3 py-1.5 bg-blue-100 hover:bg-blue-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg transition-all duration-300 hover:shadow-md active:scale-95 group border border-blue-200 text-xs"
+        className="flex items-center gap-1 px-3 py-1.5 bg-sky-100 hover:bg-sky-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg transition-all duration-300 hover:shadow-md active:scale-95 group border border-sky-200 text-xs"
       >
-        <FiChevronLeft className="text-xs group-hover:-translate-x-1 transition-transform duration-300 text-blue-900" />
-        <span className="text-xs text-blue-900">Previous</span>
+        <FiChevronLeft className="text-xs group-hover:-translate-x-1 transition-transform duration-300 text-sky-900" />
+        <span className="text-xs text-sky-900">Previous</span>
       </button>
 
       {paginationButtons.map((p) => (
@@ -379,8 +381,8 @@ function PaginationBar({
           className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-300 border
             ${
               p === page
-                ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg scale-105 border-blue-700"
-                : "bg-blue-100 hover:bg-blue-200 text-blue-900 hover:text-blue-900 hover:shadow-md border-blue-200"
+                ? "bg-gradient-to-r from-sky-500 to-sky-600 text-white shadow-lg scale-105 border-sky-600"
+                : "bg-sky-100 hover:bg-sky-200 text-sky-900 hover:text-sky-900 hover:shadow-md border-sky-200"
             }
             active:scale-95
           `}
@@ -392,30 +394,30 @@ function PaginationBar({
       <button
         disabled={page === totalPages}
         onClick={() => onPageChange(page + 1)}
-        className="flex items-center gap-1 px-3 py-1.5 bg-blue-100 hover:bg-blue-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg transition-all duration-300 hover:shadow-md active:scale-95 group border border-blue-200 text-xs"
+        className="flex items-center gap-1 px-3 py-1.5 bg-sky-100 hover:bg-sky-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg transition-all duration-300 hover:shadow-md active:scale-95 group border border-sky-200 text-xs"
       >
-        <span className="text-xs text-blue-900">Next</span>
-        <FiChevronRight className="text-xs group-hover:translate-x-1 transition-transform duration-300 text-blue-900" />
+        <span className="text-xs text-sky-900">Next</span>
+        <FiChevronRight className="text-xs group-hover:translate-x-1 transition-transform duration-300 text-sky-900" />
       </button>
 
       <button
         disabled={page === totalPages}
         onClick={() => onPageChange(totalPages)}
-        className="flex items-center gap-1 px-3 py-1.5 bg-blue-100 hover:bg-blue-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg transition-all duration-300 hover:shadow-md active:scale-95 group border border-blue-200 text-xs"
+        className="flex items-center gap-1 px-3 py-1.5 bg-sky-100 hover:bg-sky-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg transition-all duration-300 hover:shadow-md active:scale-95 group border border-sky-200 text-xs"
       >
-        <span className="text-xs text-blue-900">Last</span>
-        <FiChevronsRight className="text-xs group-hover:translate-x-1 transition-transform duration-300 text-blue-900" />
+        <span className="text-xs text-sky-900">Last</span>
+        <FiChevronsRight className="text-xs group-hover:translate-x-1 transition-transform duration-300 text-sky-900" />
       </button>
 
-      <span className="px-3 py-1.5 bg-blue-50 rounded-lg text-blue-800 text-xs border border-blue-200">
-        Page <span className="text-blue-900 font-bold">{page}</span> of{" "}
-        <span className="text-blue-900 font-bold">{totalPages}</span>
+      <span className="px-3 py-1.5 bg-sky-50 rounded-lg text-sky-800 text-xs border border-sky-200">
+        Page <span className="text-sky-900 font-bold">{page}</span> of{" "}
+        <span className="text-sky-900 font-bold">{totalPages}</span>
       </span>
 
       <select
         value={pageSize}
         onChange={(e) => onPageSizeChange(Number(e.target.value))}
-        className="px-3 py-1.5 text-xs bg-white border border-blue-200 rounded-lg text-blue-800 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 hover:border-blue-300 cursor-pointer"
+        className="px-3 py-1.5 text-xs bg-white border border-sky-200 rounded-lg text-sky-800 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all duration-300 hover:border-sky-300 cursor-pointer"
       >
         {[12, 24, 36, 100].map((n) => (
           <option key={n} value={n} className="bg-white">
@@ -436,22 +438,31 @@ function PaginationBar({
   };
 
   return (
-    <div className="bg-white text-blue-900 px-6 py-4 shadow-lg border-b border-blue-200">
+    <div
+      className={`
+        text-sky-900
+        py-4
+        border-t border-sky-200
+        ${variant === "bottom"
+          ? "w-full bg-white px-0 shadow-none"
+          : "bg-white px-6 shadow-lg border-b"}
+      `}
+    >
       {showHeader ? (
         /* ================= TOP PAGINATION ================= */
         <div className="flex flex-col gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="relative">
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-sky-600 to-blue-700 bg-clip-text text-transparent">
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-sky-600 to-sky-700 bg-clip-text text-transparent">
                   Live Webinars
                 </h1>
-                <div className="absolute -bottom-1 left-0 w-1/2 h-0.5 bg-gradient-to-r from-sky-500 to-blue-600 rounded-full"></div>
+                <div className="absolute -bottom-1 left-0 w-1/2 h-0.5 bg-gradient-to-r from-sky-500 to-sky-600 rounded-full"></div>
               </div>
 
               <button
                 onClick={onToggleFilters}
-                className="group relative flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 px-4 py-2.5 rounded-lg text-sm font-medium text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 active:scale-95 overflow-hidden w-fit"
+                className="group relative flex items-center gap-2 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 px-4 py-2.5 rounded-lg text-sm font-medium text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 active:scale-95 overflow-hidden w-fit"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                 <FiFilter className="text-base group-hover:rotate-12 transition-transform duration-300" />
@@ -461,7 +472,7 @@ function PaginationBar({
 
             {/* Results count on mobile */}
             {hasActiveFilters && (
-              <div className="sm:hidden text-sm text-black-800 bg-blue-100 px-3 py-2 rounded-lg border border-blue-200">
+              <div className="sm:hidden text-sm text-sky-800 bg-sky-100 px-3 py-2 rounded-lg border border-sky-200">
                 <span className="font-bold">
                   {start}-{end}
                 </span>{" "}
@@ -495,15 +506,15 @@ function WebinarRow({ w, onClick }) {
       onClick={onClick}
       className="
         group relative
-        bg-gradient-to-br from-white to-blue-50
-        border border-blue-100
+        bg-gradient-to-br from-white to-sky-50
+        border border-sky-100
         rounded-xl
         px-6 py-5
         grid grid-cols-[120px_1fr]
         gap-6
         cursor-pointer
         hover:shadow-lg
-        hover:border-blue-200
+        hover:border-sky-200
         hover:-translate-y-0.5
         transform
         transition-all
@@ -515,7 +526,7 @@ function WebinarRow({ w, onClick }) {
         before:inset-0
         before:bg-gradient-to-r
         before:from-transparent
-        before:via-blue-50/30
+        before:via-sky-50/30
         before:to-transparent
         before:-translate-x-full
         before:group-hover:translate-x-full
@@ -524,35 +535,49 @@ function WebinarRow({ w, onClick }) {
         before:ease-out
       "
     >
-    {w.is_test && (
-  <div className="
-    absolute top-3 right-3
-    flex items-center gap-1
-    px-2.5 py-1
-    rounded-full
-    bg-yellow-100
-    border border-yellow-400
-    text-yellow-800
-    text-xs
-    font-bold
-    z-20
-    shadow-sm
-  ">
-    ⚠️ Test
-  </div>
-)}
+      {w.is_test && (
+        <div className="
+          absolute top-3 right-3
+          flex items-center gap-1
+          px-2.5 py-1
+          rounded-full
+          bg-yellow-100
+          border border-yellow-400
+          text-yellow-800
+          text-xs
+          font-bold
+          z-20
+          shadow-sm
+        ">
+          ⚠️ Test
+        </div>
+      )}
 
       {/* ================= DATE + STATUS ================= */}
-      <div className="text-center bg-primary-subtle border-r border-blue-100 pr-4 flex flex-col items-center justify-start gap-3">
+      <div className="text-center border-r border-sky-100 pr-4 flex flex-col items-center justify-start gap-3">
         {/* Date */}
-        <div className="relative">
-          <div className="text-4xl font-bold bg-gradient-to-r from-blue-700 to-sky-600 bg-clip-text text-transparent">
+        <div
+          className="
+            relative
+            w-fit
+            rounded-xl
+            border border-sky-300
+            bg-gradient-to-br from-sky-500 to-sky-400
+            px-4 py-3
+            text-center
+            
+          "
+        >
+          <div className="text-4xl font-extrabold text-white leading-none">
             {day}
           </div>
-          <div className="text-sm text-blue-600 font-medium mt-1">
+
+          <div className="text-sm text-white font-bold mt-1 uppercase tracking-wide">
             {month}
           </div>
-          <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-gradient-to-r from-blue-500 to-sky-500 rounded-full"></div>
+
+          {/* subtle bottom accent */}
+          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-10 h-0.5 bg-white/70 rounded-full"></div>
         </div>
 
         {/* Status Badge */}
@@ -567,10 +592,10 @@ function WebinarRow({ w, onClick }) {
                 status.type === "live"
                   ? "bg-gradient-to-r from-red-600 to-red-700 text-white animate-pulse hover:animate-none hover:from-red-700 hover:to-red-800"
                   : status.type === "ended"
-                  ? "bg-gradient-to-r from-blue-400 to-blue-500 text-white"
+                  ? "bg-gradient-to-r from-sky-400 to-sky-500 text-white"
                   : status.type === "hours"
                   ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700"
-                  : "bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800"
+                  : "bg-gradient-to-r from-sky-500 to-sky-600 text-white hover:from-sky-600 hover:to-sky-700"
               }
               group-hover:scale-105
             `}
@@ -586,44 +611,39 @@ function WebinarRow({ w, onClick }) {
       {/* ================= DETAILS ================= */}
       <div className="space-y-3 min-w-0">
         {/* TITLE */}
-        <h3 className="text-lg font-bold text-blue-800 flex items-center gap-2 line-clamp-2">
-        {w.title}
-        {w.is_test && (
-          <span className="text-yellow-500 text-base" title="Test Webinar">
-            ⚠️
-          </span>
-        )}
-      </h3>
-      {w.is_test && (
-        <p className="text-xs text-yellow-700 font-medium">
-          This is a test webinar (payment flow testing)
-        </p>
-      )}
-
+        <h3 className="text-lg font-bold text-sky-800 flex items-center gap-2 truncate">
+          {w.title}
+          
+          {w.is_test && (
+            <p className="text-xs text-yellow-700 font-medium">
+              ⚠️  This is a test webinar (payment flow testing)
+            </p>
+          )}
+        </h3>
 
         {/* INSTRUCTOR + PRICE */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3 min-w-0 group/instructor">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-sky-400 rounded-full blur opacity-0 group-hover/instructor:opacity-50 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-sky-400 to-sky-300 rounded-full blur opacity-0 group-hover/instructor:opacity-50 transition-opacity duration-300"></div>
               <img
                 src={w.instructor.photo}
                 alt={w.instructor.name}
-                className="relative z-10 w-10 h-10 rounded-full object-cover border border-white shadow-sm group-hover/instructor:scale-110 group-hover/instructor:border-blue-200 transition-all duration-300"
+                className="relative z-10 w-10 h-10 rounded-full object-cover border border-white shadow-sm group-hover/instructor:scale-110 group-hover/instructor:border-sky-200 transition-all duration-300"
               />
             </div>
 
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-blue-900 truncate group-hover/instructor:text-blue-800 transition-colors duration-300">
+              <p className="text-sm font-semibold text-sky-900 truncate group-hover/instructor:text-sky-800 transition-colors duration-300">
                 {w.instructor.name}
               </p>
-              <p className="text-xs text-blue-500">Instructor</p>
+              <p className="text-xs text-sky-500">Instructor</p>
             </div>
           </div>
 
           <div className="relative group/price ml-auto mr-6">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 rounded-md blur opacity-0 p group-hover/price:opacity-50 transition-opacity duration-300"></div>
-            <span className="relative z-10 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-3 py-1.5 rounded-md font-bold text-sm shadow-sm group-hover/price:scale-105 transition-all duration-300">
+            <div className="absolute inset-0 bg-gradient-to-r from-sky-500 to-sky-600 rounded-md blur opacity-0 group-hover/price:opacity-50 transition-opacity duration-300"></div>
+            <span className="relative z-10 bg-gradient-to-r from-sky-500 to-sky-600 text-white px-3 py-1.5 rounded-md font-bold text-sm shadow-sm group-hover/price:scale-105 transition-all duration-300">
               ${w.display_price}
             </span>
           </div>
@@ -631,11 +651,11 @@ function WebinarRow({ w, onClick }) {
 
         {/* TIME + DURATION + CTA */}
         <div className="flex items-center justify-between pt-2">
-          <div className="text-sm text-blue-700 flex items-center gap-4">
+          <div className="text-sm text-sky-900 flex items-center gap-4">
             <span className="flex items-center gap-1.5 group/time">
               <div className="relative">
-                <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-sm opacity-0 group-hover/time:opacity-100 transition-opacity duration-300"></div>
-                <FiClock className="relative z-10 text-blue-600 group-hover/time:text-blue-700 transition-colors duration-300" size={16} />
+                <div className="absolute inset-0 bg-sky-400/20 rounded-full blur-sm opacity-0 group-hover/time:opacity-100 transition-opacity duration-300"></div>
+                <FiClock className="relative z-10 text-sky-600 group-hover/time:text-sky-700 transition-colors duration-300" size={16} />
               </div>
               <span className="font-medium">
                 {pst} | {est}
@@ -644,8 +664,8 @@ function WebinarRow({ w, onClick }) {
 
             <span className="flex items-center gap-1.5 group/duration">
               <div className="relative">
-                <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-sm opacity-0 group-hover/duration:opacity-100 transition-opacity duration-300"></div>
-                <FiCalendar className="relative z-10 text-blue-600 group-hover/duration:text-blue-700 transition-colors duration-300" size={16} />
+                <div className="absolute inset-0 bg-sky-400/20 rounded-full blur-sm opacity-0 group-hover/duration:opacity-100 transition-opacity duration-300"></div>
+                <FiCalendar className="relative z-10 text-sky-600 group-hover/duration:text-sky-700 transition-colors duration-300" size={16} />
               </div>
               <span className="font-medium">{w.duration_minutes} min</span>
             </span>
@@ -659,8 +679,8 @@ function WebinarRow({ w, onClick }) {
             className="
               relative
               group/cta
-              bg-gradient-to-r from-blue-600 to-blue-700
-              hover:from-blue-700 hover:to-blue-800
+              bg-gradient-to-r from-sky-500 to-sky-600
+              hover:from-sky-600 hover:to-sky-700
               text-white
               px-4 py-2
               rounded-lg

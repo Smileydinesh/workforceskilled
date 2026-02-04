@@ -6,6 +6,8 @@ import {
   FiZap,
   FiShield,
 } from "react-icons/fi";
+import PayPalButton from "../../components/payments/PayPalButton";
+
 
 export default function SubscriptionCheckout() {
   const navigate = useNavigate();
@@ -14,6 +16,15 @@ export default function SubscriptionCheckout() {
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [loading, setLoading] = useState(true);
+  const token =
+    localStorage.getItem("access") ||
+    sessionStorage.getItem("access");
+
+  const isLoggedIn = !!token;
+
+  const [showPayPal, setShowPayPal] = useState(false);
+
+
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -33,9 +44,19 @@ export default function SubscriptionCheckout() {
   }, []);
 
   const proceedToPayment = () => {
-    if (!selectedPlan) return;
-    navigate("/payment");
-  };
+  if (!selectedPlan) return;
+
+  if (!isLoggedIn) {
+    navigate("/login", {
+      state: { from: "/subscriptions" },
+    });
+    return;
+  }
+
+  // user logged in → show PayPal
+  setShowPayPal(true);
+};
+
 
   if (loading) {
     return (
@@ -181,6 +202,20 @@ export default function SubscriptionCheckout() {
         >
           Proceed to Secure Payment
         </button>
+
+        {showPayPal && selectedPlan && (
+  <div className="mt-8 max-w-md mx-auto">
+    <PayPalButton
+      itemType="SUBSCRIPTION"
+      itemId={selectedPlan.id}
+      purchaseType="SUBSCRIPTION"
+      onSuccess={() => {
+        navigate("/userdashboard");
+      }}
+    />
+  </div>
+)}
+
 
         <p className="text-center text-xs text-gray-500 mt-4">
           You can cancel anytime • Prices are shown in USD

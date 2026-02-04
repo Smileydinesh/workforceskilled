@@ -37,10 +37,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/live-webinars" element={<LiveWebinars />} />
-        <Route
-  path="/live-webinars/:webinar_id"
-  element={<LiveWebinarDetails />}
-/>
+        <Route path="/live-webinars/:webinar_id" element={<LiveWebinarDetails />}/>
 
 
         <Route path="/userdashboard" element={<UserDashboard />}/>

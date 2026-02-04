@@ -9,6 +9,7 @@ export default function Cart() {
   const [isRemoving, setIsRemoving] = useState(null);
   const [isHoveringCheckout, setIsHoveringCheckout] = useState(false);
   const [animateItems, setAnimateItems] = useState(false);
+  const [confirmRemoveItem, setConfirmRemoveItem] = useState(null);
   
   const navigate = useNavigate();
   const { fetchCartCount } = useCart();
@@ -79,7 +80,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-sky-50/20 to-gray-50 py-16 px-4 sm:px-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-sky-50/20 to-gray-50 py-6 px-4 sm:px-6">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 -left-20 w-64 h-64 bg-sky-100/30 rounded-full blur-3xl"></div>
@@ -186,7 +187,7 @@ export default function Cart() {
                 >
                   <div className="flex flex-col sm:flex-row gap-6 p-6">
                     {/* Image */}
-                    <div className="relative flex-shrink-0">
+                    {/* <div className="relative flex-shrink-0">
                       <img
                         src={item.cover_image}
                         alt={item.title}
@@ -195,7 +196,7 @@ export default function Cart() {
                       <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-amber-500 text-white text-xs font-bold flex items-center justify-center">
                         ${item.price}
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* Details */}
                     <div className="flex-1 min-w-0">
@@ -235,30 +236,21 @@ export default function Cart() {
                         <div className="flex flex-col items-end gap-3">
                           <div className="text-right">
                             <div className="text-2xl font-bold text-sky-600">${item.subtotal}</div>
-                            <div className="text-sm text-gray-500">
+                            {/* <div className="text-sm text-gray-500">
                               <span className="text-gray-600 font-medium">${item.price}</span>
                               <span className="mx-1">×</span>
                               <span className="px-2 py-0.5 bg-gray-100 rounded">{item.quantity}</span>
-                            </div>
+                            </div> */}
                           </div>
 
                           <button
-                            onClick={() => removeItem(item.id)}
-                            disabled={isRemoving === item.id}
-                            className="group flex items-center gap-2 px-4 py-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-300 disabled:opacity-50"
-                          >
-                            {isRemoving === item.id ? (
-                              <>
-                                <div className="w-4 h-4 border-2 border-red-300 border-t-red-500 rounded-full animate-spin"></div>
-                                <span className="text-sm">Removing...</span>
-                              </>
-                            ) : (
-                              <>
-                                <FiTrash2 className="group-hover:scale-110 transition-transform duration-300" />
-                                <span className="text-sm font-medium">Remove</span>
-                              </>
-                            )}
-                          </button>
+  onClick={() => setConfirmRemoveItem(item)}
+  className="group flex items-center gap-2 px-4 py-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-300"
+>
+  <FiTrash2 className="group-hover:scale-110 transition-transform duration-300" />
+  <span className="text-sm font-medium">Remove</span>
+</button>
+
                         </div>
                       </div>
                     </div>
@@ -290,10 +282,10 @@ export default function Cart() {
                     <span className="font-semibold text-gray-800">${cart.total}</span>
                   </div>
                   
-                  <div className="flex justify-between items-center">
+                  {/* <div className="flex justify-between items-center">
                     <span className="text-gray-600">Discount</span>
                     <span className="font-semibold text-sky-600">$0.00</span>
-                  </div>
+                  </div> */}
                   
                   <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
                   
@@ -369,6 +361,64 @@ export default function Cart() {
             </aside>
           </div>
         )}
+        {/* ================= REMOVE CONFIRMATION SHEET ================= */}
+{confirmRemoveItem && (
+  <>
+    {/* Backdrop */}
+    <div
+      className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+      onClick={() => setConfirmRemoveItem(null)}
+    />
+
+    {/* Bottom Sheet */}
+    <div className="fixed bottom-0 left-0 right-0 z-50 animate-slide-up">
+      <div className="max-w-xl mx-auto bg-white rounded-t-3xl shadow-2xl border border-gray-200 p-6">
+
+        {/* Handle */}
+        <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4" />
+
+        {/* Content */}
+        <div className="text-center">
+          <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center">
+            <FiTrash2 className="text-2xl text-red-600" />
+          </div>
+
+          <h3 className="text-lg font-bold text-gray-800">
+            Remove this item?
+          </h3>
+
+          <p className="text-sm text-gray-500 mt-2">
+            <span className="font-medium text-gray-700">
+              {confirmRemoveItem.title}
+            </span>{" "}
+            will be removed from your cart.
+          </p>
+        </div>
+
+        {/* Actions */}
+        <div className="mt-6 grid grid-cols-2 gap-4">
+          <button
+            onClick={() => setConfirmRemoveItem(null)}
+            className="py-3 rounded-xl border border-gray-300 text-gray-700 font-semibold hover:bg-gray-50 transition"
+          >
+            Cancel
+          </button>
+
+          <button
+            onClick={async () => {
+              await removeItem(confirmRemoveItem.id);
+              setConfirmRemoveItem(null);
+            }}
+            className="py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold hover:from-red-700 hover:to-red-800 transition"
+          >
+            Yes, Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  </>
+)}
+
       </div>
 
       {/* Custom Animations */}
@@ -402,7 +452,24 @@ export default function Cart() {
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
-      `}</style>
+        @keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-slide-up {
+  animation: slide-up 0.35s ease-out forwards;
+}
+
+      `}
+      
+      
+</style>
     </div>
   );
 }

@@ -8,6 +8,7 @@ import PricingAside from "./PricingAside";
 import MeetYourSpeaker from "./MeetYourSpeaker";
 import WebinarHero from "./WebinarHero";
 
+
 export default function LiveWebinarDetails() {
   const { webinar_id } = useParams();
   const navigate = useNavigate();
@@ -234,13 +235,14 @@ if (!webinar) {
 </div>
 
 
-      <section className="">
+      <section className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+  <WebinarContent webinar={webinar} />
+</section>
 
-
-        <WebinarContent webinar={webinar} />
-        
-      </section>
-      <MeetYourSpeaker webinar={webinar} />
+{/* ================= SPEAKER SECTION ================= */}
+<section className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 pb-2">
+  <MeetYourSpeaker webinar={webinar} />
+</section>
     </main>
   );
 }

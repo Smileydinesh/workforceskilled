@@ -1,75 +1,81 @@
-import { FiPlayCircle, FiCheckCircle, FiArrowRight } from "react-icons/fi";
+import { FiCheckCircle, FiArrowRight, FiPlayCircle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 export default function DemoVideoPage() {
   const navigate = useNavigate();
 
   return (
-    <main className="bg-gray-50 min-h-screen">
-      <div className="max-w-6xl mx-auto px-4 py-10">
+    <main className="bg-sky-50 min-h-screen">
+      <div className="max-w-6xl mx-auto px-4 py-12">
 
-        {/* HEADER */}
+        {/* ================= HEADER ================= */}
         <div className="text-center max-w-3xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+          <h1 className="text-3xl md:text-4xl font-bold text-sky-900">
             Live Webinar Demo Session
           </h1>
 
-          <p className="mt-3 text-gray-600 text-lg">
+          <p className="mt-4 text-sky-700 text-lg">
             Watch this short demo to understand how our live sessions work and
             what you’ll gain by attending.
           </p>
         </div>
 
-        {/* VIDEO SECTION */}
-        <div className="mt-10 rounded-2xl overflow-hidden shadow-xl bg-black relative">
+        {/* ================= VIDEO SECTION ================= */}
+        <div className="mt-12 rounded-2xl overflow-hidden shadow-2xl bg-black">
 
-          {/* VIDEO */}
-          <video
-                controls
-                preload="metadata"
-                controlsList="nodownload"
-                className="w-full h-[220px] sm:h-[360px] md:h-[480px] object-cover"
-                poster="/videos/demoimage.jpg" // optional thumbnail
-                >
-                <source src="/videos/media.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-        </video>
+          {/* RELATIVE WRAPPER IS IMPORTANT */}
+          <div className="relative w-full aspect-square md:aspect-video">
 
-          {/* OPTIONAL PLAY ICON OVERLAY (UI polish) */}
-          <div className="pointer-events-none absolute inset-0">
-    <div className="
-      w-full h-full
-      flex items-center justify-center
-      opacity-20
-      text-white
-      text-4xl md:text-6xl
-      font-bold
-      tracking-widest
-      rotate-[-20deg]
-      select-none
-    ">
-      PREVIEW ONLY
-    </div>
-  </div>
+            {/* VIDEO */}
+            <video
+              controls
+              preload="metadata"
+              controlsList="nodownload"
+              poster="/videos/demoimage.jpg"
+              className="absolute inset-0 w-full h-full object-contain bg-black z-10"
+            >
+              <source src="/videos/demo1.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            {/* OVERLAY – NOW 100% VISIBLE */}
+            <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+              <div
+                className="
+                  text-white/40
+                  text-3xl md:text-5xl
+                  font-extrabold
+                  tracking-widest
+                  rotate-[-15deg]
+                  select-none
+                  drop-shadow-[0_3px_8px_rgba(0,0,0,0.7)]
+                "
+              >
+                DEMO PREVIEW
+              </div>
+            </div>
+
+          </div>
         </div>
 
-        {/* CONTENT */}
-        <div className="mt-10 grid md:grid-cols-2 gap-8 items-start">
+        {/* ================= CONTENT ================= */}
+        <div className="mt-12 grid md:grid-cols-2 gap-8 items-start">
 
-          {/* LEFT – VALUE */}
+          {/* LEFT – LEARNING POINTS */}
           <div>
-            <h2 className="text-2xl font-semibold text-gray-900">
+            <h2 className="text-2xl font-semibold text-sky-900">
               What you’ll learn in the live webinar
             </h2>
 
-            <ul className="mt-5 space-y-4 text-gray-700">
+            <ul className="mt-6 space-y-4 text-sky-800">
               {[
                 "How the live session is structured",
-                "Real-world examples & case studies",
-                "Live Q&A with the instructor",     
+                "Real-world project examples",
+                "Interactive live Q&A with the instructor",
+                "Access to session recordings",
               ].map((item, i) => (
                 <li key={i} className="flex gap-3">
-                  <FiCheckCircle className="text-blue-600 text-xl mt-0.5" />
+                  <FiCheckCircle className="text-sky-500 text-xl mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -77,35 +83,39 @@ export default function DemoVideoPage() {
           </div>
 
           {/* RIGHT – CTA CARD */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
-            <h3 className="text-xl font-semibold text-gray-900">
+          <div className="bg-white rounded-2xl shadow-xl p-6 border border-sky-100">
+            <h3 className="text-xl font-semibold text-sky-900">
               Ready to join the full session?
             </h3>
 
-            <p className="text-gray-600 mt-2">
+            <p className="text-sky-700 mt-3">
               Get full access to the live webinar, recordings, and exclusive
-              resources.
+              learning resources.
             </p>
 
-            <div className="mt-6 space-y-3">
+            <div className="mt-6 space-y-4">
               <button
                 onClick={() => navigate("/live-webinars")}
                 className="
                   w-full py-3 rounded-xl
-                  bg-blue-600 text-white font-semibold
+                  bg-sky-500 text-white font-semibold
                   flex items-center justify-center gap-2
-                  hover:bg-blue-700 transition
+                  hover:bg-sky-600
+                  transition-all duration-200
                 "
               >
                 Join Live Webinar
                 <FiArrowRight />
               </button>
 
-              
+              <div className="flex items-center justify-center gap-2 text-sky-600 text-sm">
+                <FiPlayCircle />
+                <span>No payment required for demo</span>
+              </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </main>
   );

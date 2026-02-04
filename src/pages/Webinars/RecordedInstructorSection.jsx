@@ -10,19 +10,31 @@ export default function RecordedInstructorSection({ instructor }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.45, ease: "easeOut" }}
-      className="bg-white/95 backdrop-blur-xl rounded-3xl border border-gray-200 shadow-lg p-8"
+      className="
+        bg-white
+        rounded-3xl
+        border border-sky-200
+        shadow-xl
+        p-8
+      "
     >
-      {/* HEADER */}
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-50 border border-emerald-200 text-emerald-600">
+      {/* ================= HEADER ================= */}
+      <div className="flex items-center gap-4 mb-7">
+        <div className="
+          p-3 rounded-xl
+          bg-gradient-to-br from-sky-100 to-sky-50
+          border border-sky-200
+          text-sky-600
+        ">
           <FiUserCheck className="text-xl" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">
+
+        <h2 className="text-2xl font-extrabold text-gray-900">
           Meet Your Instructor
         </h2>
       </div>
 
-      {/* CONTENT */}
+      {/* ================= CONTENT ================= */}
       <div className="flex flex-col sm:flex-row gap-6 items-start">
 
         {/* PHOTO */}
@@ -30,9 +42,24 @@ export default function RecordedInstructorSection({ instructor }) {
           <img
             src={instructor.photo}
             alt={instructor.name}
-            className="w-28 h-28 rounded-full object-cover border-4 border-emerald-400 shadow-md"
+            className="
+              w-28 h-28
+              rounded-full
+              object-cover
+              border-4 border-sky-400
+              shadow-lg
+            "
           />
-          <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+
+          <span className="
+            absolute -bottom-2 left-1/2 -translate-x-1/2
+            bg-sky-600
+            text-white
+            text-xs font-bold
+            px-3 py-1
+            rounded-full
+            shadow
+          ">
             Expert Instructor
           </span>
         </div>
@@ -42,12 +69,18 @@ export default function RecordedInstructorSection({ instructor }) {
 
           {/* NAME + ROLE */}
           <div>
-            <h3 className="text-xl font-bold text-gray-900">
+            <h3 className="text-xl font-extrabold text-gray-900">
               {instructor.name}
             </h3>
 
-            <p className="text-sm text-emerald-700 font-medium flex items-center gap-2 mt-1">
-              <FiBriefcase className="text-emerald-600" />
+            <p className="
+              text-sm
+              text-sky-700
+              font-semibold
+              flex items-center gap-2
+              mt-1
+            ">
+              <FiBriefcase className="text-sky-600" />
               {instructor.designation}
               {instructor.organization
                 ? ` · ${instructor.organization}`
@@ -57,22 +90,31 @@ export default function RecordedInstructorSection({ instructor }) {
 
           {/* BIO */}
           {instructor.bio && (
-            <p className="text-gray-700 leading-relaxed text-sm">
+            <p className="
+              text-[15px]
+              text-gray-800
+              font-medium
+              leading-relaxed
+            ">
               {instructor.bio}
             </p>
           )}
 
-          {/* CREDENTIALS / TRUST */}
-          <div className="grid sm:grid-cols-2 gap-4 pt-4 border-t border-gray-200">
+          {/* TRUST / CREDENTIALS */}
+          <div className="
+            grid sm:grid-cols-2 gap-4
+            pt-4
+            border-t border-sky-200
+          ">
             <TrustItem
               icon={<FiAward />}
               title="Industry Expertise"
-              text="Recognized professional with real-world experience"
+              text="Recognized professional with strong real-world experience"
             />
             <TrustItem
               icon={<FiUserCheck />}
               title="Proven Educator"
-              text="Trusted by learners across multiple programs"
+              text="Trusted by thousands of learners across platforms"
             />
           </div>
         </div>
@@ -86,14 +128,22 @@ export default function RecordedInstructorSection({ instructor }) {
 function TrustItem({ icon, title, text }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="w-9 h-9 rounded-lg bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-600">
+      <div className="
+        w-9 h-9
+        rounded-lg
+        bg-sky-100
+        border border-sky-200
+        flex items-center justify-center
+        text-sky-600
+      ">
         {icon}
       </div>
+
       <div>
-        <p className="text-sm font-semibold text-gray-900">
+        <p className="text-sm font-bold text-gray-900">
           {title}
         </p>
-        <p className="text-xs text-gray-600">
+        <p className="text-xs text-gray-700 font-medium">
           {text}
         </p>
       </div>

@@ -9,30 +9,31 @@ export default function RecordedDescriptionSection({ webinar }) {
   return (
     <section
       className="
-        mt-2
-        rounded-2xl
+        mt-3
+        rounded-3xl
         border border-sky-200
         bg-white
+        shadow-xl
         p-6 sm:p-8
         space-y-10
       "
     >
-      {/* TITLE */}
-      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+      {/* ================= TITLE ================= */}
+      <h2 className="
+        text-2xl sm:text-3xl
+        font-extrabold
+        text-gray-900
+      ">
         Recording Details
       </h2>
 
-      {/* OVERVIEW */}
+      {/* ================= OVERVIEW ================= */}
       {webinar.overview && (
-        <section>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-sky-100">
-              <FiStar className="text-sky-600" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900">
-              Overview
-            </h3>
-          </div>
+        <section className="space-y-4">
+          <SectionHeader
+            icon={<FiStar />}
+            title="Overview"
+          />
 
           <div
             className="
@@ -40,7 +41,9 @@ export default function RecordedDescriptionSection({ webinar }) {
               prose
               prose-gray
               max-w-none
-              text-gray-700
+              text-[15px]
+              text-gray-800
+              font-medium
               leading-relaxed
             "
             dangerouslySetInnerHTML={{ __html: webinar.overview }}
@@ -48,17 +51,13 @@ export default function RecordedDescriptionSection({ webinar }) {
         </section>
       )}
 
-      {/* WHY ATTEND */}
+      {/* ================= WHY ATTEND ================= */}
       {webinar.why_attend && (
-        <section>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-sky-100">
-              <FiAward className="text-sky-600" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900">
-              Why You Should Attend
-            </h3>
-          </div>
+        <section className="space-y-4">
+          <SectionHeader
+            icon={<FiAward />}
+            title="Why You Should Attend"
+          />
 
           <div
             className="
@@ -66,7 +65,9 @@ export default function RecordedDescriptionSection({ webinar }) {
               prose
               prose-gray
               max-w-none
-              text-gray-700
+              text-[15px]
+              text-gray-800
+              font-medium
               leading-relaxed
             "
             dangerouslySetInnerHTML={{ __html: webinar.why_attend }}
@@ -74,17 +75,13 @@ export default function RecordedDescriptionSection({ webinar }) {
         </section>
       )}
 
-      {/* WHO WILL BENEFIT */}
+      {/* ================= WHO WILL BENEFIT ================= */}
       {webinar.who_benefits && (
-        <section>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-sky-100">
-              <FiUsers className="text-sky-600" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900">
-              Who Will Benefit
-            </h3>
-          </div>
+        <section className="space-y-4">
+          <SectionHeader
+            icon={<FiUsers />}
+            title="Who Will Benefit"
+          />
 
           <div
             className="
@@ -92,7 +89,9 @@ export default function RecordedDescriptionSection({ webinar }) {
               prose
               prose-gray
               max-w-none
-              text-gray-700
+              text-[15px]
+              text-gray-800
+              font-medium
               leading-relaxed
             "
             dangerouslySetInnerHTML={{ __html: webinar.who_benefits }}
@@ -100,17 +99,13 @@ export default function RecordedDescriptionSection({ webinar }) {
         </section>
       )}
 
-      {/* AREAS COVERED */}
+      {/* ================= AREAS COVERED ================= */}
       {webinar.areas_covered && (
-        <section>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-sky-100">
-              <FiChevronRight className="text-sky-600" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900">
-              Areas Covered in the Session
-            </h3>
-          </div>
+        <section className="space-y-4">
+          <SectionHeader
+            icon={<FiChevronRight />}
+            title="Areas Covered in the Session"
+          />
 
           <div
             className="
@@ -118,7 +113,9 @@ export default function RecordedDescriptionSection({ webinar }) {
               prose
               prose-gray
               max-w-none
-              text-gray-700
+              text-[15px]
+              text-gray-800
+              font-medium
               leading-relaxed
             "
             dangerouslySetInnerHTML={{ __html: webinar.areas_covered }}
@@ -126,5 +123,33 @@ export default function RecordedDescriptionSection({ webinar }) {
         </section>
       )}
     </section>
+  );
+}
+
+/* ================= REUSABLE HEADER ================= */
+
+function SectionHeader({ icon, title }) {
+  return (
+    <div className="flex items-center gap-4">
+      <div
+        className="
+          p-2.5
+          rounded-xl
+          bg-gradient-to-br from-sky-100 to-sky-50
+          border border-sky-200
+          text-sky-600
+        "
+      >
+        {icon}
+      </div>
+
+      <h3 className="
+        text-xl
+        font-bold
+        text-gray-900
+      ">
+        {title}
+      </h3>
+    </div>
   );
 }

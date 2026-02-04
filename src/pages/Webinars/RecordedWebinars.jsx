@@ -447,7 +447,7 @@ function RecordedWebinarListItem({ w }) {
               className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white rounded-md text-xs font-medium shadow-xs hover:shadow-sm transition-all duration-200 transform hover:scale-[1.02] group/btn"
             >
               <FiPlay className="w-3 h-3" />
-              Watch Now
+              Entroll Now
               <FiArrowRight className="w-3 h-3 group-hover/btn:translate-x-0.5 transition-transform" />
             </Link>
           </div>

@@ -123,13 +123,53 @@ function WebinarRow({ w, onClick }) {
       className="bg-white border border-blue-100 rounded-xl p-6 grid grid-cols-[120px_1fr] gap-6 cursor-pointer hover:shadow-lg transition"
     >
       {/* DATE */}
-      <div className="text-center border-r border-blue-100 pr-4">
-        <div className="text-4xl font-bold text-blue-700">{day}</div>
-        <div className="text-sm text-blue-600">{month}</div>
-        <span className="inline-block mt-3 px-3 py-1 rounded-full text-xs font-bold bg-blue-600 text-white">
-          {status.label}
-        </span>
-      </div>
+      {/* ================= DATE + STATUS ================= */}
+<div className="text-center border-r border-blue-100 pr-4 flex flex-col items-center gap-3">
+
+  {/* DATE CARD */}
+  <div
+    className="
+      relative
+      rounded-xl
+      border border-blue-300
+      bg-gradient-to-br from-blue-600 to-sky-500
+      px-4 py-3
+      text-center
+      shadow-md
+    "
+  >
+    <div className="text-4xl font-extrabold text-white leading-none">
+      {day}
+    </div>
+
+    <div className="text-sm text-white font-bold mt-1 uppercase tracking-wide">
+      {month}
+    </div>
+
+    {/* subtle accent */}
+    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-10 h-0.5 bg-white/70 rounded-full" />
+  </div>
+
+  {/* STATUS */}
+  <span
+    className={`
+      px-3 py-1.5 rounded-full text-xs font-bold tracking-wide
+      shadow-sm transition-all
+      ${
+        status.type === "live"
+          ? "bg-gradient-to-r from-red-600 to-red-700 text-white animate-pulse"
+          : status.type === "ended"
+          ? "bg-gradient-to-r from-blue-400 to-blue-500 text-white"
+          : status.type === "hours"
+          ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white"
+          : "bg-gradient-to-r from-blue-600 to-blue-700 text-white"
+      }
+    `}
+  >
+    {status.label}
+  </span>
+</div>
+
 
       {/* DETAILS */}
       <div className="space-y-3">
@@ -168,14 +208,25 @@ function WebinarRow({ w, onClick }) {
 
         {/* TIME + CTA */}
 <div className="flex items-center justify-between pt-2">
-  <div className="flex gap-4 text-sm text-blue-700">
-    <span className="flex items-center gap-1">
-      <FiClock /> {pst} | {est}
-    </span>
-    <span className="flex items-center gap-1">
-      <FiCalendar /> {w.duration_minutes} min
-    </span>
-  </div>
+          <div className="text-sm text-blue-900 flex items-center gap-4">
+            <span className="flex items-center gap-1.5 group/time">
+              <div className="relative">
+                <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-sm opacity-0 group-hover/time:opacity-100 transition-opacity duration-300"></div>
+                <FiClock className="relative z-10 text-blue-600 group-hover/time:text-blue-700 transition-colors duration-300" size={16} />
+              </div>
+              <span className="font-medium">
+                {pst} | {est}
+              </span>
+            </span>
+
+            <span className="flex items-center gap-1.5 group/duration">
+              <div className="relative">
+                <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-sm opacity-0 group-hover/duration:opacity-100 transition-opacity duration-300"></div>
+                <FiCalendar className="relative z-10 text-blue-600 group-hover/duration:text-blue-700 transition-colors duration-300" size={16} />
+              </div>
+              <span className="font-medium">{w.duration_minutes} min</span>
+            </span>
+          </div>
 
   <button
     onClick={(e) => {
